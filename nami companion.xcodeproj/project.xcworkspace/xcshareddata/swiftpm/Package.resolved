@@ -1,0 +1,129 @@
+{
+  "pins" : [
+    {
+      "identity" : "commontypes_ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/namiai/CommonTypes_iOS.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "1fe3fc9f06688af1dbf843c81197ecfd0596deb8"
+      }
+    },
+    {
+      "identity" : "i18n_ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/namiai/I18n_iOS",
+      "state" : {
+        "branch" : "main",
+        "revision" : "7e85b5bc73fb10f3ec82f4774f819b1cfd964b32"
+      }
+    },
+    {
+      "identity" : "iso8601msecdecoder_ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/namiai/ISO8601MsecDecoder_iOS.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "13e08bb4f81d5b4e9bc915bd5ad95b81565f92e7"
+      }
+    },
+    {
+      "identity" : "log_ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/namiai/Log_iOS",
+      "state" : {
+        "branch" : "main",
+        "revision" : "69702c73d6d14e81f1eeab38d8cd5e7f11cc929a"
+      }
+    },
+    {
+      "identity" : "namiproto_ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/namiai/NamiProto_iOS",
+      "state" : {
+        "branch" : "main",
+        "revision" : "3c8cdfa936f6ae145da0a5cb20af3adb416f9812"
+      }
+    },
+    {
+      "identity" : "namistandardpairingsdk_ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/namiai/NamiStandardPairingSDK_iOS",
+      "state" : {
+        "branch" : "main",
+        "revision" : "69e77d73fc036191b25c8956718332aa66c8278e"
+      }
+    },
+    {
+      "identity" : "packetboat",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/namiai/PacketBoat",
+      "state" : {
+        "revision" : "32d0bd4af4d8ea5329307d43e24ac4c5ecb805a0"
+      }
+    },
+    {
+      "identity" : "seance",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/namiai/Seance",
+      "state" : {
+        "revision" : "2ba6db465a757fcd43569d41006a3aa2cd559d4f"
+      }
+    },
+    {
+      "identity" : "securestorage_ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/namiai/SecureStorage_iOS.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "0bf9a2e018c574fd8dcdc77e497ef2a3d6f68154"
+      }
+    },
+    {
+      "identity" : "swift-protobuf",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-protobuf.git",
+      "state" : {
+        "revision" : "ab3a58b7209a17d781c0d1dbb3e1ff3da306bae8",
+        "version" : "1.20.3"
+      }
+    },
+    {
+      "identity" : "tokenstore_ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/namiai/TokenStore_iOS.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "21096cfb69e93fd6c0b6014d0489b935c1982381"
+      }
+    },
+    {
+      "identity" : "tomonari",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/namiai/Tomonari.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "8af3a28fb6f26fe895e2be01b37ba31145cb8008"
+      }
+    },
+    {
+      "identity" : "webapi_ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/namiai/WebAPI_iOS.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "93bb0699a0731d7a28b271c73643785bb414b9e6"
+      }
+    },
+    {
+      "identity" : "wifistorage_ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/namiai/WiFiStorage_iOS",
+      "state" : {
+        "branch" : "main",
+        "revision" : "737ee8258b3e82819b821a7f4cb393c9c3e263f9"
+      }
+    }
+  ],
+  "version" : 2
+}

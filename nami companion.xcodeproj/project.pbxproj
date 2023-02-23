@@ -8,18 +8,36 @@
 
 /* Begin PBXBuildFile section */
 		49E2212B29A75669008DF366 /* nami_companionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2212A29A75669008DF366 /* nami_companionApp.swift */; };
-		49E2212D29A75669008DF366 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2212C29A75669008DF366 /* ContentView.swift */; };
+		49E2212D29A75669008DF366 /* SessionCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2212C29A75669008DF366 /* SessionCodeView.swift */; };
 		49E2212F29A7566B008DF366 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49E2212E29A7566B008DF366 /* Assets.xcassets */; };
 		49E2213329A7566B008DF366 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49E2213229A7566B008DF366 /* Preview Assets.xcassets */; };
+		49E2213B29A7568E008DF366 /* NamiStandardPairingSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 49E2213A29A7568E008DF366 /* NamiStandardPairingSDK */; };
+		49E2213D29A758CC008DF366 /* SessionCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2213C29A758CC008DF366 /* SessionCodeViewModel.swift */; };
+		49E2213F29A75C80008DF366 /* RootRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2213E29A75C80008DF366 /* RootRouter.swift */; };
+		49E2214129A7630F008DF366 /* SessionWithAPIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2214029A7630F008DF366 /* SessionWithAPIKey.swift */; };
+		49E2214529A776A1008DF366 /* PlaceDevicesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2214429A776A1008DF366 /* PlaceDevicesListViewModel.swift */; };
+		49E2214929A792AE008DF366 /* PlaceDevicesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2214829A792AE008DF366 /* PlaceDevicesListView.swift */; };
+		49E2214B29A79C26008DF366 /* PairingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2214A29A79C26008DF366 /* PairingManager.swift */; };
+		49E2214E29A7A332008DF366 /* ErrorPresentationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2214D29A7A332008DF366 /* ErrorPresentationViewModel.swift */; };
+		49E2215029A7A563008DF366 /* ErrorPresentationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2214F29A7A563008DF366 /* ErrorPresentationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		49E2212729A75669008DF366 /* nami companion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "nami companion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49E2212A29A75669008DF366 /* nami_companionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nami_companionApp.swift; sourceTree = "<group>"; };
-		49E2212C29A75669008DF366 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		49E2212C29A75669008DF366 /* SessionCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionCodeView.swift; sourceTree = "<group>"; };
 		49E2212E29A7566B008DF366 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		49E2213029A7566B008DF366 /* nami_companion.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = nami_companion.entitlements; sourceTree = "<group>"; };
 		49E2213229A7566B008DF366 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		49E2213C29A758CC008DF366 /* SessionCodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionCodeViewModel.swift; sourceTree = "<group>"; };
+		49E2213E29A75C80008DF366 /* RootRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootRouter.swift; sourceTree = "<group>"; };
+		49E2214029A7630F008DF366 /* SessionWithAPIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionWithAPIKey.swift; sourceTree = "<group>"; };
+		49E2214429A776A1008DF366 /* PlaceDevicesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDevicesListViewModel.swift; sourceTree = "<group>"; };
+		49E2214829A792AE008DF366 /* PlaceDevicesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDevicesListView.swift; sourceTree = "<group>"; };
+		49E2214A29A79C26008DF366 /* PairingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairingManager.swift; sourceTree = "<group>"; };
+		49E2214D29A7A332008DF366 /* ErrorPresentationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorPresentationViewModel.swift; sourceTree = "<group>"; };
+		49E2214F29A7A563008DF366 /* ErrorPresentationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorPresentationView.swift; sourceTree = "<group>"; };
+		49E2215129A7B14E008DF366 /* nami-companion-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "nami-companion-Info.plist"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49E2213B29A7568E008DF366 /* NamiStandardPairingSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,8 +71,14 @@
 		49E2212929A75669008DF366 /* nami companion */ = {
 			isa = PBXGroup;
 			children = (
+				49E2215129A7B14E008DF366 /* nami-companion-Info.plist */,
 				49E2212A29A75669008DF366 /* nami_companionApp.swift */,
-				49E2212C29A75669008DF366 /* ContentView.swift */,
+				49E2214229A77667008DF366 /* SessionCode */,
+				49E2214329A7767B008DF366 /* DevicesList */,
+				49E2214C29A7A301008DF366 /* ErrorPresentation */,
+				49E2213E29A75C80008DF366 /* RootRouter.swift */,
+				49E2214029A7630F008DF366 /* SessionWithAPIKey.swift */,
+				49E2214A29A79C26008DF366 /* PairingManager.swift */,
 				49E2212E29A7566B008DF366 /* Assets.xcassets */,
 				49E2213029A7566B008DF366 /* nami_companion.entitlements */,
 				49E2213129A7566B008DF366 /* Preview Content */,
@@ -67,6 +92,33 @@
 				49E2213229A7566B008DF366 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		49E2214229A77667008DF366 /* SessionCode */ = {
+			isa = PBXGroup;
+			children = (
+				49E2213C29A758CC008DF366 /* SessionCodeViewModel.swift */,
+				49E2212C29A75669008DF366 /* SessionCodeView.swift */,
+			);
+			path = SessionCode;
+			sourceTree = "<group>";
+		};
+		49E2214329A7767B008DF366 /* DevicesList */ = {
+			isa = PBXGroup;
+			children = (
+				49E2214429A776A1008DF366 /* PlaceDevicesListViewModel.swift */,
+				49E2214829A792AE008DF366 /* PlaceDevicesListView.swift */,
+			);
+			path = DevicesList;
+			sourceTree = "<group>";
+		};
+		49E2214C29A7A301008DF366 /* ErrorPresentation */ = {
+			isa = PBXGroup;
+			children = (
+				49E2214D29A7A332008DF366 /* ErrorPresentationViewModel.swift */,
+				49E2214F29A7A563008DF366 /* ErrorPresentationView.swift */,
+			);
+			path = ErrorPresentation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -85,6 +137,9 @@
 			dependencies = (
 			);
 			name = "nami companion";
+			packageProductDependencies = (
+				49E2213A29A7568E008DF366 /* NamiStandardPairingSDK */,
+			);
 			productName = "nami companion";
 			productReference = 49E2212729A75669008DF366 /* nami companion.app */;
 			productType = "com.apple.product-type.application";
@@ -113,6 +168,9 @@
 				Base,
 			);
 			mainGroup = 49E2211E29A75669008DF366;
+			packageReferences = (
+				49E2213929A7568E008DF366 /* XCRemoteSwiftPackageReference "NamiStandardPairingSDK_iOS" */,
+			);
 			productRefGroup = 49E2212829A75669008DF366 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -139,7 +197,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49E2212D29A75669008DF366 /* ContentView.swift in Sources */,
+				49E2213F29A75C80008DF366 /* RootRouter.swift in Sources */,
+				49E2213D29A758CC008DF366 /* SessionCodeViewModel.swift in Sources */,
+				49E2214529A776A1008DF366 /* PlaceDevicesListViewModel.swift in Sources */,
+				49E2215029A7A563008DF366 /* ErrorPresentationView.swift in Sources */,
+				49E2214929A792AE008DF366 /* PlaceDevicesListView.swift in Sources */,
+				49E2214B29A79C26008DF366 /* PairingManager.swift in Sources */,
+				49E2214E29A7A332008DF366 /* ErrorPresentationViewModel.swift in Sources */,
+				49E2212D29A75669008DF366 /* SessionCodeView.swift in Sources */,
+				49E2214129A7630F008DF366 /* SessionWithAPIKey.swift in Sources */,
 				49E2212B29A75669008DF366 /* nami_companionApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -267,8 +333,10 @@
 				DEVELOPMENT_ASSET_PATHS = "\"nami companion/Preview Content\"";
 				DEVELOPMENT_TEAM = PTKKJUD9AS;
 				ENABLE_HARDENED_RUNTIME = YES;
+				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "nami-companion-Info.plist";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -305,8 +373,10 @@
 				DEVELOPMENT_ASSET_PATHS = "\"nami companion/Preview Content\"";
 				DEVELOPMENT_TEAM = PTKKJUD9AS;
 				ENABLE_HARDENED_RUNTIME = YES;
+				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "nami-companion-Info.plist";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -354,6 +424,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		49E2213929A7568E008DF366 /* XCRemoteSwiftPackageReference "NamiStandardPairingSDK_iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/namiai/NamiStandardPairingSDK_iOS";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		49E2213A29A7568E008DF366 /* NamiStandardPairingSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 49E2213929A7568E008DF366 /* XCRemoteSwiftPackageReference "NamiStandardPairingSDK_iOS" */;
+			productName = NamiStandardPairingSDK;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 49E2211F29A75669008DF366 /* Project object */;
 }
