@@ -55,11 +55,14 @@ final class RootRouter: ObservableObject {
     }
     
     private func pairing(place: Place, zoneId: PlaceZoneID, roomId: RoomID) -> some View {
-        return services.pairingManager!.startPairing(placeId: place.id, zoneId: zoneId, roomId: roomId) { [weak self] in
-            Log.info("Closure on complete pairing called")
-            DispatchQueue.main.async {
-                self?.route = .placeDevices(place, zoneId, roomId)
+        NavigationView {
+            services.pairingManager!.startPairing(placeId: place.id, zoneId: zoneId, roomId: roomId) { [weak self] in
+                Log.info("Closure on complete pairing called")
+                DispatchQueue.main.async {
+                    self?.route = .placeDevices(place, zoneId, roomId)
+                }
             }
         }
+        .navigationViewStyle(.stack)
     }
 }
