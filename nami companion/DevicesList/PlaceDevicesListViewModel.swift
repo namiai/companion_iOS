@@ -1,16 +1,10 @@
-//
-//  PlaceDevicesListViewModel.swift
-//  nami companion
-//
-//  Created by Yachin Ilya on 23.02.2023.
-//
 
 import Foundation
 import Combine
 import WebAPI
 import CommonTypes
 import SwiftUI
-import WiFiStorage
+import Log
 
 #if DEBUG
 
@@ -33,11 +27,6 @@ final class PlaceDevicesListViewModel: ObservableObject {
         self.state = state
         self.api = api
         self.nextRoute = nextRoute
-        self.pairingManager = PairingManager(api: api, wifiStorage: WiFiStorage(), onGetDevice: { [weak self] device in
-            self?.addDevice(device)
-        }, onDeleteDevice: { [weak self] deviceId in
-            self?.removeDevice(deviceId)
-        })
         self.updateDevices()
     }
     
@@ -77,11 +66,6 @@ final class PlaceDevicesListViewModel: ObservableObject {
         )
         api = WebAPI(base: URL(string: "http://dumb.org")!, signUpBase: URL(string: "http://dumb.org")!, session: URLSession.shared, tokenStore: TokenSecureStorage(server: ""))
         nextRoute = { _ in }
-        self.pairingManager = PairingManager(api: api, wifiStorage: WiFiStorage(), onGetDevice: { [weak self] device in
-            self?.addDevice(device)
-        }, onDeleteDevice: { [weak self] deviceId in
-            self?.removeDevice(deviceId)
-        })
     }
     
 #endif
@@ -90,7 +74,6 @@ final class PlaceDevicesListViewModel: ObservableObject {
     let nextRoute: (RootRouter.Routes) -> Void
     private let api: WebAPIProtocol
     private var disposable = Set<AnyCancellable>()
-    private var pairingManager: PairingManager!
     
     func updateDevices() {
         api.listDevices(query: .parameters(placeIds: [state.place.id]))
@@ -113,26 +96,7 @@ final class PlaceDevicesListViewModel: ObservableObject {
             .store(in: &disposable)
     }
     
-    @ViewBuilder
-    func buildPairingView() -> some View {
-        pairingManager.startPairing(placeId: state.place.id, zoneId: state.zoneId, roomId: state.roomId) { [weak self] in
-            DispatchQueue.main.async {
-                self?.state.presentingPairing = false
-            }
-        }
-    }
-    
-    private func addDevice(_ device: Device) {
-        DispatchQueue.main.async {
-            self.state.devices.append(device)
-        }
-    }
-    
-    private func removeDevice(_ deviceId: DeviceID) {
-        DispatchQueue.main.async {
-            self.state.devices.removeAll { device in
-                device.id == deviceId
-            }
-        }
+    func presentPairing() {
+        nextRoute(.pairing(state.place, state.zoneId, state.roomId))
     }
 }

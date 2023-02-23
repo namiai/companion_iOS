@@ -30,19 +30,11 @@ struct PlaceDevicesListView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        viewModel.state.presentingPairing = true
+                        viewModel.presentPairing()
                     } label: {
                         Image(systemName: "plus")
                     }
                 }
-            }
-        }
-        .navigationViewStyle(StackNavigationViewStyle())
-        .fullScreenCover(isPresented: $viewModel.state.presentingPairing) {
-            viewModel.updateDevices()
-        } content: {
-            NavigationView {
-                viewModel.buildPairingView()
             }
         }
         

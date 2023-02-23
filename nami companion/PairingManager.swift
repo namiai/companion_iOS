@@ -14,13 +14,9 @@ final class PairingManager {
     
     init(
         api: WebAPIProtocol,
-        wifiStorage: WiFiStorageProtocol,
-        onGetDevice: @escaping (Device) -> Void,
-        onDeleteDevice: @escaping (DeviceID) -> Void
+        wifiStorage: WiFiStorageProtocol
     ) {
         pairingSdk = NamiStandardPairingSDK(api: api, wifiStorage: wifiStorage)
-        self.onGetDevice = onGetDevice
-        self.onDeleteDevice = onDeleteDevice
         setupSubscription(api: api, wifiStorage: wifiStorage)
     }
     
@@ -41,8 +37,6 @@ final class PairingManager {
     private var pairingSdk: NamiStandardPairingSDK
     private var subscriptions = Set<AnyCancellable>()
     private var onPairingComplete: (() -> Void)?
-    private var onGetDevice: (Device) -> Void
-    private var onDeleteDevice: (DeviceID) -> Void
     
     private func setupSubscription(
         api: WebAPIProtocol,
@@ -59,15 +53,11 @@ final class PairingManager {
                 self.pairingSdk = NamiStandardPairingSDK(api: api, wifiStorage: wifiStorage)
                 self.setupSubscription(api: api, wifiStorage: wifiStorage)
             } receiveValue: { [weak self] deviceState in
+                Log.info("[PairingManager] got device state \(deviceState)")
                 switch deviceState {
-                case let .deviceCommisionedAtCloud(device, in: _):
-                    self?.onGetDevice(device)
-                case .deviceOperable:
-                    self?.completePairing()
-                case let .deviceDecommissioned(deviceId):
-                    self?.onDeleteDevice(deviceId)
-                    self?.completePairing()
-                case .pairingCancelled:
+                case .deviceCommisionedAtCloud:
+                    break
+                default:
                     self?.completePairing()
                 }
             }
