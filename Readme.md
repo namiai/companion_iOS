@@ -27,3 +27,15 @@ Also the following changes are expected:
 
 ## Building the project
 Please add `NamiStandardPairingFramework.xcframework` to `nami companion` target under the `General` tab, `Frameworks, Libraries and Embedded content` and set the `Embed` dropdown to `Embed & Sign`.
+
+## Using the `StandardPairing`
+
+The device pairing states might be observed through `var devicePairingState: DevicePairingStatePublisher` of `NamiStandardPairingSDK` (see example of use in `PairingManager.setupSubscription()`). It does not publish every pairing step but rather exposes the crucial states when the consuming app might need to react accordingly. States are following:
+
+- `deviceCommisionedAtCloud(Device, in: PlaceID)`: A record for the newly commisioned device is created in the cloud (but device is not yet fully set up). At this step the SDK consumer might want to store the record locally or keep it until the device is fully set up.
+
+- `deviceOperable(DeviceID)`: Device is fully set up: it confirms that it could connect to wi-fi network with the password provided.
+
+- `deviceDecommissioned(DeviceID)`: In case of a failute or the pairing cancellation after the successful commissioning to the cloud (see `deviceCommisionedAtCloud`) the device record is removed from the cloud. The SDK consumer might want to remove (or discard if not stored locally) the record for the device obtained on `deviceCommisionedAtCloud`. 
+        
+- `pairingCancelled`: Indicates the abortion of the pairing process when no additional cleanup might be required in consumer's code. E.g. if the pairing cancellation is confirmed and the pairing was stopped at the stage when no additional Device data were yet returned from the cloud.
