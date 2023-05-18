@@ -40,6 +40,7 @@
 
 /* Begin PBXFileReference section */
 		49CE32732A14D9DC005876D5 /* NamiStandardPairingFramework.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = NamiStandardPairingFramework.xcframework; path = ../nami_libraries/NamiStandardPairingFramework/build/NamiStandardPairingFramework.xcframework; sourceTree = "<group>"; };
+		49CE32832A162121005876D5 /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 		49E2212729A75669008DF366 /* nami companion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "nami companion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49E2212A29A75669008DF366 /* nami_companionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nami_companionApp.swift; sourceTree = "<group>"; };
 		49E2212C29A75669008DF366 /* SessionCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionCodeView.swift; sourceTree = "<group>"; };
@@ -81,6 +82,7 @@
 		49E2211E29A75669008DF366 = {
 			isa = PBXGroup;
 			children = (
+				49CE32832A162121005876D5 /* Readme.md */,
 				49E2212929A75669008DF366 /* nami companion */,
 				49E2212829A75669008DF366 /* Products */,
 				49CE32722A14D9DB005876D5 /* Frameworks */,
