@@ -1,23 +1,16 @@
 
 import Foundation
 import Combine
-import WebAPI
-import CommonTypes
+import NamiStandardPairingFramework
 import SwiftUI
-import Log
-
-#if DEBUG
-
-import TokenStore
-
-#endif
 
 final class PlaceDevicesListViewModel: ObservableObject {
+    enum EmptyPlaceError: Error {
+        case noZoneOrRoom
+    }
     
     struct State {
         var place: Place
-        var zoneId: PlaceZoneID
-        var roomId: RoomID
         var devices: [Device] = []
         var offerRetry = false
         var presentingPairing = false
@@ -42,11 +35,33 @@ final class PlaceDevicesListViewModel: ObservableObject {
                 updatedAt: Date(),
                 themeId: 1,
                 iconId: 1,
-                zones: [],
+                zones: [
+                    PlaceZone(
+                        id: 100,
+                        urn: "urn:ZONE",
+                        name: "Default Zone",
+                        placeId: 1,
+                        rooms: [
+                            Room(
+                                id: 200,
+                                urn: "urn:ROOM",
+                                name: "Default Room",
+                                placeId: 1,
+                                zoneId: 100,
+                                iconId: 0,
+                                createdAt: .now,
+                                updatedAt: .now
+                            )
+                        ],
+                        alertMode: .relaxed,
+                        engineConfig: .init(type: .security, sensitivityLevel: 7),
+                        motionStatus: .init(health: .healthy),
+                        createdAt: .now,
+                        updatedAt: .now
+                    )
+                ],
                 limits: .init(membership: 100)
             ),
-            zoneId: 1,
-            roomId: 1,
             devices: [
                 Device(
                     id: 3,
@@ -97,6 +112,13 @@ final class PlaceDevicesListViewModel: ObservableObject {
     }
     
     func presentPairing() {
-        nextRoute(.pairing(state.place, state.zoneId, state.roomId))
+        guard
+            let zone = state.place.zones.first,
+            let room = zone.rooms.first
+        else {
+            nextRoute(.errorView(EmptyPlaceError.noZoneOrRoom))
+            return
+        }
+        nextRoute(.pairing(state.place, zone.id, room.id))
     }
 }

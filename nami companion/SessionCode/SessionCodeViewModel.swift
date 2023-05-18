@@ -1,23 +1,20 @@
 
 import Foundation
 import Combine
-import WebAPI
-import TokenStore
-import CommonTypes
+import NamiStandardPairingFramework
 import SwiftUI
-import Log
 
 final class SessionCodeViewModel: ObservableObject {
     
-    init(services: ApplicationServices, nextRoute: @escaping (RootRouter.Routes) -> Void) {
-        self.services = services
+    init( setupPairingManager: @escaping (PairingManager) -> Void, nextRoute: @escaping (RootRouter.Routes) -> Void) {
+        self.setupPairingManager = setupPairingManager
         self.nextRoute = nextRoute
     }
     
 #if DEBUG
     
     init() {
-        services = ApplicationServices()
+        setupPairingManager = { _ in }
         nextRoute = { _ in }
     }
     
@@ -25,7 +22,6 @@ final class SessionCodeViewModel: ObservableObject {
     
     struct State {
         var sessionCode: String = ""
-        var apiKey: String = ""
         fileprivate var buttonTapped = false
         fileprivate var place: Place?
         fileprivate var zoneId: PlaceZoneID?
@@ -33,20 +29,20 @@ final class SessionCodeViewModel: ObservableObject {
         
         var disableButton: Bool {
             buttonTapped ||
-            sessionCode.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ||
-            apiKey.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            sessionCode.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
         }
     }
     
     @Published var state: State = State()
-    private var services: ApplicationServices
+    private var pairingManager: PairingManager?
     private var disposable = Set<AnyCancellable>()
+    private var setupPairingManager: (PairingManager) -> Void
     private var nextRoute: (RootRouter.Routes) -> Void
     
     func confirmTapped() {
         state.buttonTapped = true
-        let api = self.services.setupAPI(apiKey: state.apiKey)
-        api.installerSessionActivate(with: state.sessionCode)
+        StandardPairing.activateSession(code: state.sessionCode)
+            .publisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 Log.info("Session activate completion", completion)
@@ -57,18 +53,12 @@ final class SessionCodeViewModel: ObservableObject {
                 if case let .failure(error) = completion {
                     self.nextRoute(.errorView(error))
                 }
-            } receiveValue: { [weak self] result in
+            } receiveValue: { [weak self] (result: SessionCodeActivateResult) in
                 Log.info("Session activate result", result)
-                guard let tokenStore = self?.services.tokenStore else { return }
-                tokenStore.store(token: result.authentication.accessToken, at: .access)
-                tokenStore.store(token: result.authentication.refreshToken, at: .refresh)
+                let pairingManager = PairingManager(session: result)
+                self?.setupPairingManager(pairingManager)
                 DispatchQueue.main.async {
-                    self?.nextRoute(
-                        .placeDevices(
-                            result.place,
-                            result.sessionParameters.flatModeDefaults["zone_id"]!,
-                            result.sessionParameters.flatModeDefaults["room_id"]!)
-                    )
+                    self?.nextRoute(.placeDevices(result.place))
                 }
             }
             .store(in: &disposable)

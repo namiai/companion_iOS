@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		49CE32792A14DA60005876D5 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 49CE32782A14DA60005876D5 /* SwiftProtobuf */; };
+		49CE32802A160DBC005876D5 /* NamiStandardPairingFramework.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49CE32732A14D9DC005876D5 /* NamiStandardPairingFramework.xcframework */; };
+		49CE32812A160DBC005876D5 /* NamiStandardPairingFramework.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 49CE32732A14D9DC005876D5 /* NamiStandardPairingFramework.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		49E2212B29A75669008DF366 /* nami_companionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2212A29A75669008DF366 /* nami_companionApp.swift */; };
 		49E2212D29A75669008DF366 /* SessionCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2212C29A75669008DF366 /* SessionCodeView.swift */; };
 		49E2212F29A7566B008DF366 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49E2212E29A7566B008DF366 /* Assets.xcassets */; };
 		49E2213329A7566B008DF366 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49E2213229A7566B008DF366 /* Preview Assets.xcassets */; };
-		49E2213B29A7568E008DF366 /* NamiStandardPairingSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 49E2213A29A7568E008DF366 /* NamiStandardPairingSDK */; };
 		49E2213D29A758CC008DF366 /* SessionCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2213C29A758CC008DF366 /* SessionCodeViewModel.swift */; };
 		49E2213F29A75C80008DF366 /* RootRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2213E29A75C80008DF366 /* RootRouter.swift */; };
 		49E2214129A7630F008DF366 /* SessionWithAPIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2214029A7630F008DF366 /* SessionWithAPIKey.swift */; };
@@ -22,7 +24,22 @@
 		49E2215029A7A563008DF366 /* ErrorPresentationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2214F29A7A563008DF366 /* ErrorPresentationView.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		49CE32822A160DBC005876D5 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				49CE32812A160DBC005876D5 /* NamiStandardPairingFramework.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		49CE32732A14D9DC005876D5 /* NamiStandardPairingFramework.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = NamiStandardPairingFramework.xcframework; path = ../nami_libraries/NamiStandardPairingFramework/build/NamiStandardPairingFramework.xcframework; sourceTree = "<group>"; };
 		49E2212729A75669008DF366 /* nami companion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "nami companion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49E2212A29A75669008DF366 /* nami_companionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nami_companionApp.swift; sourceTree = "<group>"; };
 		49E2212C29A75669008DF366 /* SessionCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionCodeView.swift; sourceTree = "<group>"; };
@@ -45,18 +62,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49E2213B29A7568E008DF366 /* NamiStandardPairingSDK in Frameworks */,
+				49CE32792A14DA60005876D5 /* SwiftProtobuf in Frameworks */,
+				49CE32802A160DBC005876D5 /* NamiStandardPairingFramework.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		49CE32722A14D9DB005876D5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				49CE32732A14D9DC005876D5 /* NamiStandardPairingFramework.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		49E2211E29A75669008DF366 = {
 			isa = PBXGroup;
 			children = (
 				49E2212929A75669008DF366 /* nami companion */,
 				49E2212829A75669008DF366 /* Products */,
+				49CE32722A14D9DB005876D5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -131,6 +158,7 @@
 				49E2212329A75669008DF366 /* Sources */,
 				49E2212429A75669008DF366 /* Frameworks */,
 				49E2212529A75669008DF366 /* Resources */,
+				49CE32822A160DBC005876D5 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -138,7 +166,7 @@
 			);
 			name = "nami companion";
 			packageProductDependencies = (
-				49E2213A29A7568E008DF366 /* NamiStandardPairingSDK */,
+				49CE32782A14DA60005876D5 /* SwiftProtobuf */,
 			);
 			productName = "nami companion";
 			productReference = 49E2212729A75669008DF366 /* nami companion.app */;
@@ -169,7 +197,7 @@
 			);
 			mainGroup = 49E2211E29A75669008DF366;
 			packageReferences = (
-				49E2213929A7568E008DF366 /* XCRemoteSwiftPackageReference "NamiStandardPairingSDK_iOS" */,
+				49CE32772A14DA60005876D5 /* XCRemoteSwiftPackageReference "swift-protobuf" */,
 			);
 			productRefGroup = 49E2212829A75669008DF366 /* Products */;
 			projectDirPath = "";
@@ -426,21 +454,21 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		49E2213929A7568E008DF366 /* XCRemoteSwiftPackageReference "NamiStandardPairingSDK_iOS" */ = {
+		49CE32772A14DA60005876D5 /* XCRemoteSwiftPackageReference "swift-protobuf" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/namiai/NamiStandardPairingSDK_iOS";
+			repositoryURL = "https://github.com/apple/swift-protobuf.git";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		49E2213A29A7568E008DF366 /* NamiStandardPairingSDK */ = {
+		49CE32782A14DA60005876D5 /* SwiftProtobuf */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 49E2213929A7568E008DF366 /* XCRemoteSwiftPackageReference "NamiStandardPairingSDK_iOS" */;
-			productName = NamiStandardPairingSDK;
+			package = 49CE32772A14DA60005876D5 /* XCRemoteSwiftPackageReference "swift-protobuf" */;
+			productName = SwiftProtobuf;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

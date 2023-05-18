@@ -1,23 +1,16 @@
 // Copyright (c) nami.ai
 
 import Combine
-import CommonTypes
 import Foundation
-import Log
-import NamiStandardPairingSDK
+import NamiStandardPairingFramework
 import SwiftUI
-import WebAPI
-import WiFiStorage
 
 final class PairingManager {
     // MARK: Lifecycle
     
-    init(
-        api: WebAPIProtocol,
-        wifiStorage: WiFiStorageProtocol
-    ) {
-        pairingSdk = NamiStandardPairingSDK(api: api, wifiStorage: wifiStorage)
-        setupSubscription(api: api, wifiStorage: wifiStorage)
+    init(session: SessionCodeActivateResult) {
+        pairing = StandardPairing(session: session)
+        setupSubscription()
     }
     
     // MARK: Internal
@@ -29,20 +22,25 @@ final class PairingManager {
         onPairingComplete: (() -> Void)? = nil
     ) -> some View {
         self.onPairingComplete = onPairingComplete
-        return pairingSdk.startPairing(placeId: placeId, zoneId: zoneId, roomId: roomId)
+        return pairing.sdk.startPairing(placeId: placeId, zoneId: zoneId, roomId: roomId)
     }
     
     // MARK: Private
     
-    private var pairingSdk: NamiStandardPairingSDK
+    private var pairing: StandardPairing
     private var subscriptions = Set<AnyCancellable>()
     private var onPairingComplete: (() -> Void)?
     
-    private func setupSubscription(
-        api: WebAPIProtocol,
-        wifiStorage: WiFiStorageProtocol
-    ) {
-        pairingSdk.devicePairingState
+    var api: WebAPIProtocol {
+        pairing.api
+    }
+    
+    static func activateSession(code: String) -> Result<SessionCodeActivateResult, Error> {
+        StandardPairing.activateSession(code: code)
+    }
+    
+    private func setupSubscription() {
+        pairing.sdk.devicePairingState
             .subscribe(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 if case let .failure(error) = completion {
@@ -50,8 +48,6 @@ final class PairingManager {
                 }
                 guard let self else { return }
                 self.completePairing()
-                self.pairingSdk = NamiStandardPairingSDK(api: api, wifiStorage: wifiStorage)
-                self.setupSubscription(api: api, wifiStorage: wifiStorage)
             } receiveValue: { [weak self] deviceState in
                 Log.info("[PairingManager] got device state \(deviceState)")
                 switch deviceState {

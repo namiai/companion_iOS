@@ -6,9 +6,7 @@
 //
 
 import SwiftUI
-import WebAPI
-import TokenStore
-import WiFiStorage
+import NamiStandardPairingFramework
 
 @main
 struct nami_companionApp: App {
@@ -18,26 +16,5 @@ struct nami_companionApp: App {
         }
     }
     
-    @ObservedObject var router = RootRouter(ApplicationServices())
-}
-
-final class ApplicationServices {
-    var api: WebAPIProtocol?
-    var tokenStore: TokenStore
-    var pairingManager: PairingManager?
-    private let baseUrl = URL(string: "https://mimizan.nami.surf")!
-    private let signUpUrl = URL(string: "https://app.nami.surf/signin")!
-    
-    init() {
-        tokenStore = TokenSecureStorage(server: baseUrl.host()!)
-    }
-    
-    func setupAPI(apiKey: String) -> WebAPIProtocol {
-        let api = WebAPI(base: baseUrl, signUpBase: signUpUrl, session: SessionWithAPIKey(session: URLSession.shared, apiKey: apiKey), tokenStore: tokenStore)
-        self.api = api
-        pairingManager = PairingManager(api: api, wifiStorage: WiFiStorage())
-        return api
-    }
-    
-    
+    @ObservedObject var router = RootRouter()
 }
