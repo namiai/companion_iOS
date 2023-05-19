@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		49CE32792A14DA60005876D5 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 49CE32782A14DA60005876D5 /* SwiftProtobuf */; };
-		49CE32802A160DBC005876D5 /* NamiStandardPairingFramework.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49CE32732A14D9DC005876D5 /* NamiStandardPairingFramework.xcframework */; };
-		49CE32812A160DBC005876D5 /* NamiStandardPairingFramework.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 49CE32732A14D9DC005876D5 /* NamiStandardPairingFramework.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		49E2212B29A75669008DF366 /* nami_companionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2212A29A75669008DF366 /* nami_companionApp.swift */; };
 		49E2212D29A75669008DF366 /* SessionCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2212C29A75669008DF366 /* SessionCodeView.swift */; };
 		49E2212F29A7566B008DF366 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49E2212E29A7566B008DF366 /* Assets.xcassets */; };
@@ -25,13 +23,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		49CE32822A160DBC005876D5 /* Embed Frameworks */ = {
+		49CE329D2A1734FC005876D5 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				49CE32812A160DBC005876D5 /* NamiStandardPairingFramework.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -39,7 +36,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		49CE32732A14D9DC005876D5 /* NamiStandardPairingFramework.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = NamiStandardPairingFramework.xcframework; path = ../nami_libraries/NamiStandardPairingFramework/build/NamiStandardPairingFramework.xcframework; sourceTree = "<group>"; };
 		49CE32832A162121005876D5 /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 		49E2212729A75669008DF366 /* nami companion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "nami companion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49E2212A29A75669008DF366 /* nami_companionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nami_companionApp.swift; sourceTree = "<group>"; };
@@ -64,7 +60,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				49CE32792A14DA60005876D5 /* SwiftProtobuf in Frameworks */,
-				49CE32802A160DBC005876D5 /* NamiStandardPairingFramework.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,7 +69,6 @@
 		49CE32722A14D9DB005876D5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				49CE32732A14D9DC005876D5 /* NamiStandardPairingFramework.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -160,7 +154,7 @@
 				49E2212329A75669008DF366 /* Sources */,
 				49E2212429A75669008DF366 /* Frameworks */,
 				49E2212529A75669008DF366 /* Resources */,
-				49CE32822A160DBC005876D5 /* Embed Frameworks */,
+				49CE329D2A1734FC005876D5 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
