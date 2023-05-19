@@ -2,8 +2,7 @@ This is the demo application showing the most simple use of nami pairing SDK.
 
 ## Work in progress: SDK
 
-The SDK is under developement and planned to be partially open sourced to give the consumers an ability to better understand the steps done during the pairing or reimplement some parts if required.
-The SDK would come in two flavours:
+The SDK is under developement. It comes in two flavours:
 - `Tomonari`: a library performing the pairing steps and not providing the UI.
 - `NamiStandardPairingSDK`: a library including Tomonari as a dependency yet provding the default nami UI.
 
