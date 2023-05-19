@@ -66,8 +66,8 @@ final class SessionCodeViewModel: ObservableObject {
                     self?.nextRoute(
                         .placeDevices(
                             result.place,
-                            result.sessionParameters.flatModeDefaults["zone_id"]!,
-                            result.sessionParameters.flatModeDefaults["room_id"]!)
+                            result.place.zones.first!.id,
+                            result.place.zones.first!.rooms.first!.id)
                     )
                 }
             }
