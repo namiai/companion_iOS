@@ -38,12 +38,14 @@ final class PlaceDevicesListViewModel: ObservableObject {
                 zones: [
                     PlaceZone(
                         id: 100,
+                        externalId: UUID().uuidString,
                         urn: "urn:ZONE",
                         name: "Default Zone",
                         placeId: 1,
                         rooms: [
                             Room(
                                 id: 200,
+                                externalId: UUID().uuidString,
                                 urn: "urn:ROOM",
                                 name: "Default Room",
                                 placeId: 1,
@@ -112,6 +114,8 @@ final class PlaceDevicesListViewModel: ObservableObject {
     }
     
     func presentPairing() {
+        // It pairs a device into the first found zone/room.
+        // You definitely would want something different in production.
         guard
             let zone = state.place.zones.first,
             let room = zone.rooms.first
@@ -119,6 +123,6 @@ final class PlaceDevicesListViewModel: ObservableObject {
             nextRoute(.errorView(EmptyPlaceError.noZoneOrRoom))
             return
         }
-        nextRoute(.pairing(state.place, zone.id, room.id))
+        nextRoute(.pairing(state.place, zone.externalId, room.externalId))
     }
 }

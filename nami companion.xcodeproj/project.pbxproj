@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		49CE32792A14DA60005876D5 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 49CE32782A14DA60005876D5 /* SwiftProtobuf */; };
+		49A1CC8F2A177BAB002F992B /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 49A1CC8E2A177BAB002F992B /* SwiftProtobuf */; };
 		49E2212B29A75669008DF366 /* nami_companionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2212A29A75669008DF366 /* nami_companionApp.swift */; };
 		49E2212D29A75669008DF366 /* SessionCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2212C29A75669008DF366 /* SessionCodeView.swift */; };
 		49E2212F29A7566B008DF366 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49E2212E29A7566B008DF366 /* Assets.xcassets */; };
@@ -46,7 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49CE32792A14DA60005876D5 /* SwiftProtobuf in Frameworks */,
+				49A1CC8F2A177BAB002F992B /* SwiftProtobuf in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,7 +148,7 @@
 			);
 			name = "nami companion";
 			packageProductDependencies = (
-				49CE32782A14DA60005876D5 /* SwiftProtobuf */,
+				49A1CC8E2A177BAB002F992B /* SwiftProtobuf */,
 			);
 			productName = "nami companion";
 			productReference = 49E2212729A75669008DF366 /* nami companion.app */;
@@ -179,7 +179,7 @@
 			);
 			mainGroup = 49E2211E29A75669008DF366;
 			packageReferences = (
-				49CE32772A14DA60005876D5 /* XCRemoteSwiftPackageReference "swift-protobuf" */,
+				49A1CC8D2A177BAB002F992B /* XCRemoteSwiftPackageReference "swift-protobuf" */,
 			);
 			productRefGroup = 49E2212829A75669008DF366 /* Products */;
 			projectDirPath = "";
@@ -440,7 +440,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		49CE32772A14DA60005876D5 /* XCRemoteSwiftPackageReference "swift-protobuf" */ = {
+		49A1CC8D2A177BAB002F992B /* XCRemoteSwiftPackageReference "swift-protobuf" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-protobuf.git";
 			requirement = {
@@ -451,9 +451,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		49CE32782A14DA60005876D5 /* SwiftProtobuf */ = {
+		49A1CC8E2A177BAB002F992B /* SwiftProtobuf */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 49CE32772A14DA60005876D5 /* XCRemoteSwiftPackageReference "swift-protobuf" */;
+			package = 49A1CC8D2A177BAB002F992B /* XCRemoteSwiftPackageReference "swift-protobuf" */;
 			productName = SwiftProtobuf;
 		};
 /* End XCSwiftPackageProductDependency section */

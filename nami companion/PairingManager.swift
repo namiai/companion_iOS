@@ -16,13 +16,17 @@ final class PairingManager {
     // MARK: Internal
     
     func startPairing(
-        placeId: PlaceID,
-        zoneId: PlaceZoneID,
-        roomId: RoomID,
+        zoneUuid: String,
+        roomUuid: String,
         onPairingComplete: (() -> Void)? = nil
     ) -> some View {
         self.onPairingComplete = onPairingComplete
-        return pairing.sdk.startPairing(placeId: placeId, zoneId: zoneId, roomId: roomId)
+        do {
+            return try AnyView(pairing.startPairing(zoneUuid: zoneUuid, roomUuid: roomUuid))
+        } catch {
+            // Don't really care for a demo. Showing some error view or warning might be helpful.
+            return AnyView(EmptyView())
+        }
     }
     
     // MARK: Private

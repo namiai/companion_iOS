@@ -9,11 +9,14 @@ import Foundation
 import SwiftUI
 import NamiStandardPairingFramework
 
+typealias ZoneUUID = String
+typealias RoomUUID = String
+
 final class RootRouter: ObservableObject {
     enum Routes {
         case codeInput
         case placeDevices(Place)
-        case pairing(Place, PlaceZoneID, RoomID)
+        case pairing(Place, ZoneUUID, RoomUUID)
         case errorView(Error)
     }
     
@@ -37,8 +40,8 @@ final class RootRouter: ObservableObject {
                     self.route = route
                 })
             )
-        case let .pairing(place, zoneId, roomId):
-            pairing(place: place, zoneId: zoneId, roomId: roomId)
+        case let .pairing(place, zoneUuid, roomUuid):
+            pairing(place: place, zoneUuid: zoneUuid, roomUuid: roomUuid)
         case let .errorView(error):
             ErrorPresentationView(viewModel: ErrorPresentationViewModel(
                 state: ErrorPresentationViewModel.State(error: error),
@@ -49,9 +52,9 @@ final class RootRouter: ObservableObject {
         }
     }
     
-    private func pairing(place: Place, zoneId: PlaceZoneID, roomId: RoomID) -> some View {
+    private func pairing(place: Place, zoneUuid: ZoneUUID, roomUuid: RoomUUID) -> some View {
         NavigationView {
-            pairingManager!.startPairing(placeId: place.id, zoneId: zoneId, roomId: roomId) { [weak self] in
+            pairingManager!.startPairing(zoneUuid: zoneUuid, roomUuid: roomUuid) { [weak self] in
                 Log.info("Closure on complete pairing called")
                 DispatchQueue.main.async {
                     self?.route = .placeDevices(place)
