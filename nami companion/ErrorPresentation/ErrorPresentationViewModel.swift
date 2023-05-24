@@ -16,7 +16,7 @@ final class ErrorPresentationViewModel: ObservableObject {
             if let e = error as? NetworkError {
                 return e.customErrorDescription ?? e.localizedDescription
             }
-            if let e = error as? PlaceDevicesListViewModel.EmptyPlaceError {
+            if error is PlaceDevicesListViewModel.EmptyPlaceError {
                 return "Theres no zone or room in place yet"
             }
             return error.localizedDescription

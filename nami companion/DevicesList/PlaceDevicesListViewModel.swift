@@ -10,7 +10,7 @@ final class PlaceDevicesListViewModel: ObservableObject {
     }
     
     struct State {
-        var place: Place
+        var pairingInRoomId: String
         var devices: [Device] = []
         var offerRetry = false
         var presentingPairing = false
@@ -27,43 +27,7 @@ final class PlaceDevicesListViewModel: ObservableObject {
     
     init() {
         state = State(
-            place: Place(
-                id: 1,
-                urn: "",
-                name: "The Demo Place",
-                createdAt: Date(),
-                updatedAt: Date(),
-                themeId: 1,
-                iconId: 1,
-                zones: [
-                    PlaceZone(
-                        id: 100,
-                        externalId: UUID().uuidString,
-                        urn: "urn:ZONE",
-                        name: "Default Zone",
-                        placeId: 1,
-                        rooms: [
-                            Room(
-                                id: 200,
-                                externalId: UUID().uuidString,
-                                urn: "urn:ROOM",
-                                name: "Default Room",
-                                placeId: 1,
-                                zoneId: 100,
-                                iconId: 0,
-                                createdAt: .now,
-                                updatedAt: .now
-                            )
-                        ],
-                        alertMode: .relaxed,
-                        engineConfig: .init(type: .security, sensitivityLevel: 7),
-                        motionStatus: .init(health: .healthy),
-                        createdAt: .now,
-                        updatedAt: .now
-                    )
-                ],
-                limits: .init(membership: 100)
-            ),
+            pairingInRoomId: UUID().uuidString,
             devices: [
                 Device(
                     id: 3,
@@ -93,7 +57,7 @@ final class PlaceDevicesListViewModel: ObservableObject {
     private var disposable = Set<AnyCancellable>()
     
     func updateDevices() {
-        api.listDevices(query: .parameters(placeIds: [state.place.id]))
+        api.listDevices(query: .parameters())
             .map(\.devices)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
@@ -114,15 +78,6 @@ final class PlaceDevicesListViewModel: ObservableObject {
     }
     
     func presentPairing() {
-        // It pairs a device into the first found zone/room.
-        // You definitely would want something different in production.
-        guard
-            let zone = state.place.zones.first,
-            let room = zone.rooms.first
-        else {
-            nextRoute(.errorView(EmptyPlaceError.noZoneOrRoom))
-            return
-        }
-        nextRoute(.pairing(state.place, zone.externalId, room.externalId))
+        nextRoute(.pairing(state.pairingInRoomId))
     }
 }

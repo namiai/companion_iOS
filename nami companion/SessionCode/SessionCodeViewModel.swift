@@ -22,10 +22,8 @@ final class SessionCodeViewModel: ObservableObject {
     
     struct State {
         var sessionCode: String = ""
-        fileprivate var buttonTapped = false
-        fileprivate var place: Place?
-        fileprivate var zoneId: PlaceZoneID?
-        fileprivate var roomId: RoomID?
+        var roomId: String = ""
+        var buttonTapped = false
         
         var disableButton: Bool {
             buttonTapped ||
@@ -40,28 +38,17 @@ final class SessionCodeViewModel: ObservableObject {
     private var nextRoute: (RootRouter.Routes) -> Void
     
     func confirmTapped() {
-        state.buttonTapped = true
-        StandardPairing.activateSession(code: state.sessionCode)
-            .publisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] completion in
-                Log.info("Session activate completion", completion)
-                guard let self else { return }
-                DispatchQueue.main.async {
-                    self.state.buttonTapped = false
-                }
-                if case let .failure(error) = completion {
-                    self.nextRoute(.errorView(error))
-                }
-            } receiveValue: { [weak self] (result: SessionCodeActivateResult) in
-                Log.info("Session activate result", result)
-                let pairingManager = PairingManager(session: result)
-                self?.setupPairingManager(pairingManager)
-                DispatchQueue.main.async {
-                    self?.nextRoute(.placeDevices(result.place))
-                }
-            }
-            .store(in: &disposable)
+        DispatchQueue.main.async {
+            self.state.buttonTapped = true
+        }
+        DispatchQueue(label: "PairingInitializingQueue", qos: .default).sync {
+            let pairingManager = PairingManager(sessionCode: state.sessionCode)
+            setupPairingManager(pairingManager)
+        }
+        DispatchQueue.main.async {
+            self.nextRoute(.placeDevices(self.state.roomId))
+            self.state.buttonTapped = false
+        }
     }
     
 }

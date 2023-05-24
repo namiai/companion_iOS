@@ -17,16 +17,24 @@ struct SessionCodeView: View {
     
     var body: some View {
         VStack {
-            Text("Please enter the session code acquired from the partner's application.")
-                .frame(maxWidth: .infinity, alignment: .leading)
-            TextField("Session Code", text: $viewModel.state.sessionCode)
-                .textFieldStyle(.roundedBorder)
-            Button("Confirm") {
-                viewModel.confirmTapped()
+            if viewModel.state.buttonTapped {
+                ProgressView()
+            } else {
+                Text("Please enter the session code acquired from the partner's application.")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                TextField("Session Code", text: $viewModel.state.sessionCode)
+                    .textFieldStyle(.roundedBorder)
+                Text("Please enter the Room ID where to pair the devices.")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                TextField("Room ID", text: $viewModel.state.roomId)
+                    .textFieldStyle(.roundedBorder)
+                Button("Confirm") {
+                    viewModel.confirmTapped()
+                }
+                .buttonStyle(.bordered)
+                .disabled(viewModel.state.disableButton)
+                .padding()
             }
-            .buttonStyle(.bordered)
-            .disabled(viewModel.state.disableButton)
-            .padding()
         }
         .frame(maxWidth: 300)
         .padding()

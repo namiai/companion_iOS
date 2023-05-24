@@ -8,24 +8,30 @@ import SwiftUI
 final class PairingManager {
     // MARK: Lifecycle
     
-    init(session: SessionCodeActivateResult) {
-        pairing = StandardPairing(session: session)
+    init(sessionCode: String) {
+        pairing = try! StandardPairing(sessionCode: sessionCode)
         setupSubscription()
     }
     
     // MARK: Internal
     
     func startPairing(
-        zoneUuid: String,
-        roomUuid: String,
+        roomId: String,
         onPairingComplete: (() -> Void)? = nil
     ) -> some View {
         self.onPairingComplete = onPairingComplete
         do {
-            return try AnyView(pairing.startPairing(zoneUuid: zoneUuid, roomUuid: roomUuid))
+            return try AnyView(pairing.startPairing(roomId: roomId))
         } catch {
-            // Don't really care for a demo. Showing some error view or warning might be helpful.
-            return AnyView(EmptyView())
+            return AnyView(
+                VStack{
+                    Text("The Room ID provided could not be found in the Place topology.")
+                    Button("Back to Place") {
+                        self.completePairing()
+                    }
+                    .buttonStyle(.bordered)
+                    .padding()
+                })
         }
     }
     
@@ -39,12 +45,8 @@ final class PairingManager {
         pairing.api
     }
     
-    static func activateSession(code: String) -> Result<SessionCodeActivateResult, Error> {
-        StandardPairing.activateSession(code: code)
-    }
-    
     private func setupSubscription() {
-        pairing.sdk.devicePairingState
+        pairing.devicePairingState
             .subscribe(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 if case let .failure(error) = completion {

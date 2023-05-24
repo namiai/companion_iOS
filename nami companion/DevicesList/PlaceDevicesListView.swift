@@ -26,7 +26,7 @@ struct PlaceDevicesListView: View {
                     }
                 }
             }
-            .navigationTitle(viewModel.state.place.name)
+            .navigationTitle("Place devices list")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {

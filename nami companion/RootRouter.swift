@@ -9,14 +9,13 @@ import Foundation
 import SwiftUI
 import NamiStandardPairingFramework
 
-typealias ZoneUUID = String
 typealias RoomUUID = String
 
 final class RootRouter: ObservableObject {
     enum Routes {
         case codeInput
-        case placeDevices(Place)
-        case pairing(Place, ZoneUUID, RoomUUID)
+        case placeDevices(RoomUUID)
+        case pairing(RoomUUID)
         case errorView(Error)
     }
     
@@ -32,16 +31,16 @@ final class RootRouter: ObservableObject {
             }, nextRoute: { route in
                 self.route = route
             }))
-        case let .placeDevices(place):
+        case let .placeDevices(roomId):
             PlaceDevicesListView(viewModel: PlaceDevicesListViewModel(
-                state: PlaceDevicesListViewModel.State(place: place),
+                state: PlaceDevicesListViewModel.State(pairingInRoomId: roomId),
                 api: pairingManager!.api,
                 nextRoute: { route in
                     self.route = route
                 })
             )
-        case let .pairing(place, zoneUuid, roomUuid):
-            pairing(place: place, zoneUuid: zoneUuid, roomUuid: roomUuid)
+        case let .pairing(roomUuid):
+            pairing(roomUuid: roomUuid)
         case let .errorView(error):
             ErrorPresentationView(viewModel: ErrorPresentationViewModel(
                 state: ErrorPresentationViewModel.State(error: error),
@@ -52,12 +51,12 @@ final class RootRouter: ObservableObject {
         }
     }
     
-    private func pairing(place: Place, zoneUuid: ZoneUUID, roomUuid: RoomUUID) -> some View {
+    private func pairing(roomUuid: RoomUUID) -> some View {
         NavigationView {
-            pairingManager!.startPairing(zoneUuid: zoneUuid, roomUuid: roomUuid) { [weak self] in
+            pairingManager!.startPairing(roomId: roomUuid) { [weak self] in
                 Log.info("Closure on complete pairing called")
                 DispatchQueue.main.async {
-                    self?.route = .placeDevices(place)
+                    self?.route = .placeDevices(roomUuid)
                 }
             }
         }

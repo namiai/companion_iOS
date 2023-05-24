@@ -20,7 +20,23 @@
 		49E2214B29A79C26008DF366 /* PairingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2214A29A79C26008DF366 /* PairingManager.swift */; };
 		49E2214E29A7A332008DF366 /* ErrorPresentationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2214D29A7A332008DF366 /* ErrorPresentationViewModel.swift */; };
 		49E2215029A7A563008DF366 /* ErrorPresentationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2214F29A7A563008DF366 /* ErrorPresentationView.swift */; };
+		49F2AD2D2A1E2C1500892195 /* NamiStandardPairingFramework.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49F2AD2C2A1E2C1400892195 /* NamiStandardPairingFramework.xcframework */; };
+		49F2AD2E2A1E2C1500892195 /* NamiStandardPairingFramework.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 49F2AD2C2A1E2C1400892195 /* NamiStandardPairingFramework.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		49F2AD2F2A1E2C1500892195 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				49F2AD2E2A1E2C1500892195 /* NamiStandardPairingFramework.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		49CE32832A162121005876D5 /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
@@ -39,6 +55,7 @@
 		49E2214D29A7A332008DF366 /* ErrorPresentationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorPresentationViewModel.swift; sourceTree = "<group>"; };
 		49E2214F29A7A563008DF366 /* ErrorPresentationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorPresentationView.swift; sourceTree = "<group>"; };
 		49E2215129A7B14E008DF366 /* nami-companion-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "nami-companion-Info.plist"; sourceTree = SOURCE_ROOT; };
+		49F2AD2C2A1E2C1400892195 /* NamiStandardPairingFramework.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = NamiStandardPairingFramework.xcframework; path = ../nami_libraries/NamiStandardPairingFramework/build/NamiStandardPairingFramework.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +64,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				49A1CC8F2A177BAB002F992B /* SwiftProtobuf in Frameworks */,
+				49F2AD2D2A1E2C1500892195 /* NamiStandardPairingFramework.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,6 +74,7 @@
 		49CE32722A14D9DB005876D5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				49F2AD2C2A1E2C1400892195 /* NamiStandardPairingFramework.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -141,6 +160,7 @@
 				49E2212329A75669008DF366 /* Sources */,
 				49E2212429A75669008DF366 /* Frameworks */,
 				49E2212529A75669008DF366 /* Resources */,
+				49F2AD2F2A1E2C1500892195 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -162,7 +182,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1420;
+				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					49E2212629A75669008DF366 = {
 						CreatedOnToolsVersion = 14.2;
@@ -256,6 +276,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -314,6 +335,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -340,6 +362,7 @@
 				CODE_SIGN_ENTITLEMENTS = "nami companion/nami_companion.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"nami companion/Preview Content\"";
 				DEVELOPMENT_TEAM = PTKKJUD9AS;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -382,6 +405,7 @@
 				CODE_SIGN_ENTITLEMENTS = "nami companion/nami_companion.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"nami companion/Preview Content\"";
 				DEVELOPMENT_TEAM = PTKKJUD9AS;
 				ENABLE_HARDENED_RUNTIME = YES;
