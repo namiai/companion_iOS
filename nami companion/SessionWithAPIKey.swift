@@ -2,7 +2,7 @@
 
 import Combine
 import Foundation
-import NamiStandardPairingFramework
+import NamiPairingFramework
 
 final class SessionWithAPIKey: NetworkSession {
     // MARK: Lifecycle

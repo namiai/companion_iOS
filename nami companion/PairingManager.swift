@@ -2,14 +2,14 @@
 
 import Combine
 import Foundation
-import NamiStandardPairingFramework
+import NamiPairingFramework
 import SwiftUI
 
 final class PairingManager {
     // MARK: Lifecycle
     
     init(sessionCode: String) {
-        pairing = try! StandardPairing(sessionCode: sessionCode)
+        pairing = try! NamiPairing(sessionCode: sessionCode)
         setupSubscription()
     }
     
@@ -37,7 +37,7 @@ final class PairingManager {
     
     // MARK: Private
     
-    private var pairing: StandardPairing
+    private var pairing: NamiPairing
     private var subscriptions = Set<AnyCancellable>()
     private var onPairingComplete: (() -> Void)?
     

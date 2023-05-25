@@ -1,7 +1,7 @@
 
 import Foundation
 import Combine
-import NamiStandardPairingFramework
+import NamiPairingFramework
 import SwiftUI
 
 final class SessionCodeViewModel: ObservableObject {

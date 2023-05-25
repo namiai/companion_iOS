@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import NamiStandardPairingFramework
+import NamiPairingFramework
 
 @main
 struct nami_companionApp: App {

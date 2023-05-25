@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import NamiStandardPairingFramework
+import NamiPairingFramework
 
 struct SessionCodeView: View {
     @ObservedObject var viewModel: SessionCodeViewModel

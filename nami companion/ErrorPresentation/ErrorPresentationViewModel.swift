@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import NamiStandardPairingFramework
+import NamiPairingFramework
 
 final class ErrorPresentationViewModel: ObservableObject {
     struct State {

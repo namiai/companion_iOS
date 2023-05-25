@@ -7,7 +7,7 @@
 
 import Foundation
 import SwiftUI
-import NamiStandardPairingFramework
+import NamiPairingFramework
 
 typealias RoomUUID = String
 

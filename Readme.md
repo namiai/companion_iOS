@@ -25,7 +25,7 @@ Also the following changes are expected:
 - Adding the method(s) to `NamiStandardPairingSDK` to allow getting the session from it directly.
 
 ## Building the project
-Please add `NamiStandardPairingFramework.xcframework` to `nami companion` target under the `General` tab, `Frameworks, Libraries and Embedded content` and set the `Embed` dropdown to `Embed & Sign`.
+Please add `NamiPairingFramework.xcframework` to `nami companion` target under the `General` tab, `Frameworks, Libraries and Embedded content` and set the `Embed` dropdown to `Embed & Sign`.
 
 ## Using the `StandardPairing`
 
