@@ -58,9 +58,26 @@ final class PairingManager {
                 Log.info("[PairingManager] got device state \(deviceState)")
                 switch deviceState {
                 case .deviceCommisionedAtCloud:
+                    // Here the associated values might be obtained for case:
+                    // `.deviceCommisionedAtCloud(device, in: placeId)`.
+                    // For this demo we don't store device but would later obtain it from API.
+                    // The pairing is not over yet.
                     break
-                default:
+                case .deviceOperable:
+                    // Device is fully commisioned.
+                    // Value with device ID could be obtained `.deviceOperable(deviceId)`.
                     self?.completePairing()
+                case .deviceDecommissioned:
+                    // Pairing was cancelled/errored unrecoverably after commisioning the Device in nami cloud.
+                    // Value with device ID could be obtained `.deviceDecommissioned(deviceId)`
+                    // to revert the actions the SDK consumer might took
+                    // after getting the device on `.deviceCommisionedAtCloud(device, in: placeId)` event.
+                    self?.completePairing()
+                case .pairingCancelled:
+                    // Pairing was cancelled prior commisioning the Device in nami cloud.
+                    self?.completePairing()
+                @unknown default:
+                    break
                 }
             }
             .store(in: &subscriptions)
