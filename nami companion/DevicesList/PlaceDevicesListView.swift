@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import NamiPairingFramework
 
 struct PlaceDevicesListView: View {
     init(viewModel: PlaceDevicesListViewModel) {
@@ -17,9 +18,8 @@ struct PlaceDevicesListView: View {
             VStack {
                 if viewModel.state.devices.isEmpty == false {
                     List {
-                        ForEach(viewModel.state.devices) { device in
+                        ForEach(viewModel.state.devices, id: \.id) { device in
                             HStack{
-                                Text(device.name)
                                 Text(device.model.codeName)
                             }
                         }
@@ -43,8 +43,8 @@ struct PlaceDevicesListView: View {
     @ObservedObject var viewModel: PlaceDevicesListViewModel
 }
 
-struct PlaceDevicesListView_Previews: PreviewProvider {
-    static var previews: some View {
-        PlaceDevicesListView(viewModel: PlaceDevicesListViewModel())
-    }
-}
+//struct PlaceDevicesListView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        PlaceDevicesListView(viewModel: PlaceDevicesListViewModel())
+//    }
+//}

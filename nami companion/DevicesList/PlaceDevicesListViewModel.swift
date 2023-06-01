@@ -3,6 +3,7 @@ import Foundation
 import Combine
 import NamiPairingFramework
 import SwiftUI
+import CommonTypes
 
 final class PlaceDevicesListViewModel: ObservableObject {
     enum EmptyPlaceError: Error {
@@ -11,53 +12,53 @@ final class PlaceDevicesListViewModel: ObservableObject {
     
     struct State {
         var pairingInRoomId: String
-        var devices: [Device] = []
+        var devices: [any DeviceProtocol] = []
         var offerRetry = false
         var presentingPairing = false
     }
     
-    init(state: State, api: WebAPIProtocol, nextRoute: @escaping (RootRouter.Routes) -> Void) {
+    init(state: State, api: some PairingWebAPIProtocol, nextRoute: @escaping (RootRouter.Routes) -> Void) {
         self.state = state
         self.api = api
         self.nextRoute = nextRoute
-        self.updateDevices()
+        self.updateDevices(api: api)
     }
     
 #if DEBUG
-    
-    init() {
-        state = State(
-            pairingInRoomId: UUID().uuidString,
-            devices: [
-                Device(
-                    id: 3,
-                    uid: DeviceUniversalID(3),
-                    urn: "",
-                    roomId: 1,
-                    name: "The device",
-                    createdAt: Date(),
-                    updatedAt: Date(),
-                    model: DeviceModel(
-                        codeName: "the_device",
-                        productLabel: "Product",
-                        productId: 3
-                    )
-                ),
-            ]
-        )
-        api = WebAPI(base: URL(string: "http://dumb.org")!, signUpBase: URL(string: "http://dumb.org")!, session: URLSession.shared, tokenStore: TokenSecureStorage(server: ""))
-        nextRoute = { _ in }
-    }
+//
+//    init() {
+//        state = State(
+//            pairingInRoomId: UUID().uuidString,
+//            devices: [
+//                Device(
+//                    id: 3,
+//                    uid: DeviceUniversalID(3),
+//                    urn: "",
+//                    roomId: 1,
+//                    name: "The device",
+//                    createdAt: Date(),
+//                    updatedAt: Date(),
+//                    model: DeviceModel(
+//                        codeName: "the_device",
+//                        productLabel: "Product",
+//                        productId: 3
+//                    )
+//                ),
+//            ]
+//        )
+//        api = WebAPI(base: URL(string: "http://dumb.org")!, signUpBase: URL(string: "http://dumb.org")!, session: URLSession.shared, tokenStore: TokenSecureStorage(server: ""))
+//        nextRoute = { _ in }
+//    }
     
 #endif
     
     @Published var state: State
     let nextRoute: (RootRouter.Routes) -> Void
-    private let api: WebAPIProtocol
+    private let api: any PairingWebAPIProtocol
     private var disposable = Set<AnyCancellable>()
     
-    func updateDevices() {
-        api.listDevices(query: .parameters())
+    func updateDevices<API: PairingWebAPIProtocol>(api: API) {
+        api.listDevices(query: DeviceQuery())
             .map(\.devices)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
@@ -80,4 +81,24 @@ final class PlaceDevicesListViewModel: ObservableObject {
     func presentPairing() {
         nextRoute(.pairing(state.pairingInRoomId))
     }
+}
+
+struct DeviceQuery: DevicesQueryProtocol {
+    init(placeIds: [PlaceID] = [], zoneIds: [PlaceZoneID] = [], roomIds: [RoomID] = []) {
+        self.placeIds = placeIds
+        self.zoneIds = zoneIds
+        self.roomIds = roomIds
+    }
+    
+    init(cursor: String) {
+        self.placeIds = []
+        self.zoneIds = []
+        self.roomIds = []
+        self.cursor = cursor
+    }
+    
+    var placeIds: [PlaceID]
+    var zoneIds: [PlaceZoneID]
+    var roomIds: [RoomID]
+    var cursor: String?
 }

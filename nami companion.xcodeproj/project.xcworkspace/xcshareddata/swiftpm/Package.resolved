@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "iso8601msecdecoder_ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/namiai/ISO8601MsecDecoder_iOS",
+      "state" : {
+        "branch" : "main",
+        "revision" : "13e08bb4f81d5b4e9bc915bd5ad95b81565f92e7"
+      }
+    },
+    {
       "identity" : "swift-protobuf",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-protobuf.git",
