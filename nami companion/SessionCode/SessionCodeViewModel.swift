@@ -42,7 +42,7 @@ final class SessionCodeViewModel: ObservableObject {
             self.state.buttonTapped = true
         }
         DispatchQueue(label: "PairingInitializingQueue", qos: .default).sync {
-            let pairingManager = PairingManager(sessionCode: state.sessionCode)
+            let pairingManager = try! PairingManager(sessionCode: state.sessionCode)
             setupPairingManager(pairingManager)
         }
         DispatchQueue.main.async {

@@ -11,7 +11,6 @@
 		49E2212B29A75669008DF366 /* nami_companionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2212A29A75669008DF366 /* nami_companionApp.swift */; };
 		49E2212D29A75669008DF366 /* SessionCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2212C29A75669008DF366 /* SessionCodeView.swift */; };
 		49E2212F29A7566B008DF366 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49E2212E29A7566B008DF366 /* Assets.xcassets */; };
-		49E2213329A7566B008DF366 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49E2213229A7566B008DF366 /* Preview Assets.xcassets */; };
 		49E2213D29A758CC008DF366 /* SessionCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2213C29A758CC008DF366 /* SessionCodeViewModel.swift */; };
 		49E2213F29A75C80008DF366 /* RootRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2213E29A75C80008DF366 /* RootRouter.swift */; };
 		49E2214129A7630F008DF366 /* SessionWithAPIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2214029A7630F008DF366 /* SessionWithAPIKey.swift */; };
@@ -22,27 +21,12 @@
 		49E2215029A7A563008DF366 /* ErrorPresentationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2214F29A7A563008DF366 /* ErrorPresentationView.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		49BD0A9C2A1F6FAA005C5C06 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
-		49CE32832A162121005876D5 /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 		49E2212729A75669008DF366 /* nami companion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "nami companion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49E2212A29A75669008DF366 /* nami_companionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nami_companionApp.swift; sourceTree = "<group>"; };
 		49E2212C29A75669008DF366 /* SessionCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionCodeView.swift; sourceTree = "<group>"; };
 		49E2212E29A7566B008DF366 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		49E2213029A7566B008DF366 /* nami_companion.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = nami_companion.entitlements; sourceTree = "<group>"; };
-		49E2213229A7566B008DF366 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		49E2213C29A758CC008DF366 /* SessionCodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionCodeViewModel.swift; sourceTree = "<group>"; };
 		49E2213E29A75C80008DF366 /* RootRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootRouter.swift; sourceTree = "<group>"; };
 		49E2214029A7630F008DF366 /* SessionWithAPIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionWithAPIKey.swift; sourceTree = "<group>"; };
@@ -76,7 +60,6 @@
 		49E2211E29A75669008DF366 = {
 			isa = PBXGroup;
 			children = (
-				49CE32832A162121005876D5 /* Readme.md */,
 				49E2212929A75669008DF366 /* nami companion */,
 				49E2212829A75669008DF366 /* Products */,
 				49CE32722A14D9DB005876D5 /* Frameworks */,
@@ -104,17 +87,8 @@
 				49E2214A29A79C26008DF366 /* PairingManager.swift */,
 				49E2212E29A7566B008DF366 /* Assets.xcassets */,
 				49E2213029A7566B008DF366 /* nami_companion.entitlements */,
-				49E2213129A7566B008DF366 /* Preview Content */,
 			);
 			path = "nami companion";
-			sourceTree = "<group>";
-		};
-		49E2213129A7566B008DF366 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				49E2213229A7566B008DF366 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 		49E2214229A77667008DF366 /* SessionCode */ = {
@@ -154,7 +128,6 @@
 				49E2212329A75669008DF366 /* Sources */,
 				49E2212429A75669008DF366 /* Frameworks */,
 				49E2212529A75669008DF366 /* Resources */,
-				49BD0A9C2A1F6FAA005C5C06 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -211,7 +184,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49E2213329A7566B008DF366 /* Preview Assets.xcassets in Resources */,
 				49E2212F29A7566B008DF366 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

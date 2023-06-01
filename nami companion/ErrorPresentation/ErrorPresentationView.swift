@@ -29,9 +29,3 @@ struct ErrorPresentationView: View {
         .frame(maxWidth: 300)
     }
 }
-
-struct ErrorPresentationView_Previews: PreviewProvider {
-    static var previews: some View {
-        ErrorPresentationView(viewModel: ErrorPresentationViewModel())
-    }
-}

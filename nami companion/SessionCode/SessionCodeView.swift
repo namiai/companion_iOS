@@ -40,9 +40,3 @@ struct SessionCodeView: View {
         .padding()
     }
 }
-
-struct SessionCodeView_Previews: PreviewProvider {
-    static var previews: some View {
-        SessionCodeView(viewModel: SessionCodeViewModel())
-    }
-}

@@ -8,9 +8,27 @@ import SwiftUI
 final class PairingManager {
     // MARK: Lifecycle
     
-    init(sessionCode: String) {
-        pairing = try! NamiPairing(sessionCode: sessionCode)
-        setupSubscription()
+    init(sessionCode: String) throws {
+        do {
+            pairing = try NamiPairing(sessionCode: sessionCode)
+            setupSubscription()
+        } catch {
+            if let e = error as? NetworkError {
+                Log.warning("[Pairing init] Network Error: \(e.localizedDescription)")
+            }
+            if let e = error as? NamiPairing.SDKError {
+                switch e {
+                case let .sessionActivateMalformedResponse(data):
+                    Log.warning("[Pairing init] SDK Error: \(e.localizedDescription), containing unparsed data: \(String(data: data, encoding: .utf8) ?? data.description)")
+                    throw error
+                default:
+                    Log.warning("[Pairing init] SDK Error: \(e.localizedDescription)")
+                    throw error
+                }
+            }
+            Log.warning("[Pairing init] SDK Error: \(error.localizedDescription)")
+            throw error
+        }
     }
     
     // MARK: Internal

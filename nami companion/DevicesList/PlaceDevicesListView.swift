@@ -42,9 +42,3 @@ struct PlaceDevicesListView: View {
     
     @ObservedObject var viewModel: PlaceDevicesListViewModel
 }
-
-struct PlaceDevicesListView_Previews: PreviewProvider {
-    static var previews: some View {
-        PlaceDevicesListView(viewModel: PlaceDevicesListViewModel())
-    }
-}
