@@ -1,9 +1,8 @@
 
 import Foundation
 import Combine
-import NamiPairingFramework
 import SwiftUI
-import CommonTypes
+import NamiPairingFramework
 
 final class PlaceDevicesListViewModel: ObservableObject {
     enum EmptyPlaceError: Error {
