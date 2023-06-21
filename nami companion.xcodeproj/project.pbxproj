@@ -7,33 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		491A090A2A2750FC0011ADEF /* RoundedRectContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491A08EA2A2750FC0011ADEF /* RoundedRectContainerView.swift */; };
-		491A090B2A2750FC0011ADEF /* NamiColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 491A08EC2A2750FC0011ADEF /* NamiColors.xcassets */; };
-		491A090C2A2750FC0011ADEF /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 491A08ED2A2750FC0011ADEF /* Icons.xcassets */; };
-		491A090D2A2750FC0011ADEF /* Devices.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 491A08EE2A2750FC0011ADEF /* Devices.xcassets */; };
-		491A090E2A2750FC0011ADEF /* TextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491A08F12A2750FC0011ADEF /* TextFieldView.swift */; };
-		491A090F2A2750FC0011ADEF /* NamiTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491A08F22A2750FC0011ADEF /* NamiTextField.swift */; };
-		491A09102A2750FC0011ADEF /* NamiTextFieldModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491A08F32A2750FC0011ADEF /* NamiTextFieldModifiers.swift */; };
-		491A09112A2750FC0011ADEF /* TextFieldViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491A08F42A2750FC0011ADEF /* TextFieldViewModifiers.swift */; };
-		491A09122A2750FC0011ADEF /* NamiActionButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491A08F52A2750FC0011ADEF /* NamiActionButtonStyle.swift */; };
-		491A09132A2750FC0011ADEF /* NamiErrorChatBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491A08F62A2750FC0011ADEF /* NamiErrorChatBubble.swift */; };
-		491A09142A2750FC0011ADEF /* NamiChatBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491A08F72A2750FC0011ADEF /* NamiChatBubble.swift */; };
-		491A09152A2750FC0011ADEF /* ViewsContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491A08F82A2750FC0011ADEF /* ViewsContainer.swift */; };
-		491A09162A2750FC0011ADEF /* PongView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491A08FA2A2750FC0011ADEF /* PongView.swift */; };
-		491A09172A2750FC0011ADEF /* QRScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491A08FB2A2750FC0011ADEF /* QRScannerView.swift */; };
-		491A09182A2750FC0011ADEF /* PowerOnAndScanningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491A08FC2A2750FC0011ADEF /* PowerOnAndScanningView.swift */; };
-		491A09192A2750FC0011ADEF /* BluetoothDeviceFoundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491A08FD2A2750FC0011ADEF /* BluetoothDeviceFoundView.swift */; };
-		491A091A2A2750FC0011ADEF /* BluetoothUsageHintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491A08FE2A2750FC0011ADEF /* BluetoothUsageHintView.swift */; };
-		491A091B2A2750FC0011ADEF /* EnableBluetoothInSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491A08FF2A2750FC0011ADEF /* EnableBluetoothInSettingsView.swift */; };
-		491A091C2A2750FC0011ADEF /* WiFiNetworkRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491A09002A2750FC0011ADEF /* WiFiNetworkRowView.swift */; };
-		491A091D2A2750FC0011ADEF /* EnterWiFiPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491A09012A2750FC0011ADEF /* EnterWiFiPasswordView.swift */; };
-		491A091E2A2750FC0011ADEF /* OtherWiFiNetworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491A09022A2750FC0011ADEF /* OtherWiFiNetworkView.swift */; };
-		491A091F2A2750FC0011ADEF /* FinishingSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491A09032A2750FC0011ADEF /* FinishingSetupView.swift */; };
-		491A09202A2750FC0011ADEF /* AskToConnectToWiFiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491A09042A2750FC0011ADEF /* AskToConnectToWiFiView.swift */; };
-		491A09212A2750FC0011ADEF /* PairingErrorScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491A09052A2750FC0011ADEF /* PairingErrorScreenView.swift */; };
-		491A09222A2750FD0011ADEF /* ListWiFiNetworksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491A09062A2750FC0011ADEF /* ListWiFiNetworksView.swift */; };
-		491A09232A2750FD0011ADEF /* DeviceImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491A09082A2750FC0011ADEF /* DeviceImages.swift */; };
-		491A09242A2750FD0011ADEF /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491A09092A2750FC0011ADEF /* ColorExtension.swift */; };
 		49A1CC8F2A177BAB002F992B /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 49A1CC8E2A177BAB002F992B /* SwiftProtobuf */; };
 		49E2212B29A75669008DF366 /* nami_companionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2212A29A75669008DF366 /* nami_companionApp.swift */; };
 		49E2212D29A75669008DF366 /* SessionCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2212C29A75669008DF366 /* SessionCodeView.swift */; };
@@ -50,33 +23,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		491A08EA2A2750FC0011ADEF /* RoundedRectContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedRectContainerView.swift; sourceTree = "<group>"; };
-		491A08EC2A2750FC0011ADEF /* NamiColors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = NamiColors.xcassets; sourceTree = "<group>"; };
-		491A08ED2A2750FC0011ADEF /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
-		491A08EE2A2750FC0011ADEF /* Devices.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Devices.xcassets; sourceTree = "<group>"; };
-		491A08F12A2750FC0011ADEF /* TextFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldView.swift; sourceTree = "<group>"; };
-		491A08F22A2750FC0011ADEF /* NamiTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NamiTextField.swift; sourceTree = "<group>"; };
-		491A08F32A2750FC0011ADEF /* NamiTextFieldModifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NamiTextFieldModifiers.swift; sourceTree = "<group>"; };
-		491A08F42A2750FC0011ADEF /* TextFieldViewModifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldViewModifiers.swift; sourceTree = "<group>"; };
-		491A08F52A2750FC0011ADEF /* NamiActionButtonStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NamiActionButtonStyle.swift; sourceTree = "<group>"; };
-		491A08F62A2750FC0011ADEF /* NamiErrorChatBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NamiErrorChatBubble.swift; sourceTree = "<group>"; };
-		491A08F72A2750FC0011ADEF /* NamiChatBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NamiChatBubble.swift; sourceTree = "<group>"; };
-		491A08F82A2750FC0011ADEF /* ViewsContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewsContainer.swift; sourceTree = "<group>"; };
-		491A08FA2A2750FC0011ADEF /* PongView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PongView.swift; sourceTree = "<group>"; };
-		491A08FB2A2750FC0011ADEF /* QRScannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRScannerView.swift; sourceTree = "<group>"; };
-		491A08FC2A2750FC0011ADEF /* PowerOnAndScanningView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PowerOnAndScanningView.swift; sourceTree = "<group>"; };
-		491A08FD2A2750FC0011ADEF /* BluetoothDeviceFoundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothDeviceFoundView.swift; sourceTree = "<group>"; };
-		491A08FE2A2750FC0011ADEF /* BluetoothUsageHintView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothUsageHintView.swift; sourceTree = "<group>"; };
-		491A08FF2A2750FC0011ADEF /* EnableBluetoothInSettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnableBluetoothInSettingsView.swift; sourceTree = "<group>"; };
-		491A09002A2750FC0011ADEF /* WiFiNetworkRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WiFiNetworkRowView.swift; sourceTree = "<group>"; };
-		491A09012A2750FC0011ADEF /* EnterWiFiPasswordView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterWiFiPasswordView.swift; sourceTree = "<group>"; };
-		491A09022A2750FC0011ADEF /* OtherWiFiNetworkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherWiFiNetworkView.swift; sourceTree = "<group>"; };
-		491A09032A2750FC0011ADEF /* FinishingSetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FinishingSetupView.swift; sourceTree = "<group>"; };
-		491A09042A2750FC0011ADEF /* AskToConnectToWiFiView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AskToConnectToWiFiView.swift; sourceTree = "<group>"; };
-		491A09052A2750FC0011ADEF /* PairingErrorScreenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingErrorScreenView.swift; sourceTree = "<group>"; };
-		491A09062A2750FC0011ADEF /* ListWiFiNetworksView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListWiFiNetworksView.swift; sourceTree = "<group>"; };
-		491A09082A2750FC0011ADEF /* DeviceImages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceImages.swift; sourceTree = "<group>"; };
-		491A09092A2750FC0011ADEF /* ColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		49CE32832A162121005876D5 /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 		49E2212729A75669008DF366 /* nami companion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "nami companion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49E2212A29A75669008DF366 /* nami_companionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nami_companionApp.swift; sourceTree = "<group>"; };
@@ -107,80 +53,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		491A08E92A2750FC0011ADEF /* StandardPairingUI */ = {
-			isa = PBXGroup;
-			children = (
-				491A08EA2A2750FC0011ADEF /* RoundedRectContainerView.swift */,
-				491A08EB2A2750FC0011ADEF /* Resources */,
-				491A08EF2A2750FC0011ADEF /* Controls */,
-				491A08F82A2750FC0011ADEF /* ViewsContainer.swift */,
-				491A08F92A2750FC0011ADEF /* Views */,
-				491A09072A2750FC0011ADEF /* Assets */,
-			);
-			path = StandardPairingUI;
-			sourceTree = "<group>";
-		};
-		491A08EB2A2750FC0011ADEF /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				491A08EC2A2750FC0011ADEF /* NamiColors.xcassets */,
-				491A08ED2A2750FC0011ADEF /* Icons.xcassets */,
-				491A08EE2A2750FC0011ADEF /* Devices.xcassets */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
-		491A08EF2A2750FC0011ADEF /* Controls */ = {
-			isa = PBXGroup;
-			children = (
-				491A08F02A2750FC0011ADEF /* NamiTextField */,
-				491A08F52A2750FC0011ADEF /* NamiActionButtonStyle.swift */,
-				491A08F62A2750FC0011ADEF /* NamiErrorChatBubble.swift */,
-				491A08F72A2750FC0011ADEF /* NamiChatBubble.swift */,
-			);
-			path = Controls;
-			sourceTree = "<group>";
-		};
-		491A08F02A2750FC0011ADEF /* NamiTextField */ = {
-			isa = PBXGroup;
-			children = (
-				491A08F12A2750FC0011ADEF /* TextFieldView.swift */,
-				491A08F22A2750FC0011ADEF /* NamiTextField.swift */,
-				491A08F32A2750FC0011ADEF /* NamiTextFieldModifiers.swift */,
-				491A08F42A2750FC0011ADEF /* TextFieldViewModifiers.swift */,
-			);
-			path = NamiTextField;
-			sourceTree = "<group>";
-		};
-		491A08F92A2750FC0011ADEF /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				491A08FA2A2750FC0011ADEF /* PongView.swift */,
-				491A08FB2A2750FC0011ADEF /* QRScannerView.swift */,
-				491A08FC2A2750FC0011ADEF /* PowerOnAndScanningView.swift */,
-				491A08FD2A2750FC0011ADEF /* BluetoothDeviceFoundView.swift */,
-				491A08FE2A2750FC0011ADEF /* BluetoothUsageHintView.swift */,
-				491A08FF2A2750FC0011ADEF /* EnableBluetoothInSettingsView.swift */,
-				491A09002A2750FC0011ADEF /* WiFiNetworkRowView.swift */,
-				491A09012A2750FC0011ADEF /* EnterWiFiPasswordView.swift */,
-				491A09022A2750FC0011ADEF /* OtherWiFiNetworkView.swift */,
-				491A09032A2750FC0011ADEF /* FinishingSetupView.swift */,
-				491A09042A2750FC0011ADEF /* AskToConnectToWiFiView.swift */,
-				491A09052A2750FC0011ADEF /* PairingErrorScreenView.swift */,
-				491A09062A2750FC0011ADEF /* ListWiFiNetworksView.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		491A09072A2750FC0011ADEF /* Assets */ = {
-			isa = PBXGroup;
-			children = (
-				491A09082A2750FC0011ADEF /* DeviceImages.swift */,
-				491A09092A2750FC0011ADEF /* ColorExtension.swift */,
-			);
-			path = Assets;
-			sourceTree = "<group>";
-		};
 		49CE32722A14D9DB005876D5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -216,7 +88,6 @@
 				49E2214C29A7A301008DF366 /* ErrorPresentation */,
 				49E2213E29A75C80008DF366 /* RootRouter.swift */,
 				49E2214A29A79C26008DF366 /* PairingManager.swift */,
-				491A08E92A2750FC0011ADEF /* StandardPairingUI */,
 				49E2212E29A7566B008DF366 /* Assets.xcassets */,
 				49E2213029A7566B008DF366 /* nami_companion.entitlements */,
 				49E2213129A7566B008DF366 /* Preview Content */,
@@ -329,9 +200,6 @@
 			files = (
 				49E2213329A7566B008DF366 /* Preview Assets.xcassets in Resources */,
 				49E2212F29A7566B008DF366 /* Assets.xcassets in Resources */,
-				491A090C2A2750FC0011ADEF /* Icons.xcassets in Resources */,
-				491A090D2A2750FC0011ADEF /* Devices.xcassets in Resources */,
-				491A090B2A2750FC0011ADEF /* NamiColors.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,38 +211,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				49E2213F29A75C80008DF366 /* RootRouter.swift in Sources */,
-				491A09122A2750FC0011ADEF /* NamiActionButtonStyle.swift in Sources */,
-				491A09212A2750FC0011ADEF /* PairingErrorScreenView.swift in Sources */,
 				49E2213D29A758CC008DF366 /* SessionCodeViewModel.swift in Sources */,
-				491A091A2A2750FC0011ADEF /* BluetoothUsageHintView.swift in Sources */,
 				49E2214529A776A1008DF366 /* PlaceDevicesListViewModel.swift in Sources */,
-				491A09192A2750FC0011ADEF /* BluetoothDeviceFoundView.swift in Sources */,
-				491A091F2A2750FC0011ADEF /* FinishingSetupView.swift in Sources */,
-				491A091B2A2750FC0011ADEF /* EnableBluetoothInSettingsView.swift in Sources */,
-				491A09242A2750FD0011ADEF /* ColorExtension.swift in Sources */,
-				491A09142A2750FC0011ADEF /* NamiChatBubble.swift in Sources */,
-				491A091E2A2750FC0011ADEF /* OtherWiFiNetworkView.swift in Sources */,
-				491A090E2A2750FC0011ADEF /* TextFieldView.swift in Sources */,
-				491A091D2A2750FC0011ADEF /* EnterWiFiPasswordView.swift in Sources */,
-				491A09182A2750FC0011ADEF /* PowerOnAndScanningView.swift in Sources */,
-				491A091C2A2750FC0011ADEF /* WiFiNetworkRowView.swift in Sources */,
-				491A09152A2750FC0011ADEF /* ViewsContainer.swift in Sources */,
-				491A09162A2750FC0011ADEF /* PongView.swift in Sources */,
-				491A090F2A2750FC0011ADEF /* NamiTextField.swift in Sources */,
-				491A09102A2750FC0011ADEF /* NamiTextFieldModifiers.swift in Sources */,
-				491A09232A2750FD0011ADEF /* DeviceImages.swift in Sources */,
 				49E2215029A7A563008DF366 /* ErrorPresentationView.swift in Sources */,
 				49E2214929A792AE008DF366 /* PlaceDevicesListView.swift in Sources */,
-				491A09202A2750FC0011ADEF /* AskToConnectToWiFiView.swift in Sources */,
 				49E2214B29A79C26008DF366 /* PairingManager.swift in Sources */,
-				491A090A2A2750FC0011ADEF /* RoundedRectContainerView.swift in Sources */,
-				491A09172A2750FC0011ADEF /* QRScannerView.swift in Sources */,
 				49E2214E29A7A332008DF366 /* ErrorPresentationViewModel.swift in Sources */,
 				49E2212D29A75669008DF366 /* SessionCodeView.swift in Sources */,
 				49E2212B29A75669008DF366 /* nami_companionApp.swift in Sources */,
-				491A09222A2750FD0011ADEF /* ListWiFiNetworksView.swift in Sources */,
-				491A09112A2750FC0011ADEF /* TextFieldViewModifiers.swift in Sources */,
-				491A09132A2750FC0011ADEF /* NamiErrorChatBubble.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

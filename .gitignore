@@ -1,0 +1,10 @@
+nami companion.xcodeproj/xcuserdata/
+.DS_Store
+xcuserdata/
+BuildTools/.build
+BuildTools/.swiftpm
+build/
+Brewfile.lock.json
+Flutter/
+.github/.vscode/
+.vscode/

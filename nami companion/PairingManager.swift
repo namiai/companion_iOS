@@ -3,6 +3,7 @@
 import Combine
 import Foundation
 import NamiPairingFramework
+import StandardPairingUI
 import SwiftUI
 
 final class PairingManager {
@@ -10,13 +11,13 @@ final class PairingManager {
     
     init(sessionCode: String) throws {
         do {
-            pairing = try NamiPairing(sessionCode: sessionCode)
+            pairing = try NamiPairing<ViewsContainer>(sessionCode: sessionCode)
             setupSubscription()
         } catch {
             if let e = error as? NetworkError {
                 Log.warning("[Pairing init] Network Error: \(e.localizedDescription)")
             }
-            if let e = error as? NamiPairing.SDKError {
+            if let e = error as? NamiPairing<ViewsContainer>.SDKError {
                 switch e {
                 case let .sessionActivateMalformedResponse(data):
                     Log.warning("[Pairing init] SDK Error: \(e.localizedDescription), containing unparsed data: \(String(data: data, encoding: .utf8))")
@@ -55,7 +56,7 @@ final class PairingManager {
     
     // MARK: Private
     
-    private var pairing: NamiPairing
+    private var pairing: NamiPairing<ViewsContainer>
     private var subscriptions = Set<AnyCancellable>()
     private var onPairingComplete: (() -> Void)?
     
