@@ -7,43 +7,40 @@
 
 import Foundation
 import SwiftUI
-import WebAPI
-import CommonTypes
-import WiFiStorage
-import Log
+import NamiPairingFramework
+
+typealias RoomUUID = String
 
 final class RootRouter: ObservableObject {
     enum Routes {
         case codeInput
-        case placeDevices(Place, PlaceZoneID, RoomID)
-        case pairing(Place, PlaceZoneID, RoomID)
+        case placeDevices(RoomUUID)
+        case pairing(RoomUUID)
         case errorView(Error)
     }
     
-    init(_ services: ApplicationServices) {
-        self.services = services
-    }
-    
     @Published var route = Routes.codeInput
-    var services: ApplicationServices
+    var pairingManager: PairingManager?
     
     @ViewBuilder
     func buildView() -> some View {
         switch route {
         case .codeInput:
-            SessionCodeView(viewModel: SessionCodeViewModel(services: self.services) { route in
+            SessionCodeView(viewModel: SessionCodeViewModel(setupPairingManager: { pairingManager in
+                self.pairingManager = pairingManager
+            }, nextRoute: { route in
                 self.route = route
-            })
-        case let .placeDevices(place, zoneId, roomId):
+            }))
+        case let .placeDevices(roomId):
             PlaceDevicesListView(viewModel: PlaceDevicesListViewModel(
-                state: PlaceDevicesListViewModel.State(place: place, zoneId: zoneId, roomId: roomId),
-                api: services.api!,
+                state: PlaceDevicesListViewModel.State(pairingInRoomId: roomId),
+                api: pairingManager!.api,
                 nextRoute: { route in
                     self.route = route
                 })
             )
-        case let .pairing(place, zoneId, roomId):
-            pairing(place: place, zoneId: zoneId, roomId: roomId)
+        case let .pairing(roomUuid):
+            pairing(roomUuid: roomUuid)
         case let .errorView(error):
             ErrorPresentationView(viewModel: ErrorPresentationViewModel(
                 state: ErrorPresentationViewModel.State(error: error),
@@ -54,12 +51,12 @@ final class RootRouter: ObservableObject {
         }
     }
     
-    private func pairing(place: Place, zoneId: PlaceZoneID, roomId: RoomID) -> some View {
+    private func pairing(roomUuid: RoomUUID) -> some View {
         NavigationView {
-            services.pairingManager!.startPairing(placeId: place.id, zoneId: zoneId, roomId: roomId) { [weak self] in
+            pairingManager!.startPairing(roomId: roomUuid) { [weak self] in
                 Log.info("Closure on complete pairing called")
                 DispatchQueue.main.async {
-                    self?.route = .placeDevices(place, zoneId, roomId)
+                    self?.route = .placeDevices(roomUuid)
                 }
             }
         }

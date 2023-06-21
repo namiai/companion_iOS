@@ -6,8 +6,7 @@
 //
 
 import SwiftUI
-import WebAPI
-import TokenStore
+import NamiPairingFramework
 
 struct SessionCodeView: View {
     @ObservedObject var viewModel: SessionCodeViewModel
@@ -18,22 +17,24 @@ struct SessionCodeView: View {
     
     var body: some View {
         VStack {
-            
-            Text("Please paste your API key in to be able to communicate with nami API")
-                .frame(maxWidth: .infinity, alignment: .leading)
-            SecureField("API Key", text: $viewModel.state.apiKey)
-                .textFieldStyle(.roundedBorder)
-                .padding(.bottom)
-            Text("Please enter the session code acquired from the partner's application.")
-                .frame(maxWidth: .infinity, alignment: .leading)
-            TextField("Session Code", text: $viewModel.state.sessionCode)
-                .textFieldStyle(.roundedBorder)
-            Button("Confirm") {
-                viewModel.confirmTapped()
+            if viewModel.state.buttonTapped {
+                ProgressView()
+            } else {
+                Text("Please enter the session code acquired from the partner's application.")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                TextField("Session Code", text: $viewModel.state.sessionCode)
+                    .textFieldStyle(.roundedBorder)
+                Text("Please enter the Room ID where to pair the devices.")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                TextField("Room ID", text: $viewModel.state.roomId)
+                    .textFieldStyle(.roundedBorder)
+                Button("Confirm") {
+                    viewModel.confirmTapped()
+                }
+                .buttonStyle(.bordered)
+                .disabled(viewModel.state.disableButton)
+                .padding()
             }
-            .buttonStyle(.bordered)
-            .disabled(viewModel.state.disableButton)
-            .padding()
         }
         .frame(maxWidth: 300)
         .padding()

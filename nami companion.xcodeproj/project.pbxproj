@@ -7,22 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		49A1CC8F2A177BAB002F992B /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 49A1CC8E2A177BAB002F992B /* SwiftProtobuf */; };
 		49E2212B29A75669008DF366 /* nami_companionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2212A29A75669008DF366 /* nami_companionApp.swift */; };
 		49E2212D29A75669008DF366 /* SessionCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2212C29A75669008DF366 /* SessionCodeView.swift */; };
 		49E2212F29A7566B008DF366 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49E2212E29A7566B008DF366 /* Assets.xcassets */; };
 		49E2213329A7566B008DF366 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49E2213229A7566B008DF366 /* Preview Assets.xcassets */; };
-		49E2213B29A7568E008DF366 /* NamiStandardPairingSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 49E2213A29A7568E008DF366 /* NamiStandardPairingSDK */; };
 		49E2213D29A758CC008DF366 /* SessionCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2213C29A758CC008DF366 /* SessionCodeViewModel.swift */; };
 		49E2213F29A75C80008DF366 /* RootRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2213E29A75C80008DF366 /* RootRouter.swift */; };
-		49E2214129A7630F008DF366 /* SessionWithAPIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2214029A7630F008DF366 /* SessionWithAPIKey.swift */; };
 		49E2214529A776A1008DF366 /* PlaceDevicesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2214429A776A1008DF366 /* PlaceDevicesListViewModel.swift */; };
 		49E2214929A792AE008DF366 /* PlaceDevicesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2214829A792AE008DF366 /* PlaceDevicesListView.swift */; };
 		49E2214B29A79C26008DF366 /* PairingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2214A29A79C26008DF366 /* PairingManager.swift */; };
 		49E2214E29A7A332008DF366 /* ErrorPresentationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2214D29A7A332008DF366 /* ErrorPresentationViewModel.swift */; };
 		49E2215029A7A563008DF366 /* ErrorPresentationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2214F29A7A563008DF366 /* ErrorPresentationView.swift */; };
+		49F55A7E2A26FB5B00C31902 /* ISO8601MsecDecoder in Frameworks */ = {isa = PBXBuildFile; productRef = 49F55A7D2A26FB5B00C31902 /* ISO8601MsecDecoder */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		49CE32832A162121005876D5 /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 		49E2212729A75669008DF366 /* nami companion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "nami companion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49E2212A29A75669008DF366 /* nami_companionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nami_companionApp.swift; sourceTree = "<group>"; };
 		49E2212C29A75669008DF366 /* SessionCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionCodeView.swift; sourceTree = "<group>"; };
@@ -31,7 +32,6 @@
 		49E2213229A7566B008DF366 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		49E2213C29A758CC008DF366 /* SessionCodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionCodeViewModel.swift; sourceTree = "<group>"; };
 		49E2213E29A75C80008DF366 /* RootRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootRouter.swift; sourceTree = "<group>"; };
-		49E2214029A7630F008DF366 /* SessionWithAPIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionWithAPIKey.swift; sourceTree = "<group>"; };
 		49E2214429A776A1008DF366 /* PlaceDevicesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDevicesListViewModel.swift; sourceTree = "<group>"; };
 		49E2214829A792AE008DF366 /* PlaceDevicesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDevicesListView.swift; sourceTree = "<group>"; };
 		49E2214A29A79C26008DF366 /* PairingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairingManager.swift; sourceTree = "<group>"; };
@@ -45,18 +45,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49E2213B29A7568E008DF366 /* NamiStandardPairingSDK in Frameworks */,
+				49F55A7E2A26FB5B00C31902 /* ISO8601MsecDecoder in Frameworks */,
+				49A1CC8F2A177BAB002F992B /* SwiftProtobuf in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		49CE32722A14D9DB005876D5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		49E2211E29A75669008DF366 = {
 			isa = PBXGroup;
 			children = (
+				49CE32832A162121005876D5 /* Readme.md */,
 				49E2212929A75669008DF366 /* nami companion */,
 				49E2212829A75669008DF366 /* Products */,
+				49CE32722A14D9DB005876D5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -77,7 +87,6 @@
 				49E2214329A7767B008DF366 /* DevicesList */,
 				49E2214C29A7A301008DF366 /* ErrorPresentation */,
 				49E2213E29A75C80008DF366 /* RootRouter.swift */,
-				49E2214029A7630F008DF366 /* SessionWithAPIKey.swift */,
 				49E2214A29A79C26008DF366 /* PairingManager.swift */,
 				49E2212E29A7566B008DF366 /* Assets.xcassets */,
 				49E2213029A7566B008DF366 /* nami_companion.entitlements */,
@@ -138,7 +147,8 @@
 			);
 			name = "nami companion";
 			packageProductDependencies = (
-				49E2213A29A7568E008DF366 /* NamiStandardPairingSDK */,
+				49A1CC8E2A177BAB002F992B /* SwiftProtobuf */,
+				49F55A7D2A26FB5B00C31902 /* ISO8601MsecDecoder */,
 			);
 			productName = "nami companion";
 			productReference = 49E2212729A75669008DF366 /* nami companion.app */;
@@ -152,7 +162,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1420;
+				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					49E2212629A75669008DF366 = {
 						CreatedOnToolsVersion = 14.2;
@@ -166,10 +176,13 @@
 			knownRegions = (
 				en,
 				Base,
+				"en-US",
+				nl,
 			);
 			mainGroup = 49E2211E29A75669008DF366;
 			packageReferences = (
-				49E2213929A7568E008DF366 /* XCRemoteSwiftPackageReference "NamiStandardPairingSDK_iOS" */,
+				49A1CC8D2A177BAB002F992B /* XCRemoteSwiftPackageReference "swift-protobuf" */,
+				49F55A7C2A26FB5B00C31902 /* XCRemoteSwiftPackageReference "ISO8601MsecDecoder_iOS" */,
 			);
 			productRefGroup = 49E2212829A75669008DF366 /* Products */;
 			projectDirPath = "";
@@ -205,7 +218,6 @@
 				49E2214B29A79C26008DF366 /* PairingManager.swift in Sources */,
 				49E2214E29A7A332008DF366 /* ErrorPresentationViewModel.swift in Sources */,
 				49E2212D29A75669008DF366 /* SessionCodeView.swift in Sources */,
-				49E2214129A7630F008DF366 /* SessionWithAPIKey.swift in Sources */,
 				49E2212B29A75669008DF366 /* nami_companionApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -246,6 +258,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -304,6 +317,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -330,6 +344,7 @@
 				CODE_SIGN_ENTITLEMENTS = "nami companion/nami_companion.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"nami companion/Preview Content\"";
 				DEVELOPMENT_TEAM = PTKKJUD9AS;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -355,7 +370,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "ai.nami.nami-companion";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -370,6 +387,7 @@
 				CODE_SIGN_ENTITLEMENTS = "nami companion/nami_companion.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"nami companion/Preview Content\"";
 				DEVELOPMENT_TEAM = PTKKJUD9AS;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -395,7 +413,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "ai.nami.nami-companion";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -426,9 +446,17 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		49E2213929A7568E008DF366 /* XCRemoteSwiftPackageReference "NamiStandardPairingSDK_iOS" */ = {
+		49A1CC8D2A177BAB002F992B /* XCRemoteSwiftPackageReference "swift-protobuf" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/namiai/NamiStandardPairingSDK_iOS";
+			repositoryURL = "https://github.com/apple/swift-protobuf.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		49F55A7C2A26FB5B00C31902 /* XCRemoteSwiftPackageReference "ISO8601MsecDecoder_iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/namiai/ISO8601MsecDecoder_iOS";
 			requirement = {
 				branch = main;
 				kind = branch;
@@ -437,10 +465,15 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		49E2213A29A7568E008DF366 /* NamiStandardPairingSDK */ = {
+		49A1CC8E2A177BAB002F992B /* SwiftProtobuf */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 49E2213929A7568E008DF366 /* XCRemoteSwiftPackageReference "NamiStandardPairingSDK_iOS" */;
-			productName = NamiStandardPairingSDK;
+			package = 49A1CC8D2A177BAB002F992B /* XCRemoteSwiftPackageReference "swift-protobuf" */;
+			productName = SwiftProtobuf;
+		};
+		49F55A7D2A26FB5B00C31902 /* ISO8601MsecDecoder */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 49F55A7C2A26FB5B00C31902 /* XCRemoteSwiftPackageReference "ISO8601MsecDecoder_iOS" */;
+			productName = ISO8601MsecDecoder;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
