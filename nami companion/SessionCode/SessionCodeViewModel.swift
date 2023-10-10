@@ -11,15 +11,6 @@ final class SessionCodeViewModel: ObservableObject {
         self.nextRoute = nextRoute
     }
     
-#if DEBUG
-    
-    init() {
-        setupPairingManager = { _ in }
-        nextRoute = { _ in }
-    }
-    
-#endif
-    
     struct State {
         var sessionCode: String = ""
         var roomId: String = ""
@@ -46,7 +37,16 @@ final class SessionCodeViewModel: ObservableObject {
             setupPairingManager(pairingManager)
         }
         DispatchQueue.main.async {
-            self.nextRoute(.placeDevices(self.state.roomId))
+            // BSSID pin yet unknown here.
+            // It is okay for the new place and for a place with only nami devices
+            // because the pin would be set for first paired device or 
+            // in case if there are any nami devices paired already in the sensing zone and no explicit pin is passed to pairing
+            // the pin would be obtained from backend.
+            // If no nami devices were paired in the sensing zone a BSSID pin should be passed to the pairing.
+            // To request the pre-existent BSSID pin from the user as it might be requested from the application useing the framework
+            // is out of scope for this demo app.
+            // Pin would be obtained for the subsequent pairings on pairing success (see `PairingManager.startPairing(...)`) and shown on top of devices list.
+            self.nextRoute(.placeDevices(self.state.roomId, nil))
             self.state.buttonTapped = false
         }
     }

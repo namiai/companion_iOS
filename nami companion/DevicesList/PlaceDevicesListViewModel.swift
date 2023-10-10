@@ -11,6 +11,7 @@ final class PlaceDevicesListViewModel: ObservableObject {
     
     struct State {
         var pairingInRoomId: String
+        var bssid: [UInt8]?
         var devices: [any DeviceProtocol] = []
         var offerRetry = false
         var presentingPairing = false
@@ -22,34 +23,6 @@ final class PlaceDevicesListViewModel: ObservableObject {
         self.nextRoute = nextRoute
         self.updateDevices(api: api)
     }
-    
-#if DEBUG
-//
-//    init() {
-//        state = State(
-//            pairingInRoomId: UUID().uuidString,
-//            devices: [
-//                Device(
-//                    id: 3,
-//                    uid: DeviceUniversalID(3),
-//                    urn: "",
-//                    roomId: 1,
-//                    name: "The device",
-//                    createdAt: Date(),
-//                    updatedAt: Date(),
-//                    model: DeviceModel(
-//                        codeName: "the_device",
-//                        productLabel: "Product",
-//                        productId: 3
-//                    )
-//                ),
-//            ]
-//        )
-//        api = WebAPI(base: URL(string: "http://dumb.org")!, signUpBase: URL(string: "http://dumb.org")!, session: URLSession.shared, tokenStore: TokenSecureStorage(server: ""))
-//        nextRoute = { _ in }
-//    }
-    
-#endif
     
     @Published var state: State
     let nextRoute: (RootRouter.Routes) -> Void
@@ -78,26 +51,30 @@ final class PlaceDevicesListViewModel: ObservableObject {
     }
     
     func presentPairing() {
-        nextRoute(.pairing(state.pairingInRoomId))
+        nextRoute(.pairing(state.pairingInRoomId, state.bssid))
     }
 }
 
 struct DeviceQuery: DevicesQueryProtocol {
-    init(placeIds: [PlaceID] = [], zoneIds: [PlaceZoneID] = [], roomIds: [RoomID] = []) {
+    
+    init(placeIds: [PlaceID] = [], zoneIds: [PlaceZoneID] = [], roomIds: [RoomID] = [], uids: [DeviceUniversalID] = []) {
         self.placeIds = placeIds
         self.zoneIds = zoneIds
         self.roomIds = roomIds
+        self.uids = uids
     }
     
     init(cursor: String) {
         self.placeIds = []
         self.zoneIds = []
         self.roomIds = []
+        self.uids = []
         self.cursor = cursor
     }
     
     var placeIds: [PlaceID]
     var zoneIds: [PlaceZoneID]
     var roomIds: [RoomID]
+    var uids: [NamiPairingFramework.DeviceUniversalID]
     var cursor: String?
 }

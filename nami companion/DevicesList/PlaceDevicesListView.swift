@@ -16,6 +16,11 @@ struct PlaceDevicesListView: View {
     var body: some View {
         NavigationView {
             VStack {
+                if let bssid = viewModel.state.bssid {
+                    Text("BSSID Pin: " + bssid.map{ String(format: "%02.2hhx", $0) }.joined(separator: ":"))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal)
+                }
                 if viewModel.state.devices.isEmpty == false {
                     List {
                         ForEach(viewModel.state.devices, id: \.id) { device in
@@ -42,9 +47,3 @@ struct PlaceDevicesListView: View {
     
     @ObservedObject var viewModel: PlaceDevicesListViewModel
 }
-
-//struct PlaceDevicesListView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        PlaceDevicesListView(viewModel: PlaceDevicesListViewModel())
-//    }
-//}

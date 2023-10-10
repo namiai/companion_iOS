@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "bottom-sheet",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/weitieda/bottom-sheet",
+      "state" : {
+        "revision" : "6b21007153365235418f3943a960a1f9546592e0",
+        "version" : "1.0.12"
+      }
+    },
+    {
       "identity" : "iso8601msecdecoder_ios",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/namiai/ISO8601MsecDecoder_iOS",

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		492CD30E2AD5091200F4743D /* BottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 492CD30D2AD5091200F4743D /* BottomSheet */; };
 		49A1CC8F2A177BAB002F992B /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 49A1CC8E2A177BAB002F992B /* SwiftProtobuf */; };
 		49E2212B29A75669008DF366 /* nami_companionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2212A29A75669008DF366 /* nami_companionApp.swift */; };
 		49E2212D29A75669008DF366 /* SessionCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2212C29A75669008DF366 /* SessionCodeView.swift */; };
@@ -21,6 +22,19 @@
 		49E2215029A7A563008DF366 /* ErrorPresentationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2214F29A7A563008DF366 /* ErrorPresentationView.swift */; };
 		49F55A7E2A26FB5B00C31902 /* ISO8601MsecDecoder in Frameworks */ = {isa = PBXBuildFile; productRef = 49F55A7D2A26FB5B00C31902 /* ISO8601MsecDecoder */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		492CF30A2AAAF141006DE914 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		49CE32832A162121005876D5 /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
@@ -45,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				492CD30E2AD5091200F4743D /* BottomSheet in Frameworks */,
 				49F55A7E2A26FB5B00C31902 /* ISO8601MsecDecoder in Frameworks */,
 				49A1CC8F2A177BAB002F992B /* SwiftProtobuf in Frameworks */,
 			);
@@ -140,6 +155,7 @@
 				49E2212329A75669008DF366 /* Sources */,
 				49E2212429A75669008DF366 /* Frameworks */,
 				49E2212529A75669008DF366 /* Resources */,
+				492CF30A2AAAF141006DE914 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -149,6 +165,7 @@
 			packageProductDependencies = (
 				49A1CC8E2A177BAB002F992B /* SwiftProtobuf */,
 				49F55A7D2A26FB5B00C31902 /* ISO8601MsecDecoder */,
+				492CD30D2AD5091200F4743D /* BottomSheet */,
 			);
 			productName = "nami companion";
 			productReference = 49E2212729A75669008DF366 /* nami companion.app */;
@@ -183,6 +200,7 @@
 			packageReferences = (
 				49A1CC8D2A177BAB002F992B /* XCRemoteSwiftPackageReference "swift-protobuf" */,
 				49F55A7C2A26FB5B00C31902 /* XCRemoteSwiftPackageReference "ISO8601MsecDecoder_iOS" */,
+				492CD30C2AD5091200F4743D /* XCRemoteSwiftPackageReference "bottom-sheet" */,
 			);
 			productRefGroup = 49E2212829A75669008DF366 /* Products */;
 			projectDirPath = "";
@@ -446,6 +464,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		492CD30C2AD5091200F4743D /* XCRemoteSwiftPackageReference "bottom-sheet" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/weitieda/bottom-sheet";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.8;
+			};
+		};
 		49A1CC8D2A177BAB002F992B /* XCRemoteSwiftPackageReference "swift-protobuf" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-protobuf.git";
@@ -465,6 +491,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		492CD30D2AD5091200F4743D /* BottomSheet */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 492CD30C2AD5091200F4743D /* XCRemoteSwiftPackageReference "bottom-sheet" */;
+			productName = BottomSheet;
+		};
 		49A1CC8E2A177BAB002F992B /* SwiftProtobuf */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 49A1CC8D2A177BAB002F992B /* XCRemoteSwiftPackageReference "swift-protobuf" */;

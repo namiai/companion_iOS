@@ -14,8 +14,8 @@ typealias RoomUUID = String
 final class RootRouter: ObservableObject {
     enum Routes {
         case codeInput
-        case placeDevices(RoomUUID)
-        case pairing(RoomUUID)
+        case placeDevices(RoomUUID, [UInt8]?)
+        case pairing(RoomUUID, [UInt8]?)
         case errorView(Error)
     }
     
@@ -31,16 +31,16 @@ final class RootRouter: ObservableObject {
             }, nextRoute: { route in
                 self.route = route
             }))
-        case let .placeDevices(roomId):
+        case let .placeDevices(roomId, bssid):
             PlaceDevicesListView(viewModel: PlaceDevicesListViewModel(
-                state: PlaceDevicesListViewModel.State(pairingInRoomId: roomId),
+                state: PlaceDevicesListViewModel.State(pairingInRoomId: roomId, bssid: bssid),
                 api: pairingManager!.api,
                 nextRoute: { route in
                     self.route = route
                 })
             )
-        case let .pairing(roomUuid):
-            pairing(roomUuid: roomUuid)
+        case let .pairing(roomUuid, bssid):
+            pairing(roomUuid: roomUuid, bssidPin: bssid)
         case let .errorView(error):
             ErrorPresentationView(viewModel: ErrorPresentationViewModel(
                 state: ErrorPresentationViewModel.State(error: error),
@@ -51,12 +51,12 @@ final class RootRouter: ObservableObject {
         }
     }
     
-    private func pairing(roomUuid: RoomUUID) -> some View {
+    private func pairing(roomUuid: RoomUUID, bssidPin: [UInt8]?) -> some View {
         NavigationView {
-            pairingManager!.startPairing(roomId: roomUuid) { [weak self] in
+            pairingManager!.startPairing(roomId: roomUuid, bssidPin: bssidPin) { [weak self] bssid in
                 Log.info("Closure on complete pairing called")
                 DispatchQueue.main.async {
-                    self?.route = .placeDevices(roomUuid)
+                    self?.route = .placeDevices(roomUuid, bssid)
                 }
             }
         }

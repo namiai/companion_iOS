@@ -20,7 +20,7 @@ final class PairingManager {
             if let e = error as? NamiPairing<ViewsContainer>.SDKError {
                 switch e {
                 case let .sessionActivateMalformedResponse(data):
-                    Log.warning("[Pairing init] SDK Error: \(e.localizedDescription), containing unparsed data: \(String(data: data, encoding: .utf8))")
+                    Log.warning("[Pairing init] SDK Error: \(e.localizedDescription), containing unparsed data: \(String(data: data, encoding: .utf8) ?? "failed to encode into utf8 string")")
                     throw error
                 default:
                     Log.warning("[Pairing init] SDK Error: \(e.localizedDescription)")
@@ -36,11 +36,18 @@ final class PairingManager {
     
     func startPairing(
         roomId: String,
-        onPairingComplete: (() -> Void)? = nil
+        bssidPin: [UInt8]?,
+        onPairingComplete: (([UInt8]?) -> Void)? = nil
     ) -> some View {
         self.onPairingComplete = onPairingComplete
         do {
-            return try AnyView(pairing.startPairing(roomId: roomId, pairingSteps: ViewsContainer()))
+            return try AnyView(
+                pairing.startPairing(
+                    roomId: roomId,
+                    pairingSteps: ViewsContainer(),
+                    pairingParameters: bssidPin == nil ? Tomonari.PairingParameters() : Tomonari.PairingParameters(bssid: bssidPin!)
+                )
+            )
         } catch {
             return AnyView(
                 VStack{
@@ -58,7 +65,7 @@ final class PairingManager {
     
     private var pairing: NamiPairing<ViewsContainer>
     private var subscriptions = Set<AnyCancellable>()
-    private var onPairingComplete: (() -> Void)?
+    private var onPairingComplete: (([UInt8]?) -> Void)?
     
     var api: any PairingWebAPIProtocol {
         pairing.api
@@ -82,10 +89,10 @@ final class PairingManager {
                     // For this demo we don't store device but would later obtain it from API.
                     // The pairing is not over yet.
                     break
-                case .deviceOperable:
+                case .deviceOperable(_, ssid: _, bssid: let bssid):
                     // Device is fully commisioned.
-                    // Value with device ID could be obtained `.deviceOperable(deviceId)`.
-                    self?.completePairing()
+                    // Values with device ID, network SSID and BSSID pin could be obtained `.deviceOperable(deviceId, ssid: ssid, bssid: bssid)`.
+                    self?.completePairing(bssid: bssid)
                 case .deviceDecommissioned:
                     // Pairing was cancelled/errored unrecoverably after commisioning the Device in nami cloud.
                     // Value with device ID could be obtained `.deviceDecommissioned(deviceId)`
@@ -102,8 +109,8 @@ final class PairingManager {
             .store(in: &subscriptions)
     }
     
-    private func completePairing() {
-        onPairingComplete?()
+    private func completePairing(bssid: [UInt8]? = nil) {
+        onPairingComplete?(bssid)
         onPairingComplete = nil
     }
 }
