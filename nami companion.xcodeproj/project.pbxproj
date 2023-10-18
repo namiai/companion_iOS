@@ -15,12 +15,10 @@
 		49E2213329A7566B008DF366 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49E2213229A7566B008DF366 /* Preview Assets.xcassets */; };
 		49E2213D29A758CC008DF366 /* SessionCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2213C29A758CC008DF366 /* SessionCodeViewModel.swift */; };
 		49E2213F29A75C80008DF366 /* RootRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2213E29A75C80008DF366 /* RootRouter.swift */; };
-		49E2214529A776A1008DF366 /* PlaceDevicesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2214429A776A1008DF366 /* PlaceDevicesListViewModel.swift */; };
 		49E2214929A792AE008DF366 /* PlaceDevicesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2214829A792AE008DF366 /* PlaceDevicesListView.swift */; };
 		49E2214B29A79C26008DF366 /* PairingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2214A29A79C26008DF366 /* PairingManager.swift */; };
 		49E2214E29A7A332008DF366 /* ErrorPresentationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2214D29A7A332008DF366 /* ErrorPresentationViewModel.swift */; };
 		49E2215029A7A563008DF366 /* ErrorPresentationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2214F29A7A563008DF366 /* ErrorPresentationView.swift */; };
-		49F55A7E2A26FB5B00C31902 /* ISO8601MsecDecoder in Frameworks */ = {isa = PBXBuildFile; productRef = 49F55A7D2A26FB5B00C31902 /* ISO8601MsecDecoder */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -46,7 +44,6 @@
 		49E2213229A7566B008DF366 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		49E2213C29A758CC008DF366 /* SessionCodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionCodeViewModel.swift; sourceTree = "<group>"; };
 		49E2213E29A75C80008DF366 /* RootRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootRouter.swift; sourceTree = "<group>"; };
-		49E2214429A776A1008DF366 /* PlaceDevicesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDevicesListViewModel.swift; sourceTree = "<group>"; };
 		49E2214829A792AE008DF366 /* PlaceDevicesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDevicesListView.swift; sourceTree = "<group>"; };
 		49E2214A29A79C26008DF366 /* PairingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairingManager.swift; sourceTree = "<group>"; };
 		49E2214D29A7A332008DF366 /* ErrorPresentationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorPresentationViewModel.swift; sourceTree = "<group>"; };
@@ -60,7 +57,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				492CD30E2AD5091200F4743D /* BottomSheet in Frameworks */,
-				49F55A7E2A26FB5B00C31902 /* ISO8601MsecDecoder in Frameworks */,
 				49A1CC8F2A177BAB002F992B /* SwiftProtobuf in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -130,7 +126,6 @@
 		49E2214329A7767B008DF366 /* DevicesList */ = {
 			isa = PBXGroup;
 			children = (
-				49E2214429A776A1008DF366 /* PlaceDevicesListViewModel.swift */,
 				49E2214829A792AE008DF366 /* PlaceDevicesListView.swift */,
 			);
 			path = DevicesList;
@@ -164,7 +159,6 @@
 			name = "nami companion";
 			packageProductDependencies = (
 				49A1CC8E2A177BAB002F992B /* SwiftProtobuf */,
-				49F55A7D2A26FB5B00C31902 /* ISO8601MsecDecoder */,
 				492CD30D2AD5091200F4743D /* BottomSheet */,
 			);
 			productName = "nami companion";
@@ -199,7 +193,6 @@
 			mainGroup = 49E2211E29A75669008DF366;
 			packageReferences = (
 				49A1CC8D2A177BAB002F992B /* XCRemoteSwiftPackageReference "swift-protobuf" */,
-				49F55A7C2A26FB5B00C31902 /* XCRemoteSwiftPackageReference "ISO8601MsecDecoder_iOS" */,
 				492CD30C2AD5091200F4743D /* XCRemoteSwiftPackageReference "bottom-sheet" */,
 			);
 			productRefGroup = 49E2212829A75669008DF366 /* Products */;
@@ -230,7 +223,6 @@
 			files = (
 				49E2213F29A75C80008DF366 /* RootRouter.swift in Sources */,
 				49E2213D29A758CC008DF366 /* SessionCodeViewModel.swift in Sources */,
-				49E2214529A776A1008DF366 /* PlaceDevicesListViewModel.swift in Sources */,
 				49E2215029A7A563008DF366 /* ErrorPresentationView.swift in Sources */,
 				49E2214929A792AE008DF366 /* PlaceDevicesListView.swift in Sources */,
 				49E2214B29A79C26008DF366 /* PairingManager.swift in Sources */,
@@ -480,14 +472,6 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		49F55A7C2A26FB5B00C31902 /* XCRemoteSwiftPackageReference "ISO8601MsecDecoder_iOS" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/namiai/ISO8601MsecDecoder_iOS";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -500,11 +484,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 49A1CC8D2A177BAB002F992B /* XCRemoteSwiftPackageReference "swift-protobuf" */;
 			productName = SwiftProtobuf;
-		};
-		49F55A7D2A26FB5B00C31902 /* ISO8601MsecDecoder */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 49F55A7C2A26FB5B00C31902 /* XCRemoteSwiftPackageReference "ISO8601MsecDecoder_iOS" */;
-			productName = ISO8601MsecDecoder;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
