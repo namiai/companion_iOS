@@ -2,7 +2,7 @@ This is the demo application showing the most simple use of nami pairing SDK.
 
 ## Work in progress: SDK
 
-The SDK is under developement. It comes in two flavours:
+The SDK is under developement. It comes in two parts:
 - `NamiPairingFramework`: a framework performing the pairing steps and not providing the UI.
 - `StandardPairingUI`: a framework bringing the default nami UI.
 
