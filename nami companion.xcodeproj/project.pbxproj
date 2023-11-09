@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		492CD30E2AD5091200F4743D /* BottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 492CD30D2AD5091200F4743D /* BottomSheet */; };
 		49A1CC8F2A177BAB002F992B /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 49A1CC8E2A177BAB002F992B /* SwiftProtobuf */; };
+		49D9179E2AFCADF4000E344B /* PlaceDevicesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D9179D2AFCADF4000E344B /* PlaceDevicesListViewModel.swift */; };
 		49E2212B29A75669008DF366 /* nami_companionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2212A29A75669008DF366 /* nami_companionApp.swift */; };
 		49E2212D29A75669008DF366 /* SessionCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2212C29A75669008DF366 /* SessionCodeView.swift */; };
 		49E2212F29A7566B008DF366 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49E2212E29A7566B008DF366 /* Assets.xcassets */; };
@@ -36,6 +37,7 @@
 
 /* Begin PBXFileReference section */
 		49CE32832A162121005876D5 /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
+		49D9179D2AFCADF4000E344B /* PlaceDevicesListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceDevicesListViewModel.swift; sourceTree = "<group>"; };
 		49E2212729A75669008DF366 /* nami companion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "nami companion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49E2212A29A75669008DF366 /* nami_companionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nami_companionApp.swift; sourceTree = "<group>"; };
 		49E2212C29A75669008DF366 /* SessionCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionCodeView.swift; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				49E2214829A792AE008DF366 /* PlaceDevicesListView.swift */,
+				49D9179D2AFCADF4000E344B /* PlaceDevicesListViewModel.swift */,
 			);
 			path = DevicesList;
 			sourceTree = "<group>";
@@ -226,6 +229,7 @@
 				49E2215029A7A563008DF366 /* ErrorPresentationView.swift in Sources */,
 				49E2214929A792AE008DF366 /* PlaceDevicesListView.swift in Sources */,
 				49E2214B29A79C26008DF366 /* PairingManager.swift in Sources */,
+				49D9179E2AFCADF4000E344B /* PlaceDevicesListViewModel.swift in Sources */,
 				49E2214E29A7A332008DF366 /* ErrorPresentationViewModel.swift in Sources */,
 				49E2212D29A75669008DF366 /* SessionCodeView.swift in Sources */,
 				49E2212B29A75669008DF366 /* nami_companionApp.swift in Sources */,
