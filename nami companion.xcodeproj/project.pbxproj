@@ -20,6 +20,7 @@
 		49E2214B29A79C26008DF366 /* PairingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2214A29A79C26008DF366 /* PairingManager.swift */; };
 		49E2214E29A7A332008DF366 /* ErrorPresentationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2214D29A7A332008DF366 /* ErrorPresentationViewModel.swift */; };
 		49E2215029A7A563008DF366 /* ErrorPresentationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2214F29A7A563008DF366 /* ErrorPresentationView.swift */; };
+		49E9FA3B2B0CA64E000397FC /* NamiPairing in Frameworks */ = {isa = PBXBuildFile; productRef = 49E9FA3A2B0CA64E000397FC /* NamiPairing */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -59,6 +60,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				492CD30E2AD5091200F4743D /* BottomSheet in Frameworks */,
+				49E9FA3B2B0CA64E000397FC /* NamiPairing in Frameworks */,
 				49A1CC8F2A177BAB002F992B /* SwiftProtobuf in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -163,6 +165,7 @@
 			packageProductDependencies = (
 				49A1CC8E2A177BAB002F992B /* SwiftProtobuf */,
 				492CD30D2AD5091200F4743D /* BottomSheet */,
+				49E9FA3A2B0CA64E000397FC /* NamiPairing */,
 			);
 			productName = "nami companion";
 			productReference = 49E2212729A75669008DF366 /* nami companion.app */;
@@ -197,6 +200,7 @@
 			packageReferences = (
 				49A1CC8D2A177BAB002F992B /* XCRemoteSwiftPackageReference "swift-protobuf" */,
 				492CD30C2AD5091200F4743D /* XCRemoteSwiftPackageReference "bottom-sheet" */,
+				49E9FA392B0CA64E000397FC /* XCRemoteSwiftPackageReference "NamiPairing_iOS" */,
 			);
 			productRefGroup = 49E2212829A75669008DF366 /* Products */;
 			projectDirPath = "";
@@ -476,6 +480,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		49E9FA392B0CA64E000397FC /* XCRemoteSwiftPackageReference "NamiPairing_iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/namiai/NamiPairing_iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.4.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -488,6 +500,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 49A1CC8D2A177BAB002F992B /* XCRemoteSwiftPackageReference "swift-protobuf" */;
 			productName = SwiftProtobuf;
+		};
+		49E9FA3A2B0CA64E000397FC /* NamiPairing */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 49E9FA392B0CA64E000397FC /* XCRemoteSwiftPackageReference "NamiPairing_iOS" */;
+			productName = NamiPairing;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
