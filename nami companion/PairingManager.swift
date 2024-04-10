@@ -46,6 +46,7 @@ final class PairingManager {
             return try AnyView(
                 pairing.startPairing(
                     roomId: roomId,
+                    // Use ViewsContainer() for default nami views 
                     pairingSteps: ViewsContainer(),
                     // Plaese notice the BSSID pin is passed here to limit the WIFi networks search.
                     // Here it is in form of `[UInt8]` but also could be `Data` or ":"-separated MAC-formatted `String`.
