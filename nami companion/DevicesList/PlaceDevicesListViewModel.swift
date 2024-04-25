@@ -53,6 +53,10 @@ final class PlaceDevicesListViewModel: ObservableObject {
     func presentPairing() {
         nextRoute(.pairing(state.pairingInRoomId, state.bssid))
     }
+    
+    func presentPositioning(deviceName: String, deviceUid: DeviceUniversalID) {
+        nextRoute(.positioning(deviceName, deviceUid))
+    }
 }
 
 struct DeviceQuery: DevicesQueryProtocol {

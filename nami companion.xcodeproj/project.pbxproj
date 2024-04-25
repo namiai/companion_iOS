@@ -7,9 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		206A03762BDA0CA3007DFF2E /* NamiPairing in Frameworks */ = {isa = PBXBuildFile; productRef = 206A03752BDA0CA3007DFF2E /* NamiPairing */; };
+		206A03842BDA77F4007DFF2E /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 206A03832BDA77F4007DFF2E /* SwiftProtobuf */; };
+		206A03862BDA77F4007DFF2E /* SwiftProtobufPluginLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 206A03852BDA77F4007DFF2E /* SwiftProtobufPluginLibrary */; };
+		206A03882BDA77F4007DFF2E /* protoc-gen-swift in Frameworks */ = {isa = PBXBuildFile; productRef = 206A03872BDA77F4007DFF2E /* protoc-gen-swift */; };
 		207621CF2BC6777100CA4D88 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 207621CE2BC6777100CA4D88 /* Lottie */; };
 		492CD30E2AD5091200F4743D /* BottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 492CD30D2AD5091200F4743D /* BottomSheet */; };
-		49A1CC8F2A177BAB002F992B /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 49A1CC8E2A177BAB002F992B /* SwiftProtobuf */; };
 		49D9179E2AFCADF4000E344B /* PlaceDevicesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D9179D2AFCADF4000E344B /* PlaceDevicesListViewModel.swift */; };
 		49E2212B29A75669008DF366 /* nami_companionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2212A29A75669008DF366 /* nami_companionApp.swift */; };
 		49E2212D29A75669008DF366 /* SessionCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2212C29A75669008DF366 /* SessionCodeView.swift */; };
@@ -21,7 +24,6 @@
 		49E2214B29A79C26008DF366 /* PairingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2214A29A79C26008DF366 /* PairingManager.swift */; };
 		49E2214E29A7A332008DF366 /* ErrorPresentationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2214D29A7A332008DF366 /* ErrorPresentationViewModel.swift */; };
 		49E2215029A7A563008DF366 /* ErrorPresentationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2214F29A7A563008DF366 /* ErrorPresentationView.swift */; };
-		49E9FA3B2B0CA64E000397FC /* NamiPairing in Frameworks */ = {isa = PBXBuildFile; productRef = 49E9FA3A2B0CA64E000397FC /* NamiPairing */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -61,9 +63,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				492CD30E2AD5091200F4743D /* BottomSheet in Frameworks */,
-				49E9FA3B2B0CA64E000397FC /* NamiPairing in Frameworks */,
-				49A1CC8F2A177BAB002F992B /* SwiftProtobuf in Frameworks */,
+				206A03762BDA0CA3007DFF2E /* NamiPairing in Frameworks */,
+				206A03882BDA77F4007DFF2E /* protoc-gen-swift in Frameworks */,
+				206A03862BDA77F4007DFF2E /* SwiftProtobufPluginLibrary in Frameworks */,
 				207621CF2BC6777100CA4D88 /* Lottie in Frameworks */,
+				206A03842BDA77F4007DFF2E /* SwiftProtobuf in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -165,10 +169,12 @@
 			);
 			name = "nami companion";
 			packageProductDependencies = (
-				49A1CC8E2A177BAB002F992B /* SwiftProtobuf */,
 				492CD30D2AD5091200F4743D /* BottomSheet */,
-				49E9FA3A2B0CA64E000397FC /* NamiPairing */,
 				207621CE2BC6777100CA4D88 /* Lottie */,
+				206A03752BDA0CA3007DFF2E /* NamiPairing */,
+				206A03832BDA77F4007DFF2E /* SwiftProtobuf */,
+				206A03852BDA77F4007DFF2E /* SwiftProtobufPluginLibrary */,
+				206A03872BDA77F4007DFF2E /* protoc-gen-swift */,
 			);
 			productName = "nami companion";
 			productReference = 49E2212729A75669008DF366 /* nami companion.app */;
@@ -201,10 +207,10 @@
 			);
 			mainGroup = 49E2211E29A75669008DF366;
 			packageReferences = (
-				49A1CC8D2A177BAB002F992B /* XCRemoteSwiftPackageReference "swift-protobuf" */,
 				492CD30C2AD5091200F4743D /* XCRemoteSwiftPackageReference "bottom-sheet" */,
-				49E9FA392B0CA64E000397FC /* XCRemoteSwiftPackageReference "NamiPairing_iOS" */,
 				207621CD2BC6777100CA4D88 /* XCRemoteSwiftPackageReference "lottie-spm" */,
+				206A03742BDA0CA3007DFF2E /* XCRemoteSwiftPackageReference "NamiPairing_iOS" */,
+				206A03822BDA77F4007DFF2E /* XCRemoteSwiftPackageReference "swift-protobuf" */,
 			);
 			productRefGroup = 49E2212829A75669008DF366 /* Products */;
 			projectDirPath = "";
@@ -468,6 +474,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		206A03742BDA0CA3007DFF2E /* XCRemoteSwiftPackageReference "NamiPairing_iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:namiai/NamiPairing_iOS.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.6.1;
+			};
+		};
+		206A03822BDA77F4007DFF2E /* XCRemoteSwiftPackageReference "swift-protobuf" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-protobuf.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.26.0;
+			};
+		};
 		207621CD2BC6777100CA4D88 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
@@ -484,25 +506,29 @@
 				minimumVersion = 1.0.8;
 			};
 		};
-		49A1CC8D2A177BAB002F992B /* XCRemoteSwiftPackageReference "swift-protobuf" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/apple/swift-protobuf.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
-		49E9FA392B0CA64E000397FC /* XCRemoteSwiftPackageReference "NamiPairing_iOS" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/namiai/NamiPairing_iOS";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.5.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		206A03752BDA0CA3007DFF2E /* NamiPairing */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 206A03742BDA0CA3007DFF2E /* XCRemoteSwiftPackageReference "NamiPairing_iOS" */;
+			productName = NamiPairing;
+		};
+		206A03832BDA77F4007DFF2E /* SwiftProtobuf */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 206A03822BDA77F4007DFF2E /* XCRemoteSwiftPackageReference "swift-protobuf" */;
+			productName = SwiftProtobuf;
+		};
+		206A03852BDA77F4007DFF2E /* SwiftProtobufPluginLibrary */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 206A03822BDA77F4007DFF2E /* XCRemoteSwiftPackageReference "swift-protobuf" */;
+			productName = SwiftProtobufPluginLibrary;
+		};
+		206A03872BDA77F4007DFF2E /* protoc-gen-swift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 206A03822BDA77F4007DFF2E /* XCRemoteSwiftPackageReference "swift-protobuf" */;
+			productName = "protoc-gen-swift";
+		};
 		207621CE2BC6777100CA4D88 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 207621CD2BC6777100CA4D88 /* XCRemoteSwiftPackageReference "lottie-spm" */;
@@ -512,16 +538,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 492CD30C2AD5091200F4743D /* XCRemoteSwiftPackageReference "bottom-sheet" */;
 			productName = BottomSheet;
-		};
-		49A1CC8E2A177BAB002F992B /* SwiftProtobuf */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 49A1CC8D2A177BAB002F992B /* XCRemoteSwiftPackageReference "swift-protobuf" */;
-			productName = SwiftProtobuf;
-		};
-		49E9FA3A2B0CA64E000397FC /* NamiPairing */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 49E9FA392B0CA64E000397FC /* XCRemoteSwiftPackageReference "NamiPairing_iOS" */;
-			productName = NamiPairing;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

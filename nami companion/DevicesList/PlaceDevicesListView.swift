@@ -26,6 +26,12 @@ struct PlaceDevicesListView: View {
                         ForEach(viewModel.state.devices, id: \.id) { device in
                             HStack{
                                 Text(device.model.codeName)
+                                Spacer() 
+                                Button { 
+                                    viewModel.presentPositioning(deviceName: device.model.codeName, deviceUid: device.uid)
+                                } label : {
+                                    Text("Reposition")
+                                }
                             }
                         }
                     }

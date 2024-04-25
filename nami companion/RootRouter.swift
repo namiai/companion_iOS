@@ -16,6 +16,7 @@ final class RootRouter: ObservableObject {
         case codeInput
         case placeDevices(RoomUUID, [UInt8]?)
         case pairing(RoomUUID, [UInt8]?)
+        case positioning(String, DeviceUniversalID)
         case errorView(Error)
     }
     
@@ -41,6 +42,8 @@ final class RootRouter: ObservableObject {
             )
         case let .pairing(roomUuid, bssid):
             pairing(roomUuid: roomUuid, bssidPin: bssid)
+        case let .positioning(deviceName, deviceUid):
+            positioning(deviceName: deviceName, deviceUid: deviceUid.macFormatted)
         case let .errorView(error):
             ErrorPresentationView(viewModel: ErrorPresentationViewModel(
                 state: ErrorPresentationViewModel.State(error: error),
@@ -61,5 +64,11 @@ final class RootRouter: ObservableObject {
             }
         }
         .navigationViewStyle(.stack)
+    }
+    
+    private func positioning(deviceName: String, deviceUid: String) -> some View {
+        NavigationView {
+            pairingManager!.startPositioning(deviceName: deviceName, deviceUid: deviceUid)
+        }
     }
 }

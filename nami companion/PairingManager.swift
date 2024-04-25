@@ -65,11 +65,37 @@ final class PairingManager {
         }
     }
     
+    func startPositioning(deviceName: String, deviceUid: String, onPositioningComplete: (() -> Void)? = nil) -> some View {
+        self.onPositioningComplete = onPositioningComplete
+        do {
+            return try AnyView(
+                pairing.startPositioning(
+                    deviceName: deviceName, 
+                    deviceUid: deviceUid, 
+                    pairingSteps: ViewsContainer(), 
+                    onPositioningEnded: { result in 
+                        self.completePositioning()
+                    })
+            )
+        } catch {
+            return AnyView(
+                VStack{
+                    Text("The Device name or UID provided could not be found in.")
+                    Button("Back to Place") {
+                        self.completePositioning()
+                    }
+                    .buttonStyle(.bordered)
+                    .padding()
+                })
+        }
+    }
+    
     // MARK: Private
     
     private var pairing: NamiPairing<ViewsContainer>
     private var subscriptions = Set<AnyCancellable>()
     private var onPairingComplete: (([UInt8]?) -> Void)?
+    private var onPositioningComplete: (() -> Void)?
     
     var api: any PairingWebAPIProtocol {
         pairing.api
@@ -93,7 +119,7 @@ final class PairingManager {
                     // For this demo we don't store device but would later obtain it from API.
                     // The pairing is not over yet.
                     break
-                case .deviceOperable(_, ssid: _, bssid: let bssid):
+                case .deviceOperable(_, ssid: _, bssid: let bssid, positionAdjustmentNeeded: let repositionNeeded):
                     // Device is fully commisioned.
                     // Values with device ID, network SSID and BSSID pin could be obtained `.deviceOperable(deviceId, ssid: ssid, bssid: bssid)`.
                     self?.completePairing(bssid: bssid)
@@ -116,5 +142,10 @@ final class PairingManager {
     private func completePairing(bssid: [UInt8]? = nil) {
         onPairingComplete?(bssid)
         onPairingComplete = nil
+    }
+    
+    private func completePositioning() {
+        onPositioningComplete?()
+        onPositioningComplete = nil
     }
 }
