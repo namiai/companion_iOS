@@ -15,13 +15,18 @@ struct DeviceRepositionView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Text("WiDAR device repositioning is needed. Press next to start positioning process.")
+                Text("WiDAR device repositioning is needed.")
+                    .padding(.horizontal)
+                Spacer()
                 Button { 
-                    viewModel.presentPositioning(deviceName: viewModel.state.deviceName, deviceUid: viewModel.state.deviceUid)
+                    if let deviceName = viewModel.state.device?.name, let deviceUid = viewModel.state.device?.uid {
+                        viewModel.presentPositioning(deviceName: deviceName, deviceUid: deviceUid)
+                    }
                 } label: {
-                    Text("Next")
+                    Text("Start positioning")
                 }
             }
+            .padding(.horizontal)
         }
     }
     

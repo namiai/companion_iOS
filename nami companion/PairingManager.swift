@@ -39,7 +39,7 @@ final class PairingManager {
     func startPairing(
         roomId: String,
         bssidPin: [UInt8]?,
-        onPairingComplete: (([UInt8]?, Bool?, String?, DeviceUniversalID?) -> Void)? = nil
+        onPairingComplete: (([UInt8]?, DeviceID?, Bool?) -> Void)? = nil
     ) -> some View {
         self.onPairingComplete = onPairingComplete
         do {
@@ -95,7 +95,7 @@ final class PairingManager {
     private var pairing: NamiPairing<ViewsContainer>
     private var subscriptions = Set<AnyCancellable>()
     private var device: Device?
-    private var onPairingComplete: (([UInt8]?, Bool?, String?, DeviceUniversalID?) -> Void)?
+    private var onPairingComplete: (([UInt8]?, DeviceID?, Bool?) -> Void)?
     private var onPositioningComplete: (() -> Void)?
     
     var api: any PairingWebAPIProtocol {
@@ -121,11 +121,11 @@ final class PairingManager {
                     // The pairing is not over yet.
                     self?.device = device as? Device
                     break
-                case .deviceOperable(_, ssid: _, bssid: let bssid, positionAdjustmentNeeded: let repositionNeeded):
+                case .deviceOperable(let deviceId, ssid: _, bssid: let bssid, positionAdjustmentNeeded: let repositionNeeded):
                     // Device is fully commisioned.
                     // Values with device ID, network SSID and BSSID pin could be obtained `.deviceOperable(deviceId, ssid: ssid, bssid: bssid)`.
                     if repositionNeeded == true {
-                        self?.repositionDevice(bssid: bssid, repositionNeeded: repositionNeeded)
+                        self?.completePairing(bssid: bssid, deviceId: deviceId, repositionNeeded: repositionNeeded)
                         break
                     }
                     self?.completePairing(bssid: bssid)
@@ -145,14 +145,8 @@ final class PairingManager {
             .store(in: &subscriptions)
     }
     
-    private func repositionDevice(bssid: [UInt8]? = nil, repositionNeeded: Bool? = nil) {
-        if let device = self.device {
-            onPairingComplete?(bssid, repositionNeeded, device.model.productLabel, device.uid)
-        }
-    }
-    
-    private func completePairing(bssid: [UInt8]? = nil, repositionNeeded: Bool? = nil, deviceName: String? = nil, deviceUid: DeviceUniversalID? = nil) {
-        onPairingComplete?(bssid, repositionNeeded, deviceName, deviceUid)
+    private func completePairing(bssid: [UInt8]? = nil, deviceId: DeviceID? = nil, repositionNeeded: Bool? = nil) {
+        onPairingComplete?(bssid, deviceId, repositionNeeded)
         onPairingComplete = nil
     }
     

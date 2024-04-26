@@ -17,15 +17,6 @@
         "revision" : "4d0c11c85f5a9ec3d1b0daf2dc6daebc0e2df897",
         "version" : "4.4.2"
       }
-    },
-    {
-      "identity" : "namipairing_ios",
-      "kind" : "remoteSourceControl",
-      "location" : "git@github.com:namiai/NamiPairing_iOS.git",
-      "state" : {
-        "branch" : "main",
-        "revision" : "38b90def0cea257af86f30856b5735281af48e9d"
-      }
     }
   ],
   "version" : 2

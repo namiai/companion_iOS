@@ -55,7 +55,26 @@ final class PlaceDevicesListViewModel: ObservableObject {
     }
     
     func presentPositioning(deviceName: String, deviceUid: DeviceUniversalID) {
-        nextRoute(.positioning(deviceName, deviceUid))
+        nextRoute(.positioning(state.pairingInRoomId, state.bssid, deviceName, deviceUid))
+    }
+    
+    func deleteDevice(deviceId: DeviceID) {
+        api.deleteDevice(id: deviceId)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { [self] completion in
+                switch completion {
+                case .finished:
+                    // Handle successful completion
+                    self.updateDevices(api: self.api)
+                case .failure(let error):
+                    // Handle failure
+                    print("Failed to delete device: \(error)")
+                    // Optionally, you can show an alert or perform any other error handling here
+                }
+            }, receiveValue: { _ in
+                // Do nothing here since we are only interested in completion events
+            })
+            .store(in: &disposable)
     }
 }
 
