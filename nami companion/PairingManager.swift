@@ -39,7 +39,7 @@ final class PairingManager {
     func startPairing(
         roomId: String,
         bssidPin: [UInt8]?,
-        onPairingComplete: (([UInt8]?) -> Void)? = nil
+        onPairingComplete: (([UInt8]?, Bool?, String?, DeviceUniversalID?) -> Void)? = nil
     ) -> some View {
         self.onPairingComplete = onPairingComplete
         do {
@@ -94,7 +94,8 @@ final class PairingManager {
     
     private var pairing: NamiPairing<ViewsContainer>
     private var subscriptions = Set<AnyCancellable>()
-    private var onPairingComplete: (([UInt8]?) -> Void)?
+    private var device: Device?
+    private var onPairingComplete: (([UInt8]?, Bool?, String?, DeviceUniversalID?) -> Void)?
     private var onPositioningComplete: (() -> Void)?
     
     var api: any PairingWebAPIProtocol {
@@ -113,15 +114,20 @@ final class PairingManager {
             } receiveValue: { [weak self] deviceState in
                 Log.info("[PairingManager] got device state \(deviceState)")
                 switch deviceState {
-                case .deviceCommisionedAtCloud:
+                case .deviceCommisionedAtCloud(let device, in: _):
                     // Here the associated values might be obtained for case:
                     // `.deviceCommisionedAtCloud(device, in: placeId)`.
                     // For this demo we don't store device but would later obtain it from API.
                     // The pairing is not over yet.
+                    self?.device = device as? Device
                     break
                 case .deviceOperable(_, ssid: _, bssid: let bssid, positionAdjustmentNeeded: let repositionNeeded):
                     // Device is fully commisioned.
                     // Values with device ID, network SSID and BSSID pin could be obtained `.deviceOperable(deviceId, ssid: ssid, bssid: bssid)`.
+                    if repositionNeeded == true {
+                        self?.repositionDevice(bssid: bssid, repositionNeeded: repositionNeeded)
+                        break
+                    }
                     self?.completePairing(bssid: bssid)
                 case .deviceDecommissioned:
                     // Pairing was cancelled/errored unrecoverably after commisioning the Device in nami cloud.
@@ -139,8 +145,14 @@ final class PairingManager {
             .store(in: &subscriptions)
     }
     
-    private func completePairing(bssid: [UInt8]? = nil) {
-        onPairingComplete?(bssid)
+    private func repositionDevice(bssid: [UInt8]? = nil, repositionNeeded: Bool? = nil) {
+        if let device = self.device {
+            onPairingComplete?(bssid, repositionNeeded, device.model.productLabel, device.uid)
+        }
+    }
+    
+    private func completePairing(bssid: [UInt8]? = nil, repositionNeeded: Bool? = nil, deviceName: String? = nil, deviceUid: DeviceUniversalID? = nil) {
+        onPairingComplete?(bssid, repositionNeeded, deviceName, deviceUid)
         onPairingComplete = nil
     }
     

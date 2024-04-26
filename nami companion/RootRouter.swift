@@ -16,12 +16,14 @@ final class RootRouter: ObservableObject {
         case codeInput
         case placeDevices(RoomUUID, [UInt8]?)
         case pairing(RoomUUID, [UInt8]?)
+        case deviceReposition(String, DeviceUniversalID)
         case positioning(String, DeviceUniversalID)
         case errorView(Error)
     }
     
     @Published var route = Routes.codeInput
     var pairingManager: PairingManager?
+    var currentRoomUUID: RoomUUID?
     
     @ViewBuilder
     func buildView() -> some View {
@@ -42,6 +44,13 @@ final class RootRouter: ObservableObject {
             )
         case let .pairing(roomUuid, bssid):
             pairing(roomUuid: roomUuid, bssidPin: bssid)
+        case let .deviceReposition(deviceName, deviceUid):
+            DeviceRepositionView(viewModel: DeviceRepositionViewModel(
+                state: DeviceRepositionViewModel.State(deviceName: deviceName, deviceUid: deviceUid), 
+                nextRoute: { route in
+                    self.route = route
+                })
+            )
         case let .positioning(deviceName, deviceUid):
             positioning(deviceName: deviceName, deviceUid: deviceUid.macFormatted)
         case let .errorView(error):
@@ -56,11 +65,18 @@ final class RootRouter: ObservableObject {
     
     private func pairing(roomUuid: RoomUUID, bssidPin: [UInt8]?) -> some View {
         NavigationView {
-            pairingManager!.startPairing(roomId: roomUuid, bssidPin: bssidPin) { [weak self] bssid in
-                Log.info("Closure on complete pairing called")
-                DispatchQueue.main.async {
-                    self?.route = .placeDevices(roomUuid, bssid)
+            pairingManager!.startPairing(roomId: roomUuid, bssidPin: bssidPin) { [weak self] bssid, repositionNeeded, deviceName, deviceUid in
+                if repositionNeeded == true, let deviceName = deviceName, let deviceUid = deviceUid {
+                    DispatchQueue.main.async {
+                        self?.route = .deviceReposition(deviceName, deviceUid)
+                    }
+                } else {
+                    Log.info("Closure on complete pairing called")
+                    DispatchQueue.main.async {
+                        self?.route = .placeDevices(roomUuid, bssid)
+                    }    
                 }
+                
             }
         }
         .navigationViewStyle(.stack)
@@ -68,7 +84,10 @@ final class RootRouter: ObservableObject {
     
     private func positioning(deviceName: String, deviceUid: String) -> some View {
         NavigationView {
-            pairingManager!.startPositioning(deviceName: deviceName, deviceUid: deviceUid)
+            pairingManager!.startPositioning(deviceName: deviceName, deviceUid: deviceUid) { 
+                // it should dismiss itself
+            }
         }
+        .navigationViewStyle(.stack)
     }
 }
