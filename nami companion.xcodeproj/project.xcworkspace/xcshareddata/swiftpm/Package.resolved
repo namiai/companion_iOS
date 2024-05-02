@@ -1,4 +1,5 @@
 {
+  "originHash" : "872aebaaf0d8473613948b90418a7d95ae37902b02c08539a21644199663ca13",
   "pins" : [
     {
       "identity" : "bottom-sheet",
@@ -14,10 +15,19 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/airbnb/lottie-spm.git",
       "state" : {
-        "revision" : "4d0c11c85f5a9ec3d1b0daf2dc6daebc0e2df897",
-        "version" : "4.4.2"
+        "revision" : "1d29eccc24cc8b75bff9f6804155112c0ffc9605",
+        "version" : "4.4.3"
+      }
+    },
+    {
+      "identity" : "namipairing_ios",
+      "kind" : "remoteSourceControl",
+      "location" : "git@github.com:namiai/NamiPairing_iOS.git",
+      "state" : {
+        "revision" : "39bd794eea814772e121d1ffb8e6b9a3002ece0e",
+        "version" : "1.6.3"
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }
