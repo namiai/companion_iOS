@@ -14,7 +14,10 @@ public struct CustomQRCodeScannerView: View {
     }
     
     public var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Text("Custom QR Scanner")
+            viewModel.undecoratedScannerView
+        }
     }
     
     @ObservedObject var viewModel: QRScanner.ViewModel
