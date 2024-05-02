@@ -7,24 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		207621A82BC4407900CA4D88 /* CustomViewsContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207621A72BC4407900CA4D88 /* CustomViewsContainer.swift */; };
-		207621AA2BC4419B00CA4D88 /* CustomBluetoothUsageHintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207621A92BC4419B00CA4D88 /* CustomBluetoothUsageHintView.swift */; };
-		207621AC2BC444B200CA4D88 /* CustomPowerOnAndScanningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207621AB2BC444B200CA4D88 /* CustomPowerOnAndScanningView.swift */; };
-		207621AE2BC4453D00CA4D88 /* CustomEnableBluetoothInSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207621AD2BC4453D00CA4D88 /* CustomEnableBluetoothInSettingsView.swift */; };
-		207621B02BC4455900CA4D88 /* CustomBluetoothDeviceFoundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207621AF2BC4455900CA4D88 /* CustomBluetoothDeviceFoundView.swift */; };
-		207621B22BC4458300CA4D88 /* CustomAskToConnectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207621B12BC4458300CA4D88 /* CustomAskToConnectView.swift */; };
-		207621B42BC445A500CA4D88 /* CustomQRCodeScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207621B32BC445A500CA4D88 /* CustomQRCodeScannerView.swift */; };
-		207621B62BC445E600CA4D88 /* CustomListWiFiNetworksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207621B52BC445E600CA4D88 /* CustomListWiFiNetworksView.swift */; };
-		207621B82BC445FC00CA4D88 /* CustomOtherWiFiNetworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207621B72BC445FC00CA4D88 /* CustomOtherWiFiNetworkView.swift */; };
-		207621BA2BC4460D00CA4D88 /* CustomEnterWiFiPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207621B92BC4460D00CA4D88 /* CustomEnterWiFiPasswordView.swift */; };
-		207621BC2BC4462F00CA4D88 /* CustomFinishingSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207621BB2BC4462F00CA4D88 /* CustomFinishingSetupView.swift */; };
-		207621BE2BC4464B00CA4D88 /* CustomPairingErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207621BD2BC4464B00CA4D88 /* CustomPairingErrorView.swift */; };
-		207621C02BC4465C00CA4D88 /* CustomBackButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207621BF2BC4465C00CA4D88 /* CustomBackButtonView.swift */; };
-		207621C22BC4475600CA4D88 /* CustomEnableCameraInSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207621C12BC4475600CA4D88 /* CustomEnableCameraInSettingsView.swift */; };
 		206A03DF2BDB8745007DFF2E /* DeviceRepositionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206A03DE2BDB8745007DFF2E /* DeviceRepositionView.swift */; };
 		206A03E12BDB8752007DFF2E /* DeviceRepositionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206A03E02BDB8752007DFF2E /* DeviceRepositionViewModel.swift */; };
 		206A03E82BDBBAFB007DFF2E /* NamiPairing in Frameworks */ = {isa = PBXBuildFile; productRef = 206A03E72BDBBAFB007DFF2E /* NamiPairing */; };
 		207621CF2BC6777100CA4D88 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 207621CE2BC6777100CA4D88 /* Lottie */; };
+		20F39B012BE34643002AB429 /* CustomQRCodeScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F39AF32BE34643002AB429 /* CustomQRCodeScannerView.swift */; };
+		20F39B022BE34643002AB429 /* CustomBluetoothUsageHintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F39AF42BE34643002AB429 /* CustomBluetoothUsageHintView.swift */; };
+		20F39B032BE34643002AB429 /* CustomPairingErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F39AF52BE34643002AB429 /* CustomPairingErrorView.swift */; };
+		20F39B042BE34643002AB429 /* CustomPowerOnAndScanningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F39AF62BE34643002AB429 /* CustomPowerOnAndScanningView.swift */; };
+		20F39B052BE34643002AB429 /* CustomEnableBluetoothInSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F39AF72BE34643002AB429 /* CustomEnableBluetoothInSettingsView.swift */; };
+		20F39B062BE34643002AB429 /* CustomViewsContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F39AF82BE34643002AB429 /* CustomViewsContainer.swift */; };
+		20F39B072BE34643002AB429 /* CustomBackButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F39AF92BE34643002AB429 /* CustomBackButtonView.swift */; };
+		20F39B082BE34643002AB429 /* CustomBluetoothDeviceFoundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F39AFA2BE34643002AB429 /* CustomBluetoothDeviceFoundView.swift */; };
+		20F39B092BE34643002AB429 /* CustomEnableCameraInSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F39AFB2BE34643002AB429 /* CustomEnableCameraInSettingsView.swift */; };
+		20F39B0A2BE34643002AB429 /* CustomOtherWiFiNetworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F39AFC2BE34643002AB429 /* CustomOtherWiFiNetworkView.swift */; };
+		20F39B0B2BE34643002AB429 /* CustomAskToConnectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F39AFD2BE34643002AB429 /* CustomAskToConnectView.swift */; };
+		20F39B0C2BE34643002AB429 /* CustomFinishingSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F39AFE2BE34643002AB429 /* CustomFinishingSetupView.swift */; };
+		20F39B0D2BE34643002AB429 /* CustomEnterWiFiPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F39AFF2BE34643002AB429 /* CustomEnterWiFiPasswordView.swift */; };
+		20F39B0E2BE34643002AB429 /* CustomListWiFiNetworksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F39B002BE34643002AB429 /* CustomListWiFiNetworksView.swift */; };
 		492CD30E2AD5091200F4743D /* BottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 492CD30D2AD5091200F4743D /* BottomSheet */; };
 		49D9179E2AFCADF4000E344B /* PlaceDevicesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D9179D2AFCADF4000E344B /* PlaceDevicesListViewModel.swift */; };
 		49E2212B29A75669008DF366 /* nami_companionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2212A29A75669008DF366 /* nami_companionApp.swift */; };
@@ -53,23 +53,23 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		207621A72BC4407900CA4D88 /* CustomViewsContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewsContainer.swift; sourceTree = "<group>"; };
-		207621A92BC4419B00CA4D88 /* CustomBluetoothUsageHintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBluetoothUsageHintView.swift; sourceTree = "<group>"; };
-		207621AB2BC444B200CA4D88 /* CustomPowerOnAndScanningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPowerOnAndScanningView.swift; sourceTree = "<group>"; };
-		207621AD2BC4453D00CA4D88 /* CustomEnableBluetoothInSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomEnableBluetoothInSettingsView.swift; sourceTree = "<group>"; };
-		207621AF2BC4455900CA4D88 /* CustomBluetoothDeviceFoundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBluetoothDeviceFoundView.swift; sourceTree = "<group>"; };
-		207621B12BC4458300CA4D88 /* CustomAskToConnectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAskToConnectView.swift; sourceTree = "<group>"; };
-		207621B32BC445A500CA4D88 /* CustomQRCodeScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomQRCodeScannerView.swift; sourceTree = "<group>"; };
-		207621B52BC445E600CA4D88 /* CustomListWiFiNetworksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomListWiFiNetworksView.swift; sourceTree = "<group>"; };
-		207621B72BC445FC00CA4D88 /* CustomOtherWiFiNetworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomOtherWiFiNetworkView.swift; sourceTree = "<group>"; };
-		207621B92BC4460D00CA4D88 /* CustomEnterWiFiPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomEnterWiFiPasswordView.swift; sourceTree = "<group>"; };
-		207621BB2BC4462F00CA4D88 /* CustomFinishingSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFinishingSetupView.swift; sourceTree = "<group>"; };
-		207621BD2BC4464B00CA4D88 /* CustomPairingErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPairingErrorView.swift; sourceTree = "<group>"; };
-		207621BF2BC4465C00CA4D88 /* CustomBackButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBackButtonView.swift; sourceTree = "<group>"; };
-		207621C12BC4475600CA4D88 /* CustomEnableCameraInSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomEnableCameraInSettingsView.swift; sourceTree = "<group>"; };
 		206A03DE2BDB8745007DFF2E /* DeviceRepositionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceRepositionView.swift; sourceTree = "<group>"; };
 		206A03E02BDB8752007DFF2E /* DeviceRepositionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceRepositionViewModel.swift; sourceTree = "<group>"; };
 		206A03E52BDBB86F007DFF2E /* NamiPairing_iOS */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = NamiPairing_iOS; path = ../nami_libraries/NamiPairing_iOS; sourceTree = "<group>"; };
+		20F39AF32BE34643002AB429 /* CustomQRCodeScannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomQRCodeScannerView.swift; sourceTree = "<group>"; };
+		20F39AF42BE34643002AB429 /* CustomBluetoothUsageHintView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomBluetoothUsageHintView.swift; sourceTree = "<group>"; };
+		20F39AF52BE34643002AB429 /* CustomPairingErrorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPairingErrorView.swift; sourceTree = "<group>"; };
+		20F39AF62BE34643002AB429 /* CustomPowerOnAndScanningView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPowerOnAndScanningView.swift; sourceTree = "<group>"; };
+		20F39AF72BE34643002AB429 /* CustomEnableBluetoothInSettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomEnableBluetoothInSettingsView.swift; sourceTree = "<group>"; };
+		20F39AF82BE34643002AB429 /* CustomViewsContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomViewsContainer.swift; sourceTree = "<group>"; };
+		20F39AF92BE34643002AB429 /* CustomBackButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomBackButtonView.swift; sourceTree = "<group>"; };
+		20F39AFA2BE34643002AB429 /* CustomBluetoothDeviceFoundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomBluetoothDeviceFoundView.swift; sourceTree = "<group>"; };
+		20F39AFB2BE34643002AB429 /* CustomEnableCameraInSettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomEnableCameraInSettingsView.swift; sourceTree = "<group>"; };
+		20F39AFC2BE34643002AB429 /* CustomOtherWiFiNetworkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomOtherWiFiNetworkView.swift; sourceTree = "<group>"; };
+		20F39AFD2BE34643002AB429 /* CustomAskToConnectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAskToConnectView.swift; sourceTree = "<group>"; };
+		20F39AFE2BE34643002AB429 /* CustomFinishingSetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomFinishingSetupView.swift; sourceTree = "<group>"; };
+		20F39AFF2BE34643002AB429 /* CustomEnterWiFiPasswordView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomEnterWiFiPasswordView.swift; sourceTree = "<group>"; };
+		20F39B002BE34643002AB429 /* CustomListWiFiNetworksView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomListWiFiNetworksView.swift; sourceTree = "<group>"; };
 		49CE32832A162121005876D5 /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 		49D9179D2AFCADF4000E344B /* PlaceDevicesListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceDevicesListViewModel.swift; sourceTree = "<group>"; };
 		49E2212729A75669008DF366 /* nami companion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "nami companion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -101,25 +101,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		207621A62BC4405E00CA4D88 /* CustomUI */ = {
-			isa = PBXGroup;
-			children = (
-				207621A72BC4407900CA4D88 /* CustomViewsContainer.swift */,
-				207621BD2BC4464B00CA4D88 /* CustomPairingErrorView.swift */,
-				207621A92BC4419B00CA4D88 /* CustomBluetoothUsageHintView.swift */,
-				207621AB2BC444B200CA4D88 /* CustomPowerOnAndScanningView.swift */,
-				207621AD2BC4453D00CA4D88 /* CustomEnableBluetoothInSettingsView.swift */,
-				207621C12BC4475600CA4D88 /* CustomEnableCameraInSettingsView.swift */,
-				207621AF2BC4455900CA4D88 /* CustomBluetoothDeviceFoundView.swift */,
-				207621B12BC4458300CA4D88 /* CustomAskToConnectView.swift */,
-				207621B32BC445A500CA4D88 /* CustomQRCodeScannerView.swift */,
-				207621B52BC445E600CA4D88 /* CustomListWiFiNetworksView.swift */,
-				207621B72BC445FC00CA4D88 /* CustomOtherWiFiNetworkView.swift */,
-				207621B92BC4460D00CA4D88 /* CustomEnterWiFiPasswordView.swift */,
-				207621BB2BC4462F00CA4D88 /* CustomFinishingSetupView.swift */,
-				207621BF2BC4465C00CA4D88 /* CustomBackButtonView.swift */,
-			);
-			path = CustomUI;
 		206A03DD2BDB8726007DFF2E /* DeviceReposition */ = {
 			isa = PBXGroup;
 			children = (
@@ -127,6 +108,27 @@
 				206A03E02BDB8752007DFF2E /* DeviceRepositionViewModel.swift */,
 			);
 			path = DeviceReposition;
+			sourceTree = "<group>";
+		};
+		20F39AF22BE34643002AB429 /* CustomUI */ = {
+			isa = PBXGroup;
+			children = (
+				20F39AF32BE34643002AB429 /* CustomQRCodeScannerView.swift */,
+				20F39AF42BE34643002AB429 /* CustomBluetoothUsageHintView.swift */,
+				20F39AF52BE34643002AB429 /* CustomPairingErrorView.swift */,
+				20F39AF62BE34643002AB429 /* CustomPowerOnAndScanningView.swift */,
+				20F39AF72BE34643002AB429 /* CustomEnableBluetoothInSettingsView.swift */,
+				20F39AF82BE34643002AB429 /* CustomViewsContainer.swift */,
+				20F39AF92BE34643002AB429 /* CustomBackButtonView.swift */,
+				20F39AFA2BE34643002AB429 /* CustomBluetoothDeviceFoundView.swift */,
+				20F39AFB2BE34643002AB429 /* CustomEnableCameraInSettingsView.swift */,
+				20F39AFC2BE34643002AB429 /* CustomOtherWiFiNetworkView.swift */,
+				20F39AFD2BE34643002AB429 /* CustomAskToConnectView.swift */,
+				20F39AFE2BE34643002AB429 /* CustomFinishingSetupView.swift */,
+				20F39AFF2BE34643002AB429 /* CustomEnterWiFiPasswordView.swift */,
+				20F39B002BE34643002AB429 /* CustomListWiFiNetworksView.swift */,
+			);
+			path = CustomUI;
 			sourceTree = "<group>";
 		};
 		49CE32722A14D9DB005876D5 /* Frameworks */ = {
@@ -158,9 +160,9 @@
 		49E2212929A75669008DF366 /* nami companion */ = {
 			isa = PBXGroup;
 			children = (
-				207621A62BC4405E00CA4D88 /* CustomUI */,
 				49E2215129A7B14E008DF366 /* nami-companion-Info.plist */,
 				49E2212A29A75669008DF366 /* nami_companionApp.swift */,
+				20F39AF22BE34643002AB429 /* CustomUI */,
 				49E2214229A77667008DF366 /* SessionCode */,
 				49E2214329A7767B008DF366 /* DevicesList */,
 				206A03DD2BDB8726007DFF2E /* DeviceReposition */,
@@ -263,7 +265,6 @@
 			mainGroup = 49E2211E29A75669008DF366;
 			packageReferences = (
 				492CD30C2AD5091200F4743D /* XCRemoteSwiftPackageReference "bottom-sheet" */,
-				207621C92BC6515B00CA4D88 /* XCRemoteSwiftPackageReference "NamiPairing_iOS" */,
 				207621CD2BC6777100CA4D88 /* XCRemoteSwiftPackageReference "lottie-spm" */,
 			);
 			productRefGroup = 49E2212829A75669008DF366 /* Products */;
@@ -292,31 +293,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				207621AE2BC4453D00CA4D88 /* CustomEnableBluetoothInSettingsView.swift in Sources */,
-				207621AA2BC4419B00CA4D88 /* CustomBluetoothUsageHintView.swift in Sources */,
 				49E2213F29A75C80008DF366 /* RootRouter.swift in Sources */,
 				49E2213D29A758CC008DF366 /* SessionCodeViewModel.swift in Sources */,
+				20F39B072BE34643002AB429 /* CustomBackButtonView.swift in Sources */,
+				20F39B092BE34643002AB429 /* CustomEnableCameraInSettingsView.swift in Sources */,
+				20F39B012BE34643002AB429 /* CustomQRCodeScannerView.swift in Sources */,
 				49E2215029A7A563008DF366 /* ErrorPresentationView.swift in Sources */,
-				207621BE2BC4464B00CA4D88 /* CustomPairingErrorView.swift in Sources */,
+				20F39B062BE34643002AB429 /* CustomViewsContainer.swift in Sources */,
+				20F39B082BE34643002AB429 /* CustomBluetoothDeviceFoundView.swift in Sources */,
 				49E2214929A792AE008DF366 /* PlaceDevicesListView.swift in Sources */,
-				207621B42BC445A500CA4D88 /* CustomQRCodeScannerView.swift in Sources */,
+				20F39B032BE34643002AB429 /* CustomPairingErrorView.swift in Sources */,
+				20F39B0C2BE34643002AB429 /* CustomFinishingSetupView.swift in Sources */,
 				49E2214B29A79C26008DF366 /* PairingManager.swift in Sources */,
-				207621B02BC4455900CA4D88 /* CustomBluetoothDeviceFoundView.swift in Sources */,
-				207621C02BC4465C00CA4D88 /* CustomBackButtonView.swift in Sources */,
+				20F39B022BE34643002AB429 /* CustomBluetoothUsageHintView.swift in Sources */,
 				49D9179E2AFCADF4000E344B /* PlaceDevicesListViewModel.swift in Sources */,
+				20F39B0D2BE34643002AB429 /* CustomEnterWiFiPasswordView.swift in Sources */,
+				20F39B042BE34643002AB429 /* CustomPowerOnAndScanningView.swift in Sources */,
 				206A03DF2BDB8745007DFF2E /* DeviceRepositionView.swift in Sources */,
 				49E2214E29A7A332008DF366 /* ErrorPresentationViewModel.swift in Sources */,
-				207621B22BC4458300CA4D88 /* CustomAskToConnectView.swift in Sources */,
-				207621B82BC445FC00CA4D88 /* CustomOtherWiFiNetworkView.swift in Sources */,
-				207621C22BC4475600CA4D88 /* CustomEnableCameraInSettingsView.swift in Sources */,
-				207621B62BC445E600CA4D88 /* CustomListWiFiNetworksView.swift in Sources */,
-				207621A82BC4407900CA4D88 /* CustomViewsContainer.swift in Sources */,
-				207621BA2BC4460D00CA4D88 /* CustomEnterWiFiPasswordView.swift in Sources */,
 				49E2212D29A75669008DF366 /* SessionCodeView.swift in Sources */,
-				207621AC2BC444B200CA4D88 /* CustomPowerOnAndScanningView.swift in Sources */,
+				20F39B0E2BE34643002AB429 /* CustomListWiFiNetworksView.swift in Sources */,
 				206A03E12BDB8752007DFF2E /* DeviceRepositionViewModel.swift in Sources */,
+				20F39B0A2BE34643002AB429 /* CustomOtherWiFiNetworkView.swift in Sources */,
 				49E2212B29A75669008DF366 /* nami_companionApp.swift in Sources */,
-				207621BC2BC4462F00CA4D88 /* CustomFinishingSetupView.swift in Sources */,
+				20F39B052BE34643002AB429 /* CustomEnableBluetoothInSettingsView.swift in Sources */,
+				20F39B0B2BE34643002AB429 /* CustomAskToConnectView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -544,12 +545,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		207621C92BC6515B00CA4D88 /* XCRemoteSwiftPackageReference "NamiPairing_iOS" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "git@github.com:namiai/NamiPairing_iOS.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.5.0;
 		207621CD2BC6777100CA4D88 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
