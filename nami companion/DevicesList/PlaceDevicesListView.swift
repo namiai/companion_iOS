@@ -26,6 +26,22 @@ struct PlaceDevicesListView: View {
                         ForEach(viewModel.state.devices, id: \.id) { device in
                             HStack{
                                 Text(device.model.codeName)
+                                Spacer()
+                                if device.model.codeName == "thread_widar_sensor" {
+                                    Button { 
+                                        viewModel.presentPositioning(deviceName: device.name, deviceUid: device.uid)
+                                    } label : {
+                                        Text("Reposition")
+                                    }
+                                }
+                            }
+                            .contextMenu {
+                                Button(action: {
+                                    viewModel.deleteDevice(deviceId: device.id)
+                                }) {
+                                    Text("Delete")
+                                    Image(systemName: "trash")
+                                }
                             }
                         }
                     }

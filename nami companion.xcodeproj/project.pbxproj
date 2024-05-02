@@ -21,8 +21,11 @@
 		207621BE2BC4464B00CA4D88 /* CustomPairingErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207621BD2BC4464B00CA4D88 /* CustomPairingErrorView.swift */; };
 		207621C02BC4465C00CA4D88 /* CustomBackButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207621BF2BC4465C00CA4D88 /* CustomBackButtonView.swift */; };
 		207621C22BC4475600CA4D88 /* CustomEnableCameraInSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207621C12BC4475600CA4D88 /* CustomEnableCameraInSettingsView.swift */; };
+		206A03DF2BDB8745007DFF2E /* DeviceRepositionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206A03DE2BDB8745007DFF2E /* DeviceRepositionView.swift */; };
+		206A03E12BDB8752007DFF2E /* DeviceRepositionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206A03E02BDB8752007DFF2E /* DeviceRepositionViewModel.swift */; };
+		206A03E82BDBBAFB007DFF2E /* NamiPairing in Frameworks */ = {isa = PBXBuildFile; productRef = 206A03E72BDBBAFB007DFF2E /* NamiPairing */; };
+		207621CF2BC6777100CA4D88 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 207621CE2BC6777100CA4D88 /* Lottie */; };
 		492CD30E2AD5091200F4743D /* BottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 492CD30D2AD5091200F4743D /* BottomSheet */; };
-		49A1CC8F2A177BAB002F992B /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 49A1CC8E2A177BAB002F992B /* SwiftProtobuf */; };
 		49D9179E2AFCADF4000E344B /* PlaceDevicesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D9179D2AFCADF4000E344B /* PlaceDevicesListViewModel.swift */; };
 		49E2212B29A75669008DF366 /* nami_companionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2212A29A75669008DF366 /* nami_companionApp.swift */; };
 		49E2212D29A75669008DF366 /* SessionCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2212C29A75669008DF366 /* SessionCodeView.swift */; };
@@ -64,6 +67,9 @@
 		207621BD2BC4464B00CA4D88 /* CustomPairingErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPairingErrorView.swift; sourceTree = "<group>"; };
 		207621BF2BC4465C00CA4D88 /* CustomBackButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBackButtonView.swift; sourceTree = "<group>"; };
 		207621C12BC4475600CA4D88 /* CustomEnableCameraInSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomEnableCameraInSettingsView.swift; sourceTree = "<group>"; };
+		206A03DE2BDB8745007DFF2E /* DeviceRepositionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceRepositionView.swift; sourceTree = "<group>"; };
+		206A03E02BDB8752007DFF2E /* DeviceRepositionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceRepositionViewModel.swift; sourceTree = "<group>"; };
+		206A03E52BDBB86F007DFF2E /* NamiPairing_iOS */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = NamiPairing_iOS; path = ../nami_libraries/NamiPairing_iOS; sourceTree = "<group>"; };
 		49CE32832A162121005876D5 /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 		49D9179D2AFCADF4000E344B /* PlaceDevicesListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceDevicesListViewModel.swift; sourceTree = "<group>"; };
 		49E2212729A75669008DF366 /* nami companion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "nami companion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,7 +93,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				492CD30E2AD5091200F4743D /* BottomSheet in Frameworks */,
-				49A1CC8F2A177BAB002F992B /* SwiftProtobuf in Frameworks */,
+				206A03E82BDBBAFB007DFF2E /* NamiPairing in Frameworks */,
+				207621CF2BC6777100CA4D88 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -113,11 +120,19 @@
 				207621BF2BC4465C00CA4D88 /* CustomBackButtonView.swift */,
 			);
 			path = CustomUI;
+		206A03DD2BDB8726007DFF2E /* DeviceReposition */ = {
+			isa = PBXGroup;
+			children = (
+				206A03DE2BDB8745007DFF2E /* DeviceRepositionView.swift */,
+				206A03E02BDB8752007DFF2E /* DeviceRepositionViewModel.swift */,
+			);
+			path = DeviceReposition;
 			sourceTree = "<group>";
 		};
 		49CE32722A14D9DB005876D5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				206A03E52BDBB86F007DFF2E /* NamiPairing_iOS */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -148,6 +163,7 @@
 				49E2212A29A75669008DF366 /* nami_companionApp.swift */,
 				49E2214229A77667008DF366 /* SessionCode */,
 				49E2214329A7767B008DF366 /* DevicesList */,
+				206A03DD2BDB8726007DFF2E /* DeviceReposition */,
 				49E2214C29A7A301008DF366 /* ErrorPresentation */,
 				49E2213E29A75C80008DF366 /* RootRouter.swift */,
 				49E2214A29A79C26008DF366 /* PairingManager.swift */,
@@ -211,8 +227,9 @@
 			);
 			name = "nami companion";
 			packageProductDependencies = (
-				49A1CC8E2A177BAB002F992B /* SwiftProtobuf */,
 				492CD30D2AD5091200F4743D /* BottomSheet */,
+				207621CE2BC6777100CA4D88 /* Lottie */,
+				206A03E72BDBBAFB007DFF2E /* NamiPairing */,
 			);
 			productName = "nami companion";
 			productReference = 49E2212729A75669008DF366 /* nami companion.app */;
@@ -245,9 +262,9 @@
 			);
 			mainGroup = 49E2211E29A75669008DF366;
 			packageReferences = (
-				49A1CC8D2A177BAB002F992B /* XCRemoteSwiftPackageReference "swift-protobuf" */,
 				492CD30C2AD5091200F4743D /* XCRemoteSwiftPackageReference "bottom-sheet" */,
 				207621C92BC6515B00CA4D88 /* XCRemoteSwiftPackageReference "NamiPairing_iOS" */,
+				207621CD2BC6777100CA4D88 /* XCRemoteSwiftPackageReference "lottie-spm" */,
 			);
 			productRefGroup = 49E2212829A75669008DF366 /* Products */;
 			projectDirPath = "";
@@ -287,6 +304,7 @@
 				207621B02BC4455900CA4D88 /* CustomBluetoothDeviceFoundView.swift in Sources */,
 				207621C02BC4465C00CA4D88 /* CustomBackButtonView.swift in Sources */,
 				49D9179E2AFCADF4000E344B /* PlaceDevicesListViewModel.swift in Sources */,
+				206A03DF2BDB8745007DFF2E /* DeviceRepositionView.swift in Sources */,
 				49E2214E29A7A332008DF366 /* ErrorPresentationViewModel.swift in Sources */,
 				207621B22BC4458300CA4D88 /* CustomAskToConnectView.swift in Sources */,
 				207621B82BC445FC00CA4D88 /* CustomOtherWiFiNetworkView.swift in Sources */,
@@ -296,6 +314,7 @@
 				207621BA2BC4460D00CA4D88 /* CustomEnterWiFiPasswordView.swift in Sources */,
 				49E2212D29A75669008DF366 /* SessionCodeView.swift in Sources */,
 				207621AC2BC444B200CA4D88 /* CustomPowerOnAndScanningView.swift in Sources */,
+				206A03E12BDB8752007DFF2E /* DeviceRepositionViewModel.swift in Sources */,
 				49E2212B29A75669008DF366 /* nami_companionApp.swift in Sources */,
 				207621BC2BC4462F00CA4D88 /* CustomFinishingSetupView.swift in Sources */,
 			);
@@ -422,7 +441,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "nami companion/nami_companion.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 5;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"nami companion/Preview Content\"";
 				DEVELOPMENT_TEAM = PTKKJUD9AS;
@@ -441,7 +460,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
@@ -465,7 +484,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "nami companion/nami_companion.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 5;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"nami companion/Preview Content\"";
 				DEVELOPMENT_TEAM = PTKKJUD9AS;
@@ -484,7 +503,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
@@ -531,6 +550,12 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.5.0;
+		207621CD2BC6777100CA4D88 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.4.2;
 			};
 		};
 		492CD30C2AD5091200F4743D /* XCRemoteSwiftPackageReference "bottom-sheet" */ = {
@@ -541,26 +566,22 @@
 				minimumVersion = 1.0.8;
 			};
 		};
-		49A1CC8D2A177BAB002F992B /* XCRemoteSwiftPackageReference "swift-protobuf" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/apple/swift-protobuf.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		206A03E72BDBBAFB007DFF2E /* NamiPairing */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NamiPairing;
+		};
+		207621CE2BC6777100CA4D88 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 207621CD2BC6777100CA4D88 /* XCRemoteSwiftPackageReference "lottie-spm" */;
+			productName = Lottie;
+		};
 		492CD30D2AD5091200F4743D /* BottomSheet */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 492CD30C2AD5091200F4743D /* XCRemoteSwiftPackageReference "bottom-sheet" */;
 			productName = BottomSheet;
-		};
-		49A1CC8E2A177BAB002F992B /* SwiftProtobuf */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 49A1CC8D2A177BAB002F992B /* XCRemoteSwiftPackageReference "swift-protobuf" */;
-			productName = SwiftProtobuf;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
