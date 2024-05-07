@@ -3,7 +3,6 @@
 import Combine
 import Foundation
 import NamiPairingFramework
-import StandardPairingUI
 import SwiftUI
 
 final class PairingManager {
@@ -13,13 +12,13 @@ final class PairingManager {
         do {
             // This init is called passing all the parameters, but the same defaults for `wifiStorage` and `threadDatasetStore` would be set implicitly.
             // Could be initialized as `try NamiPairing<ViewsContainer>(sessionCode: sessionCode)`.
-            pairing = try NamiPairing<ViewsContainer>(sessionCode: sessionCode, wifiStorage: InMemoryWiFiStorage(), threadDatasetStore: InMemoryThreadDatasetStorage.self)
+            pairing = try NamiPairing<CustomViewsContainer>(sessionCode: sessionCode, wifiStorage: InMemoryWiFiStorage(), threadDatasetStore: InMemoryThreadDatasetStorage.self)
             setupSubscription()
         } catch {
             if let e = error as? NetworkError {
                 Log.warning("[Pairing init] Network Error: \(e.localizedDescription)")
             }
-            if let e = error as? NamiPairing<ViewsContainer>.SDKError {
+            if let e = error as? NamiPairing<CustomViewsContainer>.SDKError {
                 switch e {
                 case let .sessionActivateMalformedResponse(data):
                     Log.warning("[Pairing init] SDK Error: \(e.localizedDescription), containing unparsed data: \(String(data: data, encoding: .utf8) ?? "failed to encode into utf8 string")")
@@ -47,7 +46,7 @@ final class PairingManager {
                 pairing.startPairing(
                     roomId: roomId,
                     // Use ViewsContainer() for default nami views 
-                    pairingSteps: ViewsContainer(),
+                    pairingSteps: CustomViewsContainer(),
                     // Plaese notice the BSSID pin is passed here to limit the WIFi networks search.
                     // Here it is in form of `[UInt8]` but also could be `Data` or ":"-separated MAC-formatted `String`.
                     pairingParameters: bssidPin == nil ? NamiPairing.PairingParameters() : NamiPairing.PairingParameters(bssid: bssidPin!)
@@ -73,7 +72,7 @@ final class PairingManager {
                 pairing.startPositioning(
                     deviceName: deviceName, 
                     deviceUid: deviceUid, 
-                    pairingSteps: ViewsContainer(), 
+                    pairingSteps: CustomViewsContainer(), 
                     onPositioningEnded: { result in 
                         self.completePositioning()
                     })
@@ -93,7 +92,7 @@ final class PairingManager {
     
     // MARK: Private
     
-    private var pairing: NamiPairing<ViewsContainer>
+    private var pairing: NamiPairing<CustomViewsContainer>
     private var subscriptions = Set<AnyCancellable>()
     private var device: Device?
     private var onPairingComplete: (([UInt8]?, DeviceID?, Bool?) -> Void)?

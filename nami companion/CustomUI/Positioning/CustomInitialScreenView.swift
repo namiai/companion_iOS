@@ -1,9 +1,4 @@
-//
-//  CustomInitialScreenView.swift
-//  nami companion
-//
-//  Created by Hoang Viet Tran on 2/5/24.
-//
+// Copyright (c) nami.ai
 
 import SwiftUI
 import NamiPairingFramework
@@ -14,12 +9,13 @@ public struct CustomInitialScreenView: View {
     }
     
     public var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Text("Initial screen of positioning process")
+            Button("How to position") {
+                viewModel.send(.howToPositionTapped)
+            }
+        }
     }
     
     @ObservedObject var viewModel: InitialScreen.ViewModel
 }
-
-//#Preview {
-//    CustomInitialScreenView()
-//}

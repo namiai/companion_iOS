@@ -1,9 +1,4 @@
-//
-//  CustomBluetoothUsageHint.swift
-//  nami companion
-//
-//  Created by Hoang Viet Tran on 8/4/24.
-//
+// Copyright (c) nami.ai
 
 import SwiftUI
 import NamiPairingFramework
@@ -51,7 +46,3 @@ public struct CustomBluetoothUsageHintView: View {
 
     @ObservedObject var viewModel: BluetoothUsageHint.ViewModel
 }
-
-//#Preview {
-//    CustomBluetoothUsageHintView()
-//}

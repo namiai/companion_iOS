@@ -1,9 +1,4 @@
-//
-//  CustomPowerOnAndScanning.swift
-//  nami companion
-//
-//  Created by Hoang Viet Tran on 8/4/24.
-//
+// Copyright (c) nami.ai
 
 import SwiftUI
 import NamiPairingFramework
@@ -14,12 +9,16 @@ public struct CustomPowerOnAndScanningView: View {
     }
     
     public var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Text("This is custom view for power and scanning")
+            
+            HStack {
+                Text("Searching for device")
+                ProgressView()
+                    .padding()
+            }
+        }
     }
     
     @ObservedObject var viewModel: PowerOnAndScanning.ViewModel
 }
-
-//#Preview {
-//    CustomPowerOnAndScanningView()
-//}

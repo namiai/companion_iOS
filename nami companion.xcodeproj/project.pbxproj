@@ -108,19 +108,9 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		206A03DD2BDB8726007DFF2E /* DeviceReposition */ = {
+		203AFD112BE45C5300795A9F /* Commissioning */ = {
 			isa = PBXGroup;
 			children = (
-				206A03DE2BDB8745007DFF2E /* DeviceRepositionView.swift */,
-				206A03E02BDB8752007DFF2E /* DeviceRepositionViewModel.swift */,
-			);
-			path = DeviceReposition;
-			sourceTree = "<group>";
-		};
-		20F39AF22BE34643002AB429 /* CustomUI */ = {
-			isa = PBXGroup;
-			children = (
-				20F39AF82BE34643002AB429 /* CustomViewsContainer.swift */,
 				20F39AF32BE34643002AB429 /* CustomQRCodeScannerView.swift */,
 				20F39AF42BE34643002AB429 /* CustomBluetoothUsageHintView.swift */,
 				20F39AF52BE34643002AB429 /* CustomPairingErrorView.swift */,
@@ -134,11 +124,37 @@
 				20F39AFE2BE34643002AB429 /* CustomFinishingSetupView.swift */,
 				20F39AFF2BE34643002AB429 /* CustomEnterWiFiPasswordView.swift */,
 				20F39B002BE34643002AB429 /* CustomListWiFiNetworksView.swift */,
+			);
+			path = Commissioning;
+			sourceTree = "<group>";
+		};
+		203AFD122BE45C6100795A9F /* Positioning */ = {
+			isa = PBXGroup;
+			children = (
 				20F39B192BE35F50002AB429 /* CustomHowToPositionView.swift */,
 				20F39B1B2BE35F6E002AB429 /* CustomInitialScreenView.swift */,
 				20F39B1D2BE35F7C002AB429 /* CustomPositioningGuidanceView.swift */,
 				20F39B1F2BE35F87002AB429 /* CustomPositioningCompleteView.swift */,
 				20F39B212BE35F93002AB429 /* CustomErrorScreenView.swift */,
+			);
+			path = Positioning;
+			sourceTree = "<group>";
+		};
+		206A03DD2BDB8726007DFF2E /* DeviceReposition */ = {
+			isa = PBXGroup;
+			children = (
+				206A03DE2BDB8745007DFF2E /* DeviceRepositionView.swift */,
+				206A03E02BDB8752007DFF2E /* DeviceRepositionViewModel.swift */,
+			);
+			path = DeviceReposition;
+			sourceTree = "<group>";
+		};
+		20F39AF22BE34643002AB429 /* CustomUI */ = {
+			isa = PBXGroup;
+			children = (
+				20F39AF82BE34643002AB429 /* CustomViewsContainer.swift */,
+				203AFD112BE45C5300795A9F /* Commissioning */,
+				203AFD122BE45C6100795A9F /* Positioning */,
 			);
 			path = CustomUI;
 			sourceTree = "<group>";
@@ -256,6 +272,7 @@
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
 				LastUpgradeCheck = 1430;
+				ORGANIZATIONNAME = nami.ai;
 				TargetAttributes = {
 					49E2212629A75669008DF366 = {
 						CreatedOnToolsVersion = 14.2;

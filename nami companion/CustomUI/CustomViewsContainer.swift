@@ -1,21 +1,19 @@
 //
 //  CustomUIViewsContainer.swift
 //  nami companion
-//
-//  Created by Hoang Viet Tran on 8/4/24.
-//
 
 import Foundation
 import SwiftUI
 import NamiPairingFramework
 
 public struct CustomViewsContainer: PairingStepsContainer {
-    // MARK: Lifecycle
+    
     public init() {}
     
     // MARK: Public
-    public var bluetoothUsageHint: (BluetoothUsageHint.ViewModel) -> CustomBluetoothUsageHintView = CustomBluetoothUsageHintView.init
+    public var bluetoothUsageHint: (BluetoothUsageHint.ViewModel) -> CustomBluetoothUsageHintView = CustomBluetoothUsageHintView.init 
     public var powerOnAndScanning: (PowerOnAndScanning.ViewModel) -> CustomPowerOnAndScanningView = CustomPowerOnAndScanningView.init
+    public var enableCameraInSettings: () -> CustomEnableCameraInSettingsView = CustomEnableCameraInSettingsView.init
     public var enableBluetoothInSettings: () -> CustomEnableBluetoothInSettingsView = CustomEnableBluetoothInSettingsView.init
     public var bluetoothDeviceFound: (BluetoothDeviceFound.ViewModel) -> CustomBluetoothDeviceFoundView = CustomBluetoothDeviceFoundView.init
     public var askToConnect: (AskToConnect.ViewModel) -> CustomAskToConnectView = CustomAskToConnectView.init

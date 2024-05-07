@@ -1,9 +1,4 @@
-//
-//  ContentView.swift
-//  nami companion
-//
-//  Created by Yachin Ilya on 23.02.2023.
-//
+// Copyright (c) nami.ai
 
 import SwiftUI
 import NamiPairingFramework

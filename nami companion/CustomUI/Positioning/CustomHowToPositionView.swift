@@ -1,9 +1,4 @@
-//
-//  CustomHowToPositionView.swift
-//  nami companion
-//
-//  Created by Hoang Viet Tran on 2/5/24.
-//
+// Copyright (c) nami.ai
 
 import SwiftUI
 import NamiPairingFramework
@@ -14,12 +9,13 @@ public struct CustomHowToPositionView: View {
     }
     
     public var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Text("How to re-position device with some fancy animation")
+            Button("Next") {
+                viewModel.send(.startPositioningTapped)
+            }
+        }
     }
     
     @ObservedObject var viewModel: HowToPosition.ViewModel
 }
-
-//#Preview {
-//    CustomHowToPositionView()
-//}
