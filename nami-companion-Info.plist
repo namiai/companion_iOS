@@ -2,13 +2,19 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>NSBluetoothAlwaysUsageDescription</key>
-    <string>Discover and add nami devices</string>
-    <key>NSBluetoothPeripheralUsageDescription</key>
-    <string>Discover and add nami devices</string>
-    <key>NSCameraUsageDescription</key>
-    <string>Camera access for QR scanner</string>
-    <key>NSLocalNetworkUsageDescription</key>
-    <string>Required to read nami devices via Wi-Fi</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Lobster-Regular.ttf</string>
+	</array>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Discover and add nami devices</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Discover and add nami devices</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Camera access for QR scanner</string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>Required to read nami devices via Wi-Fi</string>
+	<key>ATSApplicationFontsPath</key>
+	<string></string>
 </dict>
 </plist>
