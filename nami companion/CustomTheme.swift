@@ -4,25 +4,25 @@ import SwiftUI
 import StandardPairingUI
 
 struct CustomTheme: ThemeProtocol {
-    var headline1: Font = .custom("Lobster-Regular", size: 34)
+    var headline1: Font = .custom("Montserrat-Bold", size: 34)
     
-    var headline2: Font = .custom("Lobster-Regular", size: 28)
+    var headline2: Font = .custom("Montserrat-Bold", size: 28)
     
-    var headline3: Font = .custom("Lobster-Regular", size: 24)
+    var headline3: Font = .custom("Montserrat-Bold", size: 24)
     
-    var headline4: Font = .custom("Lobster-Regular", size: 20)
+    var headline4: Font = .custom("Montserrat-Bold", size: 20)
     
-    var headline5: Font = .custom("Lobster-Regular", size: 17)
+    var headline5: Font = .custom("Montserrat-Bold", size: 17)
     
-    var headline6: Font = .custom("Lobster-Regular", size: 14)
+    var headline6: Font = .custom("Montserrat-Bold", size: 14)
     
-    var paragraph1: Font = .custom("Lobster-Regular", size: 17)
+    var paragraph1: Font = .custom("Montserrat-Regular", size: 17)
     
-    var paragraph2: Font = .custom("Lobster-Regular", size: 14)
+    var paragraph2: Font = .custom("Montserrat-Regular", size: 14)
     
-    var small1: Font = .custom("Lobster-Regular", size: 11)
+    var small1: Font = .custom("Montserrat-Regular", size: 11)
     
-    var small2: Font = .custom("Lobster-Regular", size: 8)
+    var small2: Font = .custom("Montserrat-Regular", size: 8)
     
     var primaryBlack: Color = Color.black
     
