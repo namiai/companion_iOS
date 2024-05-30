@@ -32,7 +32,7 @@ struct CustomTheme: ThemeProtocol {
     
     var white: Color = Color.white
     
-    var background: Color = Color.white
+    var background: Color = Color("Background")
     
     var line: Color = Color.teal
     
@@ -66,6 +66,7 @@ struct CustomTheme: ThemeProtocol {
 struct BlueButton: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
+            .font(.custom("Montserrat-Regular", size: 17))
             .padding()
             .background(Color(red: 0, green: 0, blue: 0.5))
             .foregroundStyle(.white)
