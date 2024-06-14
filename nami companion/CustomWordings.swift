@@ -115,6 +115,7 @@ class CustomWordings: WordingProtocol {
     var widarInfoTitle: String = "gninoitisop eciveD"
     var widarInfoMustOptimisePosition: String = ".krow ot gnisnes rof noitisop lamitpo na ni decalp eb tsum ecived sihT"
     var widarInfoAvoidMovingWhenOptimized: String = ".gnikrow pots gnisnes esuac lliw ecived eht gnivom ,dnuof si noitisop lamitpo ecno"
+    var nextButton: String = "txeN"
 
 
     // MARK: - How to position view
