@@ -1,5 +1,5 @@
 {
-  "originHash" : "872aebaaf0d8473613948b90418a7d95ae37902b02c08539a21644199663ca13",
+  "originHash" : "839147670156f7dd7bf6e773394c0ab6f8d3452f08d6047d8908c0079b7a0196",
   "pins" : [
     {
       "identity" : "bottom-sheet",
@@ -22,7 +22,7 @@
     {
       "identity" : "namipairing_ios",
       "kind" : "remoteSourceControl",
-      "location" : "git@github.com:namiai/NamiPairing_iOS.git",
+      "location" : "https://github.com/namiai/NamiPairing_iOS.git",
       "state" : {
         "revision" : "7c6f2fab630c103b963a01111bc3e0e85cea52b0",
         "version" : "1.7.1"
