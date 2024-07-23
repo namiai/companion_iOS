@@ -121,7 +121,7 @@ final class PairingManager {
                     // The pairing is not over yet.
                     self?.device = device as? Device
                     break
-                case .deviceOperable(let deviceId, _, ssid: _, bssid: let bssid, positionAdjustmentNeeded: let repositionNeeded):
+                case .deviceOperable(let deviceId, ssid: _, bssid: let bssid, positionAdjustmentNeeded: let repositionNeeded):
                     // Device is fully commisioned.
                     // Values with device ID, network SSID and BSSID pin could be obtained `.deviceOperable(deviceId, ssid: ssid, bssid: bssid)`.
                     if repositionNeeded == true {

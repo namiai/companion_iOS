@@ -3,7 +3,7 @@
 import SwiftUI
 import StandardPairingUI
 
-struct CustomWordings: WordingProtocol {
+class CustomWordings: WordingProtocol {
     // MARK: - General
     var ok: String = "KO"
     var next: String = "txeN"
