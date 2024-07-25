@@ -30,6 +30,8 @@ struct CustomTheme: ThemeProtocol {
     
     var tertiaryBlack: Color = Color.orange
     
+    var navigationTitleColor: Color = Color.white
+    
     var white: Color = Color.white
     
     var background: Color = Color("Background")
