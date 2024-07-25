@@ -13,7 +13,7 @@ final class PairingManager {
         do {
             // This init is called passing all the parameters, but the same defaults for `wifiStorage` and `threadDatasetStore` would be set implicitly.
             // Could be initialized as `try NamiPairing<ViewsContainer>(sessionCode: sessionCode)`.
-            pairing = try NamiPairing<ViewsContainer>(sessionCode: sessionCode, wifiStorage: InMemoryWiFiStorage(), threadDatasetStore: InMemoryThreadDatasetStorage.self)
+            pairing = try NamiPairing<BackButtonOnlyViewsContainer>(sessionCode: sessionCode, wifiStorage: InMemoryWiFiStorage(), threadDatasetStore: InMemoryThreadDatasetStorage.self)
             setupSubscription()
         } catch {
             if let e = error as? NetworkError {
@@ -46,7 +46,7 @@ final class PairingManager {
             return try AnyView(
                 pairing.startPairing(
                     roomId: roomId,
-                    pairingSteps: ViewsContainer(),
+                    pairingSteps: BackButtonOnlyViewsContainer(),
                     // Plaese notice the BSSID pin is passed here to limit the WIFi networks search.
                     // Here it is in form of `[UInt8]` but also could be `Data` or ":"-separated MAC-formatted `String`.
                     pairingParameters: bssidPin == nil ? NamiPairing.PairingParameters() : NamiPairing.PairingParameters(bssid: bssidPin!)
@@ -72,7 +72,7 @@ final class PairingManager {
                 pairing.startPositioning(
                     deviceName: deviceName, 
                     deviceUid: deviceUid, 
-                    pairingSteps: ViewsContainer(), 
+                    pairingSteps: BackButtonOnlyViewsContainer(), 
                     onPositioningEnded: { result in 
                         self.completePositioning()
                     })
@@ -92,7 +92,7 @@ final class PairingManager {
     
     // MARK: Private
     
-    private var pairing: NamiPairing<ViewsContainer>
+    private var pairing: NamiPairing<BackButtonOnlyViewsContainer>
     private var subscriptions = Set<AnyCancellable>()
     private var device: Device?
     private var onPairingComplete: (([UInt8]?, DeviceID?, Bool?) -> Void)?
