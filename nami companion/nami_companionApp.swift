@@ -6,8 +6,21 @@ import StandardPairingUI
 
 @main
 struct nami_companionApp: App {
-    @StateObject var themeManager = ThemeManager(selectedTheme: CustomTheme())
-    @StateObject var wordingManager = WordingManager()
+    @StateObject var themeManager = ThemeManager(selectedTheme: NamiTheme())
+    @StateObject var wordingManager = WordingManager(wordings: NavigationTitleWordings())
+    
+    let coloredNavAppearance = UINavigationBarAppearance()
+    
+    init() {
+        coloredNavAppearance.configureWithTransparentBackground()
+        coloredNavAppearance.backgroundColor = .systemOrange
+        coloredNavAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        coloredNavAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+               
+        UINavigationBar.appearance().standardAppearance = coloredNavAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = coloredNavAppearance
+
+    }
     
     var body: some Scene {
         WindowGroup {
