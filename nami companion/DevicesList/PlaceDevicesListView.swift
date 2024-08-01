@@ -95,23 +95,27 @@ struct PlaceDevicesListView: View {
                         .padding()
                     }
 
-//                    Picker("Select Wording", selection: $selectedWording) {
-//                        ForEach(wordings, id: \.self) { wording in
-//                            Text(wording).tag(wording)
-//                        }
-//                    }
-//                    .pickerStyle(MenuPickerStyle())
-//                    .onChange(of: selectedWording) { newWording in
-//                        switch newWording {
-//                        case "Default":
-//                            wordingManager.setWordings(DefaultWording())
-//                        case "Custom":
-//                            wordingManager.setWordings(CustomWording())
-//                        default:
-//                            break
-//                        }
-//                    }
-//                    .padding()
+                    HStack {
+                        Text("Wordings: ")
+                            .padding(.horizontal)
+                        Picker("Select Wording", selection: $selectedWording) {
+                            ForEach(wordings, id: \.self) { wording in
+                                Text(wording).tag(wording)
+                            }
+                        }
+                        .pickerStyle(MenuPickerStyle())
+                        .onChange(of: selectedWording) { newWording in
+                            switch newWording {
+                            case "Default":
+                                wordingManager.resetWordings()
+                            case "Custom":
+                                wordingManager.setWordings(CustomWordings())
+                            default:
+                                break
+                            }
+                        }
+                        .padding()
+                    }
                 }
                 .background(Color.white)
                 .cornerRadius(10)
