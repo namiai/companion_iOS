@@ -35,22 +35,38 @@ final class RootRouter: ObservableObject {
                 self.route = route
             }))
         case let .placeDevices(roomId, bssid):
-            PlaceDevicesListView(viewModel: PlaceDevicesListViewModel(
-                state: PlaceDevicesListViewModel.State(pairingInRoomId: roomId, bssid: bssid),
-                api: pairingManager!.api,
-                nextRoute: { route in
+            if let api = pairingManager?.api {
+                PlaceDevicesListView(viewModel: PlaceDevicesListViewModel(
+                    state: PlaceDevicesListViewModel.State(pairingInRoomId: roomId, bssid: bssid),
+                    api: api,
+                    nextRoute: { route in
+                        self.route = route
+                    })
+                )
+            } else {
+                SessionCodeView(viewModel: SessionCodeViewModel(setupPairingManager: { pairingManager in
+                    self.pairingManager = pairingManager
+                }, nextRoute: { route in
                     self.route = route
-                })
-            )
+                }))
+            }
         case let .pairing(roomUuid, bssid):
             pairing(roomUuid: roomUuid, bssidPin: bssid)
         case let .deviceReposition(roomUuid, deviceId):
-            DeviceRepositionView(viewModel: DeviceRepositionViewModel(
-                state: DeviceRepositionViewModel.State(roomUuid: roomUuid, deviceId: deviceId), api: pairingManager!.api, 
-                nextRoute: { route in
+            if let api = pairingManager?.api {
+                DeviceRepositionView(viewModel: DeviceRepositionViewModel(
+                    state: DeviceRepositionViewModel.State(roomUuid: roomUuid, deviceId: deviceId), api: api, 
+                    nextRoute: { route in
+                        self.route = route
+                    })
+                )
+            } else {
+                SessionCodeView(viewModel: SessionCodeViewModel(setupPairingManager: { pairingManager in
+                    self.pairingManager = pairingManager
+                }, nextRoute: { route in
                     self.route = route
-                })
-            )
+                }))
+            }
         case let .positioning(roomUuid, bssid, deviceName, deviceUid):
             positioning(roomUuid: roomUuid, bssid: bssid, deviceName: deviceName, deviceUid: deviceUid.macFormatted)
         case let .errorView(error):
