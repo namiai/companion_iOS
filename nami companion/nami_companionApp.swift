@@ -6,7 +6,7 @@ import StandardPairingUI
 
 @main
 struct nami_companionApp: App {
-    @StateObject var themeManager = ThemeManager(selectedTheme: CustomTheme())
+    @StateObject var themeManager = ThemeManager(selectedTheme: NamiTheme())
     @StateObject var wordingManager = WordingManager()
     
     var body: some Scene {

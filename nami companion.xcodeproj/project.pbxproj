@@ -236,7 +236,7 @@
 			packageReferences = (
 				492CD30C2AD5091200F4743D /* XCRemoteSwiftPackageReference "bottom-sheet" */,
 				207621CD2BC6777100CA4D88 /* XCRemoteSwiftPackageReference "lottie-spm" */,
-				20E153952CABB505003213A8 /* XCRemoteSwiftPackageReference "NamiPairing_iOS" */,
+				207D235E2C5B7D18005558AF /* XCRemoteSwiftPackageReference "NamiPairing_iOS" */,
 			);
 			productRefGroup = 49E2212829A75669008DF366 /* Products */;
 			projectDirPath = "";
