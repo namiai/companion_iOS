@@ -4,6 +4,8 @@ import SwiftUI
 import StandardPairingUI
 
 struct CustomTheme: ThemeProtocol {
+    var navigationTitleColor: Color = Color.cyan
+    
     var headline1: Font = .custom("Montserrat-Bold", size: 34)
     
     var headline2: Font = .custom("Montserrat-Bold", size: 28)

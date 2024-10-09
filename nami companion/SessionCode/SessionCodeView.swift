@@ -1,15 +1,10 @@
-//
-//  ContentView.swift
-//  nami companion
-//
-//  Created by Yachin Ilya on 23.02.2023.
-//
-
 import SwiftUI
 import NamiPairingFramework
 
 struct SessionCodeView: View {
     @ObservedObject var viewModel: SessionCodeViewModel
+    
+    @State private var isErrorPresented = false
     
     init(viewModel: SessionCodeViewModel) {
         self.viewModel = viewModel
@@ -38,5 +33,26 @@ struct SessionCodeView: View {
         }
         .frame(maxWidth: 300)
         .padding()
+        .onChange(of: viewModel.state.error) { error in
+            if error != nil {
+                isErrorPresented = true
+            }
+        }
+        .sheet(isPresented: $isErrorPresented) {
+            VStack {
+                Text("An Error Occurred")
+                    .font(.headline)
+                if let error = viewModel.state.error {
+                    Text(error.detailedMessage)
+                        .multilineTextAlignment(.center)
+                        .padding()
+                }
+                Button("Dismiss") {
+                    isErrorPresented = false
+                }
+                .padding()
+            }
+            .padding()
+        }
     }
 }
