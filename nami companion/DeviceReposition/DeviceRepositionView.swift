@@ -19,7 +19,7 @@ struct DeviceRepositionView: View {
                     .padding(.horizontal)
                 Spacer()
                 Button { 
-                    if let deviceName = viewModel.state.device?.name, let deviceUid = viewModel.state.device?.uid {
+                    if let deviceName = viewModel.state.device?.model.productLabel, let deviceUid = viewModel.state.device?.uid {
                         viewModel.presentPositioning(deviceName: deviceName, deviceUid: deviceUid)
                     }
                 } label: {
