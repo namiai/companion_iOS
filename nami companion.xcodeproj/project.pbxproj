@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		204957DB2BECE51A000707BF /* CustomTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204957DA2BECE51A000707BF /* CustomTheme.swift */; };
+		204A11822CD334C8001D2744 /* KeychainWiFiStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204A11812CD334C8001D2744 /* KeychainWiFiStorage.swift */; };
+		204A11842CD334D4001D2744 /* KeychainThreadDatasetStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204A11832CD334D4001D2744 /* KeychainThreadDatasetStorage.swift */; };
 		204DFF112CB64AD4000CC9C0 /* NamiPairing in Frameworks */ = {isa = PBXBuildFile; productRef = 204DFF102CB64AD4000CC9C0 /* NamiPairing */; };
 		206A03DF2BDB8745007DFF2E /* DeviceRepositionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206A03DE2BDB8745007DFF2E /* DeviceRepositionView.swift */; };
 		206A03E12BDB8752007DFF2E /* DeviceRepositionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206A03E02BDB8752007DFF2E /* DeviceRepositionViewModel.swift */; };
@@ -45,6 +47,8 @@
 /* Begin PBXFileReference section */
 		204957C82BEB3B23000707BF /* CustomTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTheme.swift; sourceTree = "<group>"; };
 		204957DA2BECE51A000707BF /* CustomTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTheme.swift; sourceTree = "<group>"; };
+		204A11812CD334C8001D2744 /* KeychainWiFiStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainWiFiStorage.swift; sourceTree = "<group>"; };
+		204A11832CD334D4001D2744 /* KeychainThreadDatasetStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainThreadDatasetStorage.swift; sourceTree = "<group>"; };
 		206A03DE2BDB8745007DFF2E /* DeviceRepositionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceRepositionView.swift; sourceTree = "<group>"; };
 		206A03E02BDB8752007DFF2E /* DeviceRepositionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceRepositionViewModel.swift; sourceTree = "<group>"; };
 		20D4AAC02BF477930059F9A3 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
@@ -87,6 +91,15 @@
 				204957C82BEB3B23000707BF /* CustomTheme.swift */,
 			);
 			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		204A11802CD334B4001D2744 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				204A11832CD334D4001D2744 /* KeychainThreadDatasetStorage.swift */,
+				204A11812CD334C8001D2744 /* KeychainWiFiStorage.swift */,
+			);
+			path = Storage;
 			sourceTree = "<group>";
 		};
 		206A03DD2BDB8726007DFF2E /* DeviceReposition */ = {
@@ -133,6 +146,7 @@
 				49E2212A29A75669008DF366 /* nami_companionApp.swift */,
 				20D98D472C1BCF78004EFAD0 /* CustomWordings.swift */,
 				204957DA2BECE51A000707BF /* CustomTheme.swift */,
+				204A11802CD334B4001D2744 /* Storage */,
 				49E2214229A77667008DF366 /* SessionCode */,
 				49E2214329A7767B008DF366 /* DevicesList */,
 				206A03DD2BDB8726007DFF2E /* DeviceReposition */,
@@ -275,7 +289,9 @@
 				49D9179E2AFCADF4000E344B /* PlaceDevicesListViewModel.swift in Sources */,
 				206A03DF2BDB8745007DFF2E /* DeviceRepositionView.swift in Sources */,
 				49E2214E29A7A332008DF366 /* ErrorPresentationViewModel.swift in Sources */,
+				204A11842CD334D4001D2744 /* KeychainThreadDatasetStorage.swift in Sources */,
 				49E2212D29A75669008DF366 /* SessionCodeView.swift in Sources */,
+				204A11822CD334C8001D2744 /* KeychainWiFiStorage.swift in Sources */,
 				20D98D482C1BCF7B004EFAD0 /* CustomWordings.swift in Sources */,
 				206A03E12BDB8752007DFF2E /* DeviceRepositionViewModel.swift in Sources */,
 				49E2212B29A75669008DF366 /* nami_companionApp.swift in Sources */,

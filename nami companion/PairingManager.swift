@@ -14,7 +14,10 @@ final class PairingManager {
 
         do {
             // Initialize pairing inside the do block after the stored properties are set
-            self.pairing = try NamiPairing<ViewsContainer>(sessionCode: sessionCode, wifiStorage: InMemoryWiFiStorage(), threadDatasetStore: InMemoryThreadDatasetStorage.self)
+            // Using built in SDK's WiFi Storage and Thread Dataset Store, data stored are only available in one session
+            // self.pairing = try NamiPairing<ViewsContainer>(sessionCode: sessionCode, wifiStorage: InMemoryWiFiStorage(), threadDatasetStore: InMemoryThreadDatasetStorage.self)
+            
+            self.pairing = try NamiPairing<ViewsContainer>(sessionCode: sessionCode, wifiStorage: KeychainWiFiStorage(), threadDatasetStore: KeychainThreadDatasetStorage.self)
             setupSubscription()
         } catch {
             self.onError?(handleError(error))
