@@ -1,3 +1,5 @@
+// Copyright (c) nami.ai
+
 import NamiPairingFramework
 
 final public class KeychainThreadDatasetStorage: ThreadSecureStorageProtocol {

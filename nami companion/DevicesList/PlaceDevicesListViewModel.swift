@@ -1,3 +1,4 @@
+// Copyright (c) nami.ai
 
 import Foundation
 import Combine

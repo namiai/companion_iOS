@@ -1,15 +1,6 @@
 {
-  "originHash" : "839147670156f7dd7bf6e773394c0ab6f8d3452f08d6047d8908c0079b7a0196",
+  "originHash" : "7b6abc1e4363a16d0a2dbb082430c7efb21b749a8231feb45dcbb2935efd0cde",
   "pins" : [
-    {
-      "identity" : "bottom-sheet",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/weitieda/bottom-sheet",
-      "state" : {
-        "revision" : "6b21007153365235418f3943a960a1f9546592e0",
-        "version" : "1.0.12"
-      }
-    },
     {
       "identity" : "lottie-spm",
       "kind" : "remoteSourceControl",
@@ -22,10 +13,9 @@
     {
       "identity" : "namipairing_ios",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/namiai/NamiPairing_iOS.git",
+      "location" : "git@github.com:namiai/NamiPairing_iOS.git",
       "state" : {
-        "revision" : "a31d509cc237b6f0ef4afb47175da23c4071d34c",
-        "version" : "2.2.0"
+        "revision" : "d42b218cad70a40c9549b10ba06005901b15189b"
       }
     }
   ],

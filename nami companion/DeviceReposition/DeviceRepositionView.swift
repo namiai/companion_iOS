@@ -1,9 +1,4 @@
-//
-//  DeviceRepositionView.swift
-//  nami companion
-//
-//  Created by Hoang Viet Tran on 26/4/24.
-//
+// Copyright (c) nami.ai
 
 import SwiftUI
 
