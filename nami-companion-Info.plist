@@ -4,6 +4,13 @@
 <dict>
 	<key>ATSApplicationFontsPath</key>
 	<string></string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>Czech</string>
+		<string>Dutch</string>
+		<string>ja</string>
+	</array>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>UIAppFonts</key>
