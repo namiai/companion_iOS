@@ -1,12 +1,8 @@
-//
-//  Router.swift
-//  nami companion
-//
-//  Created by Yachin Ilya on 23.02.2023.
-//
+// Copyright (c) nami.ai
 
 import Foundation
 import SwiftUI
+import Combine
 import NamiPairingFramework
 
 typealias RoomUUID = String
@@ -18,11 +14,17 @@ final class RootRouter: ObservableObject {
         case pairing(RoomUUID, [UInt8]?)
         case deviceReposition(RoomUUID, DeviceID)
         case positioning(RoomUUID, [UInt8]?, String, DeviceUniversalID)
-        case errorView(Error)
     }
     
     @Published var route = Routes.codeInput
-    var pairingManager: PairingManager?
+    @Published var currentError: NamiError?
+    
+    var pairingManager: PairingManager? {
+        didSet {
+            subscribeToPairingManagerErrors()
+        }
+    }
+    
     var currentRoomUUID: RoomUUID?
     
     @ViewBuilder
@@ -69,15 +71,19 @@ final class RootRouter: ObservableObject {
             }
         case let .positioning(roomUuid, bssid, deviceName, deviceUid):
             positioning(roomUuid: roomUuid, bssid: bssid, deviceName: deviceName, deviceUid: deviceUid.macFormatted)
-        case let .errorView(error):
-            ErrorPresentationView(viewModel: ErrorPresentationViewModel(
-                state: ErrorPresentationViewModel.State(error: error),
-                nextRoute: { route in
-                    self.route = route
-                })
-            )
         }
     }
+    
+    func clearError() {
+        currentError = nil
+        if let currentRoomUUID = self.currentRoomUUID {
+            self.route = .placeDevices(currentRoomUUID, nil)
+        } else {
+            self.route = .codeInput
+        }
+    }
+    
+    private var cancellables = Set<AnyCancellable>()
     
     private func pairing(roomUuid: RoomUUID, bssidPin: [UInt8]?) -> some View {
         NavigationView {
@@ -107,5 +113,17 @@ final class RootRouter: ObservableObject {
             }
         }
         .navigationViewStyle(.stack)
+    }
+    
+    private func subscribeToPairingManagerErrors() {
+        pairingManager?.errorPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                Log.warning("[RootRouter] Error received: \(error.localizedDescription)")
+                if self?.currentError == nil {
+                    self?.currentError = NamiError(error)
+                }
+            }
+            .store(in: &cancellables)
     }
 }

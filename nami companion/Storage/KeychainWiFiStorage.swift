@@ -1,3 +1,5 @@
+// Copyright (c) nami.ai
+
 import Foundation
 import Security
 import NamiPairingFramework

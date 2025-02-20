@@ -14,6 +14,11 @@ struct nami_companionApp: App {
             router.buildView()
                 .environmentObject(themeManager)
                 .environmentObject(wordingManager)
+                .sheet(item: $router.currentError) { error in
+                    ErrorSheetView(error: error, dismiss: {
+                        router.clearError()
+                    })
+                }
         }
     }
     

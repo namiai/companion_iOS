@@ -10,6 +10,8 @@
 		204957DB2BECE51A000707BF /* CustomTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204957DA2BECE51A000707BF /* CustomTheme.swift */; };
 		204A11822CD334C8001D2744 /* KeychainWiFiStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204A11812CD334C8001D2744 /* KeychainWiFiStorage.swift */; };
 		204A11842CD334D4001D2744 /* KeychainThreadDatasetStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204A11832CD334D4001D2744 /* KeychainThreadDatasetStorage.swift */; };
+		2068BC8F2D5B5441006F6DF1 /* ErrorSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2068BC8E2D5B5441006F6DF1 /* ErrorSheetView.swift */; };
+		2068BC912D5B54CC006F6DF1 /* NamiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2068BC902D5B54CC006F6DF1 /* NamiError.swift */; };
 		206A03DF2BDB8745007DFF2E /* DeviceRepositionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206A03DE2BDB8745007DFF2E /* DeviceRepositionView.swift */; };
 		206A03E12BDB8752007DFF2E /* DeviceRepositionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206A03E02BDB8752007DFF2E /* DeviceRepositionViewModel.swift */; };
 		207621CF2BC6777100CA4D88 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 207621CE2BC6777100CA4D88 /* Lottie */; };
@@ -17,7 +19,6 @@
 		20B9EF932C082DFC000EFA6E /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20D4AAC12BF477930059F9A3 /* Montserrat-Bold.ttf */; };
 		20B9EF942C082DFF000EFA6E /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20D4AAC02BF477930059F9A3 /* Montserrat-Regular.ttf */; };
 		20D98D482C1BCF7B004EFAD0 /* CustomWordings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D98D472C1BCF78004EFAD0 /* CustomWordings.swift */; };
-		492CD30E2AD5091200F4743D /* BottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 492CD30D2AD5091200F4743D /* BottomSheet */; };
 		49D9179E2AFCADF4000E344B /* PlaceDevicesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D9179D2AFCADF4000E344B /* PlaceDevicesListViewModel.swift */; };
 		49E2212B29A75669008DF366 /* nami_companionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2212A29A75669008DF366 /* nami_companionApp.swift */; };
 		49E2212D29A75669008DF366 /* SessionCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2212C29A75669008DF366 /* SessionCodeView.swift */; };
@@ -49,6 +50,8 @@
 		204957DA2BECE51A000707BF /* CustomTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTheme.swift; sourceTree = "<group>"; };
 		204A11812CD334C8001D2744 /* KeychainWiFiStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainWiFiStorage.swift; sourceTree = "<group>"; };
 		204A11832CD334D4001D2744 /* KeychainThreadDatasetStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainThreadDatasetStorage.swift; sourceTree = "<group>"; };
+		2068BC8E2D5B5441006F6DF1 /* ErrorSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorSheetView.swift; sourceTree = "<group>"; };
+		2068BC902D5B54CC006F6DF1 /* NamiError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamiError.swift; sourceTree = "<group>"; };
 		206A03DE2BDB8745007DFF2E /* DeviceRepositionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceRepositionView.swift; sourceTree = "<group>"; };
 		206A03E02BDB8752007DFF2E /* DeviceRepositionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceRepositionViewModel.swift; sourceTree = "<group>"; };
 		20D4AAC02BF477930059F9A3 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
@@ -76,7 +79,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				492CD30E2AD5091200F4743D /* BottomSheet in Frameworks */,
 				20A95E512CE6F5F400BC91D9 /* NamiPairing in Frameworks */,
 				207621CF2BC6777100CA4D88 /* Lottie in Frameworks */,
 			);
@@ -189,6 +191,8 @@
 		49E2214C29A7A301008DF366 /* ErrorPresentation */ = {
 			isa = PBXGroup;
 			children = (
+				2068BC902D5B54CC006F6DF1 /* NamiError.swift */,
+				2068BC8E2D5B5441006F6DF1 /* ErrorSheetView.swift */,
 				49E2214D29A7A332008DF366 /* ErrorPresentationViewModel.swift */,
 				49E2214F29A7A563008DF366 /* ErrorPresentationView.swift */,
 			);
@@ -213,7 +217,6 @@
 			);
 			name = "nami companion";
 			packageProductDependencies = (
-				492CD30D2AD5091200F4743D /* BottomSheet */,
 				207621CE2BC6777100CA4D88 /* Lottie */,
 				20A95E502CE6F5F400BC91D9 /* NamiPairing */,
 			);
@@ -238,17 +241,16 @@
 			};
 			buildConfigurationList = 49E2212229A75669008DF366 /* Build configuration list for PBXProject "nami companion" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = "en-US";
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
-				Base,
 				"en-US",
 				nl,
+				ja,
+				cs,
 			);
 			mainGroup = 49E2211E29A75669008DF366;
 			packageReferences = (
-				492CD30C2AD5091200F4743D /* XCRemoteSwiftPackageReference "bottom-sheet" */,
 				207621CD2BC6777100CA4D88 /* XCRemoteSwiftPackageReference "lottie-spm" */,
 				20A95E4F2CE6F5F400BC91D9 /* XCRemoteSwiftPackageReference "NamiPairing_iOS" */,
 			);
@@ -283,6 +285,7 @@
 				49E2213F29A75C80008DF366 /* RootRouter.swift in Sources */,
 				49E2213D29A758CC008DF366 /* SessionCodeViewModel.swift in Sources */,
 				49E2215029A7A563008DF366 /* ErrorPresentationView.swift in Sources */,
+				2068BC912D5B54CC006F6DF1 /* NamiError.swift in Sources */,
 				49E2214929A792AE008DF366 /* PlaceDevicesListView.swift in Sources */,
 				49E2214B29A79C26008DF366 /* PairingManager.swift in Sources */,
 				204957DB2BECE51A000707BF /* CustomTheme.swift in Sources */,
@@ -293,6 +296,7 @@
 				49E2212D29A75669008DF366 /* SessionCodeView.swift in Sources */,
 				204A11822CD334C8001D2744 /* KeychainWiFiStorage.swift in Sources */,
 				20D98D482C1BCF7B004EFAD0 /* CustomWordings.swift in Sources */,
+				2068BC8F2D5B5441006F6DF1 /* ErrorSheetView.swift in Sources */,
 				206A03E12BDB8752007DFF2E /* DeviceRepositionViewModel.swift in Sources */,
 				49E2212B29A75669008DF366 /* nami_companionApp.swift in Sources */,
 			);
@@ -418,8 +422,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "nami companion/nami_companion.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 24;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"nami companion/Preview Content\"";
 				DEVELOPMENT_TEAM = PTKKJUD9AS;
@@ -442,13 +447,14 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 1.9.0;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ai.nami.nami-companion";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -465,8 +471,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "nami companion/nami_companion.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 24;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"nami companion/Preview Content\"";
 				DEVELOPMENT_TEAM = PTKKJUD9AS;
@@ -489,13 +496,14 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 1.9.0;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ai.nami.nami-companion";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -543,15 +551,7 @@
 			repositoryURL = "https://github.com/namiai/NamiPairing_iOS.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.2.0;
-			};
-		};
-		492CD30C2AD5091200F4743D /* XCRemoteSwiftPackageReference "bottom-sheet" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/weitieda/bottom-sheet";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.8;
+				minimumVersion = 3.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -566,11 +566,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 20A95E4F2CE6F5F400BC91D9 /* XCRemoteSwiftPackageReference "NamiPairing_iOS" */;
 			productName = NamiPairing;
-		};
-		492CD30D2AD5091200F4743D /* BottomSheet */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 492CD30C2AD5091200F4743D /* XCRemoteSwiftPackageReference "bottom-sheet" */;
-			productName = BottomSheet;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

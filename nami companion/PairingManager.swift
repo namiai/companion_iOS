@@ -7,6 +7,8 @@ import StandardPairingUI
 import SwiftUI
 
 final class PairingManager {
+    public var errorPublisher = PassthroughSubject<Error, Never>()
+    
     // MARK: Lifecycle
 
     init?(sessionCode: String, onError: ((CompanionError) -> Void)? = nil) {
@@ -17,7 +19,18 @@ final class PairingManager {
             // Using built in SDK's WiFi Storage and Thread Dataset Store, data stored are only available in one session
             // self.pairing = try NamiPairing<ViewsContainer>(sessionCode: sessionCode, wifiStorage: InMemoryWiFiStorage(), threadDatasetStore: InMemoryThreadDatasetStorage.self)
             
-            self.pairing = try NamiPairing<ViewsContainer>(sessionCode: sessionCode, wifiStorage: KeychainWiFiStorage(), threadDatasetStore: KeychainThreadDatasetStorage.self)
+            self.pairing = try NamiPairing<ViewsContainer>(
+                sessionCode: sessionCode, 
+                wifiStorage: KeychainWiFiStorage(), 
+                threadDatasetStore: KeychainThreadDatasetStorage.self, 
+                onError: { [weak self] error in
+                    guard let self = self else { return }
+                    
+                    Log.warning("[PairingManager] Error occurred: \(error.localizedDescription)")
+                    self.errorPublisher.send(error)
+                    self.onError?(CompanionError(error: error, detailedMessage: error.localizedDescription))
+                }
+            )
             setupSubscription()
         } catch {
             self.onError?(handleError(error))
@@ -132,7 +145,7 @@ final class PairingManager {
             let message = "[Pairing init] Network Error: \(e.localizedDescription)"
             Log.warning(message)
             return CompanionError(error: e, detailedMessage: message)
-        } else if let e = error as? NamiPairing<ViewsContainer>.SDKError {
+        } else if let e = error as? SDKError {
             switch e {
             case let .sessionActivateMalformedResponse(data):
                 let message = "[Pairing init] SDK Error: \(e.localizedDescription), containing unparsed data: \(String(data: data, encoding: .utf8) ?? "failed to encode into utf8 string")"
