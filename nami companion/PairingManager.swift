@@ -22,14 +22,7 @@ final class PairingManager {
             self.pairing = try NamiPairing<ViewsContainer>(
                 sessionCode: sessionCode, 
                 wifiStorage: KeychainWiFiStorage(), 
-                threadDatasetStore: KeychainThreadDatasetStorage.self, 
-                onError: { [weak self] error in
-                    guard let self = self else { return }
-                    
-                    Log.warning("[PairingManager] Error occurred: \(error.localizedDescription)")
-                    self.errorPublisher.send(error)
-                    self.onError?(CompanionError(error: error, detailedMessage: error.localizedDescription))
-                }
+                threadDatasetStore: KeychainThreadDatasetStorage.self
             )
             setupSubscription()
         } catch {
