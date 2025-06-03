@@ -28,6 +28,10 @@ struct PlaceDevicesListView: View {
                             .padding(.horizontal)
                     }
                     if viewModel.state.devices.isEmpty == false {
+                        Button("Delete Thread credentials") {
+                            viewModel.deleteThreadCredentials()
+                        }
+                        
                         List {
                             ForEach(viewModel.state.devices, id: \.id) { device in
                                 HStack {

@@ -12,15 +12,17 @@ final class PlaceDevicesListViewModel: ObservableObject {
     
     struct State {
         var pairingInRoomId: String
+        var placeId: PlaceID
         var bssid: [UInt8]?
         var devices: [any DeviceProtocol] = []
         var offerRetry = false
         var presentingPairing = false
     }
     
-    init(state: State, api: some PairingWebAPIProtocol, nextRoute: @escaping (RootRouter.Routes) -> Void) {
+    init(state: State, api: some PairingWebAPIProtocol, threadDatasetProvider: some PairingThreadOperationalDatasetProviderProtocol, nextRoute: @escaping (RootRouter.Routes) -> Void) {
         self.state = state
         self.api = api
+        self.threadDatasetProvider = threadDatasetProvider
         self.nextRoute = nextRoute
         self.updateDevices(api: api)
     }
@@ -28,6 +30,7 @@ final class PlaceDevicesListViewModel: ObservableObject {
     @Published var state: State
     let nextRoute: (RootRouter.Routes) -> Void
     private let api: any PairingWebAPIProtocol
+    private let threadDatasetProvider: any PairingThreadOperationalDatasetProviderProtocol
     private var disposable = Set<AnyCancellable>()
     
     func updateDevices<API: PairingWebAPIProtocol>(api: API) {
@@ -76,6 +79,10 @@ final class PlaceDevicesListViewModel: ObservableObject {
                 // Do nothing here since we are only interested in completion events
             })
             .store(in: &disposable)
+    }
+    
+    func deleteThreadCredentials() {        
+        threadDatasetProvider.removeDataset(for: state.placeId)
     }
 }
 

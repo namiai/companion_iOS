@@ -100,6 +100,14 @@ final class PairingManager {
     var api: (any PairingWebAPIProtocol)? {
         pairing?.api
     }
+    
+    var threadDatasetProvider: (any PairingThreadOperationalDatasetProviderProtocol)? {
+        pairing?.threadDatasetProvider
+    }
+    
+    var placeId: PlaceID? {
+        pairing?.placeId
+    }
 
     private func setupSubscription() {
         pairing?.devicePairingState

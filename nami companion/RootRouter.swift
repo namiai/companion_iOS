@@ -37,10 +37,11 @@ final class RootRouter: ObservableObject {
                 self.route = route
             }))
         case let .placeDevices(roomId, bssid):
-            if let api = pairingManager?.api {
+            if let api = pairingManager?.api, let placeId = pairingManager?.placeId, let threadDatasetProvider = pairingManager?.threadDatasetProvider {
                 PlaceDevicesListView(viewModel: PlaceDevicesListViewModel(
-                    state: PlaceDevicesListViewModel.State(pairingInRoomId: roomId, bssid: bssid),
+                    state: PlaceDevicesListViewModel.State(pairingInRoomId: roomId, placeId: placeId, bssid: bssid),
                     api: api,
+                    threadDatasetProvider: threadDatasetProvider,
                     nextRoute: { route in
                         self.route = route
                     })

@@ -11,8 +11,12 @@
 		<string>Dutch</string>
 		<string>ja</string>
 	</array>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_nami._tcp</string>
+		<string>_namicoaps._udp</string>
+		<string>_dartVmService._tcp</string>
+	</array>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Montserrat-Bold.ttf</string>
