@@ -35,7 +35,13 @@ struct PlaceDevicesListView: View {
                         List {
                             ForEach(viewModel.state.devices, id: \.id) { device in
                                 HStack {
-                                    Text(device.model.codeName)
+                                    VStack {
+                                        Text("\(device.name) (\(device.uid))")
+                                            .font(.title)
+                                        Text(device.model.codeName)
+                                            .font(.caption)
+                                        
+                                    }
                                     Spacer()
                                     if device.model.codeName == "thread_widar_sensor" {
                                         Button {

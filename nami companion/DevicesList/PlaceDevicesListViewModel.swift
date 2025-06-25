@@ -55,7 +55,7 @@ final class PlaceDevicesListViewModel: ObservableObject {
     }
     
     func presentPairing() {
-        nextRoute(.pairing(state.pairingInRoomId, state.bssid))
+        nextRoute(.pairing(state.pairingInRoomId, state.devices.isEmpty ? nil : state.bssid))
     }
     
     func presentPositioning(deviceName: String, deviceUid: DeviceUniversalID) {

@@ -23,7 +23,7 @@ final class SessionCodeViewModel: ObservableObject {
     
     struct State {
         var sessionCode: String = ""
-        var roomId: String = ""
+        var roomId: String = "d7326c19-b0da-45b5-ad67-ec4c7f4321bb"
         var buttonTapped = false
         var error: CompanionError?
         
