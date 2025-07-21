@@ -5,127 +5,73 @@ import NamiPairingFramework
 import StandardPairingUI
 
 struct PlaceDevicesListView: View {
-    @EnvironmentObject var themeManager: ThemeManager
-    @EnvironmentObject var wordingManager: WordingManager
-    
     init(viewModel: PlaceDevicesListViewModel) {
         self.viewModel = viewModel
     }
     
-    @State private var selectedTheme: String = "Nami"
-    @State private var selectedWording: String = "Default"
-    
-    private let themes = ["Nami", "Custom"]
-    private let wordings = ["Default", "Custom"]
-    
     var body: some View {
-        ZStack {
-            NavigationView {
-                VStack {
-                    if let bssid = viewModel.state.bssid {
+        NavigationView {
+            VStack {
+                if let bssid = viewModel.state.bssid {
+                    VStack {
                         Text("BSSID Pin: " + bssid.map { String(format: "%02.2hhx", $0) }.joined(separator: ":"))
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal)
                     }
-                    if viewModel.state.devices.isEmpty == false {
-                        Button("Delete Thread credentials") {
-                            viewModel.deleteThreadCredentials()
-                        }
-                        
-                        List {
-                            ForEach(viewModel.state.devices, id: \.id) { device in
-                                HStack {
-                                    VStack {
-                                        Text("\(device.name) (\(device.uid))")
-                                            .font(.title)
-                                        Text(device.model.codeName)
-                                            .font(.caption)
-                                        
-                                    }
-                                    Spacer()
-                                    if device.model.codeName == "thread_widar_sensor" {
-                                        Button {
-                                            viewModel.presentPositioning(deviceName: device.name, deviceUid: device.uid)
-                                        } label: {
-                                            Text("Reposition")
-                                        }
-                                    }
-                                }
-                                .contextMenu {
-                                    Button(action: {
-                                        viewModel.deleteDevice(deviceId: device.id)
-                                    }) {
-                                        Text("Delete")
-                                        Image(systemName: "trash")
-                                    }
-                                }
-                            }
-                        }
-                    }
                 }
-                .navigationTitle("Place devices list")
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button {
-                            viewModel.presentPairing()
-                        } label: {
-                            Image(systemName: "plus")
+                
+                if viewModel.state.devices.isEmpty == false {
+                    Button("Delete Thread credentials") {
+                        viewModel.deleteThreadCredentials()
+                    }
+                    
+                    List {
+                        ForEach(viewModel.state.devices, id: \.id) { device in
+                            deviceRow(for: device)
                         }
                     }
                 }
             }
-            
-            VStack {
-                Spacer()
-                VStack(spacing: 16) {
-                    HStack {
-                        Text("Theme: ")
-                            .padding(.horizontal)
-                        Picker("Select Theme", selection: $selectedTheme) {
-                            ForEach(themes, id: \.self) { theme in
-                                Text(theme).tag(theme)
-                            }
+            .navigationTitle("Place devices list")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Menu {
+                        Button("Add Single Device") {
+                            viewModel.presentPairing()
                         }
-                        .pickerStyle(MenuPickerStyle())
-                        .onChange(of: selectedTheme) { newTheme in
-                            switch newTheme {
-                            case "Nami":
-                                themeManager.setTheme(NamiTheme())
-                            case "Custom":
-                                themeManager.setTheme(CustomTheme())
-                            default:
-                                break
-                            }
+                        Button("Start Setup Guide") {
+                            viewModel.presentSetupGuide()
                         }
-                        .padding()
-                    }
-
-                    HStack {
-                        Text("Wordings: ")
-                            .padding(.horizontal)
-                        Picker("Select Wording", selection: $selectedWording) {
-                            ForEach(wordings, id: \.self) { wording in
-                                Text(wording).tag(wording)
-                            }
+                        Button("Show settings") {
+                            viewModel.presentSettings()
                         }
-                        .pickerStyle(MenuPickerStyle())
-                        .onChange(of: selectedWording) { newWording in
-                            switch newWording {
-                            case "Default":
-                                wordingManager.resetWordings()
-                            case "Custom":
-                                wordingManager.setWordings(CustomWordings())
-                            default:
-                                break
-                            }
-                        }
-                        .padding()
+                    } label: {
+                        Image(systemName: "plus")
                     }
                 }
-                .background(Color.white)
-                .cornerRadius(10)
-                .shadow(radius: 5)
-                .padding()
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func deviceRow(for device: Device) -> some View {
+        HStack {
+            Text(device.type ?? "unknown")
+            Spacer()
+            if device.type == "thread_widar_sensor" {
+                Button {
+                    viewModel.presentPositioning(deviceName: device.name, deviceUid: device.uid)
+                } label: {
+                    Text("Reposition")
+                }
+            }
+        }
+        .contextMenu {
+            Button(action: {
+                viewModel.deleteDevice(deviceId: device.id)
+            }) {
+                Text("Delete")
+                Image(systemName: "trash")
             }
         }
     }

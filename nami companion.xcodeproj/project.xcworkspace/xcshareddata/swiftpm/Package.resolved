@@ -1,6 +1,15 @@
 {
-  "originHash" : "7b6abc1e4363a16d0a2dbb082430c7efb21b749a8231feb45dcbb2935efd0cde",
+  "originHash" : "339798076578f3857b876050e72258f1172c5fa749624e42955c6e34d502e1df",
   "pins" : [
+    {
+      "identity" : "divkit-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/divkit/divkit-ios",
+      "state" : {
+        "revision" : "e0c95c5f8aa32140ab47a6e675de27838540a370",
+        "version" : "32.8.0"
+      }
+    },
     {
       "identity" : "lottie-spm",
       "kind" : "remoteSourceControl",
@@ -15,7 +24,35 @@
       "kind" : "remoteSourceControl",
       "location" : "git@github.com:namiai/NamiPairing_iOS.git",
       "state" : {
-        "revision" : "7b5fce48a9ec5bf61a65f26d4a23cb0bc4573b75"
+        "branch" : "setup_guide",
+        "revision" : "0e3fec5dc11e25acba5c71916d4a940f7d80f765"
+      }
+    },
+    {
+      "identity" : "swift-cmark",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftlang/swift-cmark.git",
+      "state" : {
+        "revision" : "b022b08312decdc46585e0b3440d97f6f22ef703",
+        "version" : "0.6.0"
+      }
+    },
+    {
+      "identity" : "swift-markdown",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-markdown.git",
+      "state" : {
+        "revision" : "ea79e83c8744d2b50b0dc2d5bbd1e857e1253bf9",
+        "version" : "0.6.0"
+      }
+    },
+    {
+      "identity" : "vgsl",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/yandex/vgsl.git",
+      "state" : {
+        "revision" : "c7ef18d2cb15342c868751c893692b6f6f96e2c1",
+        "version" : "7.6.0"
       }
     }
   ],

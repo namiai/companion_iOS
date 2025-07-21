@@ -5,16 +5,17 @@ import Combine
 import SwiftUI
 import NamiPairingFramework
 
+// MARK: - PlaceDevicesListViewModel
+
 final class PlaceDevicesListViewModel: ObservableObject {
     enum EmptyPlaceError: Error {
         case noZoneOrRoom
     }
     
     struct State {
-        var pairingInRoomId: String
         var placeId: PlaceID
         var bssid: [UInt8]?
-        var devices: [any DeviceProtocol] = []
+        var devices: [Device] = []
         var offerRetry = false
         var presentingPairing = false
     }
@@ -34,32 +35,38 @@ final class PlaceDevicesListViewModel: ObservableObject {
     private var disposable = Set<AnyCancellable>()
     
     func updateDevices<API: PairingWebAPIProtocol>(api: API) {
-        api.listDevices(query: DeviceQuery())
+        api.listDevices(query: NamiDevicesQuery(placeIds: [self.state.placeId]))
             .map(\.devices)
+            .map { $0.map(Device.init) }
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] completion in
-                guard let self else { return }
-                if case .failure(_) = completion {
-                    DispatchQueue.main.async {
-                        self.state.offerRetry = true
-                    }
-                    return
-                }
-            } receiveValue: { [weak self] devices in
-                DispatchQueue.main.async {
+            .sink(
+                receiveCompletion: { [weak self] completion in
+                    guard let self, case .failure = completion else { return }
+                    self.state.offerRetry = true
+                },
+                receiveValue: { [weak self] devices in
                     self?.state.devices = devices
                     self?.state.offerRetry = false
                 }
-            }
+            )
             .store(in: &disposable)
     }
     
     func presentPairing() {
-        nextRoute(.pairing(state.pairingInRoomId, state.devices.isEmpty ? nil : state.bssid))
+//        nextRoute(.pairing(state.pairingInRoomId, state.devices.isEmpty ? nil : state.bssid))
+        nextRoute(.presentSingleDeviceSetup)
     }
     
     func presentPositioning(deviceName: String, deviceUid: DeviceUniversalID) {
-        nextRoute(.positioning(state.pairingInRoomId, state.bssid, deviceName, deviceUid))
+//        nextRoute(.positioning(state.pairingInRoomId, state.bssid, deviceName, deviceUid))
+    }
+    
+    func presentSetupGuide() {
+        nextRoute(.presentSetupGuide)
+    }
+    
+    func presentSettings() {
+        nextRoute(.presentSettings)
     }
     
     func deleteDevice(deviceId: DeviceID) {
@@ -84,28 +91,4 @@ final class PlaceDevicesListViewModel: ObservableObject {
     func deleteThreadCredentials() {        
         threadDatasetProvider.removeDataset(for: state.placeId)
     }
-}
-
-struct DeviceQuery: DevicesQueryProtocol {
-    
-    init(placeIds: [PlaceID] = [], zoneIds: [PlaceZoneID] = [], roomIds: [RoomID] = [], uids: [DeviceUniversalID] = []) {
-        self.placeIds = placeIds
-        self.zoneIds = zoneIds
-        self.roomIds = roomIds
-        self.uids = uids
-    }
-    
-    init(cursor: String) {
-        self.placeIds = []
-        self.zoneIds = []
-        self.roomIds = []
-        self.uids = []
-        self.cursor = cursor
-    }
-    
-    var placeIds: [PlaceID]
-    var zoneIds: [PlaceZoneID]
-    var roomIds: [RoomID]
-    var uids: [NamiPairingFramework.DeviceUniversalID]
-    var cursor: String?
 }
