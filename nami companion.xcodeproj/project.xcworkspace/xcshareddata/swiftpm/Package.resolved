@@ -1,13 +1,13 @@
 {
-  "originHash" : "339798076578f3857b876050e72258f1172c5fa749624e42955c6e34d502e1df",
+  "originHash" : "8766080f7d9709450b00e7239a65ede4dadd73d4d43d5ba56199a195df5e8f94",
   "pins" : [
     {
       "identity" : "divkit-ios",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/divkit/divkit-ios",
       "state" : {
-        "revision" : "e0c95c5f8aa32140ab47a6e675de27838540a370",
-        "version" : "32.8.0"
+        "revision" : "2797238d04e001f3f9441244a617232d280f9bcf",
+        "version" : "32.9.0"
       }
     },
     {
@@ -22,10 +22,9 @@
     {
       "identity" : "namipairing_ios",
       "kind" : "remoteSourceControl",
-      "location" : "git@github.com:namiai/NamiPairing_iOS.git",
+      "location" : "https://github.com/namiai/NamiPairing_iOS.git",
       "state" : {
-        "branch" : "setup_guide",
-        "revision" : "0e3fec5dc11e25acba5c71916d4a940f7d80f765"
+        "revision" : "0719bf32a6bbe4d4c24a79a595a2890908ed64ed"
       }
     },
     {
