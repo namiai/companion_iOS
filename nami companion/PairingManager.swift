@@ -93,19 +93,19 @@ final class PairingManager {
     
     @MainActor func presentSingleDeviceSetup() -> some View {
         return AnyView(
-            pairing.presentEntryPoint(entrypoint: .setupDeviceGuide)
+            pairing.presentEntryPoint(entrypoint: .setupDeviceGuide, pairingSteps: ViewsContainer())
         )
     }
     
     @MainActor func presentSetupGuide() -> some View {
         return AnyView(
-            pairing.presentEntryPoint(entrypoint: .setupKitGuide)
+            pairing.presentEntryPoint(entrypoint: .setupKitGuide, pairingSteps: ViewsContainer())
         )
     }
     
     @MainActor func presentSettings() -> some View {
         return AnyView(
-            pairing.presentEntryPoint(entrypoint: .settings)
+            pairing.presentEntryPoint(entrypoint: .settings, pairingSteps: ViewsContainer())
         )
     }
     

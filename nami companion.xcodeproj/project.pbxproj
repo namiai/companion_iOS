@@ -8,9 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		203076822E2E679200A6EB7D /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203076812E2E679200A6EB7D /* Device.swift */; };
-		203076852E2ECF7800A6EB7D /* DivKit in Frameworks */ = {isa = PBXBuildFile; productRef = 203076842E2ECF7800A6EB7D /* DivKit */; };
-		203076872E2ECF7800A6EB7D /* DivKitExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 203076862E2ECF7800A6EB7D /* DivKitExtensions */; };
-		203076892E2ECF7800A6EB7D /* DivKitSVG in Frameworks */ = {isa = PBXBuildFile; productRef = 203076882E2ECF7800A6EB7D /* DivKitSVG */; };
 		204957DB2BECE51A000707BF /* CustomTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204957DA2BECE51A000707BF /* CustomTheme.swift */; };
 		204A11822CD334C8001D2744 /* KeychainWiFiStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204A11812CD334C8001D2744 /* KeychainWiFiStorage.swift */; };
 		204A11842CD334D4001D2744 /* KeychainThreadDatasetStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204A11832CD334D4001D2744 /* KeychainThreadDatasetStorage.swift */; };
@@ -85,10 +82,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				20A95E512CE6F5F400BC91D9 /* NamiPairing in Frameworks */,
-				203076892E2ECF7800A6EB7D /* DivKitSVG in Frameworks */,
-				203076852E2ECF7800A6EB7D /* DivKit in Frameworks */,
 				207621CF2BC6777100CA4D88 /* Lottie in Frameworks */,
-				203076872E2ECF7800A6EB7D /* DivKitExtensions in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,9 +230,6 @@
 			packageProductDependencies = (
 				207621CE2BC6777100CA4D88 /* Lottie */,
 				20A95E502CE6F5F400BC91D9 /* NamiPairing */,
-				203076842E2ECF7800A6EB7D /* DivKit */,
-				203076862E2ECF7800A6EB7D /* DivKitExtensions */,
-				203076882E2ECF7800A6EB7D /* DivKitSVG */,
 			);
 			productName = "nami companion";
 			productReference = 49E2212729A75669008DF366 /* nami companion.app */;
@@ -273,7 +264,6 @@
 			packageReferences = (
 				207621CD2BC6777100CA4D88 /* XCRemoteSwiftPackageReference "lottie-spm" */,
 				20A95E4F2CE6F5F400BC91D9 /* XCRemoteSwiftPackageReference "NamiPairing_iOS" */,
-				203076832E2ECF7800A6EB7D /* XCRemoteSwiftPackageReference "divkit-ios" */,
 			);
 			productRefGroup = 49E2212829A75669008DF366 /* Products */;
 			projectDirPath = "";
@@ -562,14 +552,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		203076832E2ECF7800A6EB7D /* XCRemoteSwiftPackageReference "divkit-ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/divkit/divkit-ios";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 32.9.0;
-			};
-		};
 		207621CD2BC6777100CA4D88 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
@@ -583,27 +565,12 @@
 			repositoryURL = "https://github.com/namiai/NamiPairing_iOS.git";
 			requirement = {
 				kind = revision;
-				revision = 0719bf32a6bbe4d4c24a79a595a2890908ed64ed;
+				revision = 123444d798a55d096a0b63523fe7e88643c7f1d1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		203076842E2ECF7800A6EB7D /* DivKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 203076832E2ECF7800A6EB7D /* XCRemoteSwiftPackageReference "divkit-ios" */;
-			productName = DivKit;
-		};
-		203076862E2ECF7800A6EB7D /* DivKitExtensions */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 203076832E2ECF7800A6EB7D /* XCRemoteSwiftPackageReference "divkit-ios" */;
-			productName = DivKitExtensions;
-		};
-		203076882E2ECF7800A6EB7D /* DivKitSVG */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 203076832E2ECF7800A6EB7D /* XCRemoteSwiftPackageReference "divkit-ios" */;
-			productName = DivKitSVG;
-		};
 		207621CE2BC6777100CA4D88 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 207621CD2BC6777100CA4D88 /* XCRemoteSwiftPackageReference "lottie-spm" */;

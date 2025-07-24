@@ -1,5 +1,5 @@
 {
-  "originHash" : "8766080f7d9709450b00e7239a65ede4dadd73d4d43d5ba56199a195df5e8f94",
+  "originHash" : "fb0c43a81631860535d2ea27b800475be658fa811fd71a62b225bef52ec14877",
   "pins" : [
     {
       "identity" : "divkit-ios",
@@ -24,7 +24,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/namiai/NamiPairing_iOS.git",
       "state" : {
-        "revision" : "0719bf32a6bbe4d4c24a79a595a2890908ed64ed"
+        "revision" : "123444d798a55d096a0b63523fe7e88643c7f1d1"
       }
     },
     {
@@ -48,10 +48,9 @@
     {
       "identity" : "vgsl",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/yandex/vgsl.git",
+      "location" : "https://github.com/namiai/vgsl.git",
       "state" : {
-        "revision" : "c7ef18d2cb15342c868751c893692b6f6f96e2c1",
-        "version" : "7.6.0"
+        "revision" : "3a1ce6687505ef40965930d198c0f700234bf70b"
       }
     }
   ],
