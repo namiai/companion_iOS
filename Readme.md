@@ -2,7 +2,7 @@ This is the demo application showing the most simple use of nami pairing SDK.
 
 To get started with the SDK:  
 
-Add SPM dependency to your project - https://github.com/namiai/NamiPairing_iOS.git, v4.0.0 and above
+Add SPM dependency to your project - https://github.com/namiai/NamiPairing_iOS.git, v4.0.1 and above
 
 Import frameworks:
 ```
