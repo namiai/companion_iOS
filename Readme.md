@@ -1,16 +1,36 @@
 This is the demo application showing the most simple use of nami pairing SDK.
 
-## Work in progress: SDK
+To get started with the SDK:  
 
-The SDK is under developement. It comes in two parts:
-- `NamiPairingFramework`: a framework performing the pairing steps and not providing the UI.
-- `StandardPairingUI`: a framework bringing the default nami UI.
+Add SPM dependency to your project - https://github.com/namiai/NamiPairing_iOS.git, v4.0.0 and above
 
-## Building the project
-Please add 
-- `NamiPairingFramework.xcframework` to `nami companion` target under the `General` tab, `Frameworks, Libraries and Embedded content` and set the `Embed` dropdown to `Embed & Sign`.
-- `StandardPairingUI` to `nami companion` target under the `General` tab, `Frameworks, Libraries and Embedded content` and set the `Embed` dropdown to `Embed & Sign`.
-There's also another way to use the packages: start by adding provided `StandardPairingUI_iOS-example_code_w_framework` code as local Swift Package by selecting `nami companion` project, `Package Dependencies`, `+`, `Add Local...`. Please check `StandardPairingUI_iOS-example_code_w_framework` to be advised where to add `NamiPairingFramework.xcframework`.
-
-## How to use SDK
-Please refer to the provided `Pairing_SDK.pdf` for more details and use examples.
+Import frameworks:
+```
+import NamiPairingFramework
+import StandardPairingUI
+```
+Init the pairing SDK:
+```
+let pairing = try NamiPairing<ViewsContainer>(
+    sessionCode: sessionCode,
+    wifiStorage: InMemoryWiFiStorage(),
+    threadDatasetStore: InMemoryThreadDatasetStorage.self
+)
+```
+SDK instance should be reused during the app lifetime. Same instance can be used to present multiple screens / entrypoints  
+Present the template
+```
+let config = NamiSdkConfig(
+            baseURL: URL(string:"https://mobile-screens.nami.surf/divkit/v0.2.0/precompiled_layouts")!,
+            countryCode: "us",
+            measurementSystem: .imperial,
+            clientId: "alarm_com_security",
+            language: "en-US",
+            appearance: .light
+        )
+pairing.presentEntryPoint(entrypoint: .setupKitGuide, config: config, pairingSteps: ViewsContainer())
+```
+Supported entrpoints:  
+`.settings` - Settings screen  
+`.setupKitGuide` - Setup guide (kits)  
+`.setupDeviceGuide` - Setup a single device
