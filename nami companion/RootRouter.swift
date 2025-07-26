@@ -35,7 +35,7 @@ final class RootRouter: ObservableObject {
         switch route {
         case .codeInput:
             SessionCodeView(viewModel: SessionCodeViewModel(setupPairingManager: { pairingManager in
-                self.pairingManager = pairingManager 
+                self.pairingManager = pairingManager
             }, nextRoute: { route in
                 self.route = route
             }))
@@ -52,7 +52,7 @@ final class RootRouter: ObservableObject {
             pairing(roomUuid: roomUuid, bssidPin: bssid)
         case let .deviceReposition(roomUuid, deviceId):
             DeviceRepositionView(viewModel: DeviceRepositionViewModel(
-                state: DeviceRepositionViewModel.State(roomUuid: roomUuid, deviceId: deviceId), api: pairingManager!.api, 
+                state: DeviceRepositionViewModel.State(roomUuid: roomUuid, deviceId: deviceId), api: pairingManager!.api,
                 nextRoute: { route in
                     self.route = route
                 })
@@ -61,7 +61,7 @@ final class RootRouter: ObservableObject {
             positioning(roomUuid: roomUuid, bssid: bssid, deviceName: deviceName, deviceUid: deviceUid.macFormatted)
         case .presentSingleDeviceSetup:
             presentSingleDeviceSetup()
-        case .presentSetupGuide: 
+        case .presentSetupGuide:
             presentSetupGuide()
         case .presentSettings:
             presentSettings()
@@ -79,7 +79,7 @@ final class RootRouter: ObservableObject {
                     Log.info("Closure on complete pairing called")
                     DispatchQueue.main.async {
                         self?.route = .placeDevices(bssid)
-                    }    
+                    }
                 }
                 
             }
@@ -89,10 +89,10 @@ final class RootRouter: ObservableObject {
     
     private func positioning(roomUuid: RoomUUID, bssid: [UInt8]?, deviceName: String, deviceUid: String) -> some View {
         NavigationView {
-            pairingManager!.startPositioning(deviceName: deviceName, deviceUid: deviceUid) { 
+            pairingManager!.startPositioning(deviceName: deviceName, deviceUid: deviceUid) {
                 DispatchQueue.main.async {
                     self.route = .placeDevices(bssid)
-                }  
+                }
             }
         }
         .navigationViewStyle(.stack)
@@ -101,14 +101,18 @@ final class RootRouter: ObservableObject {
     @MainActor
     private func presentSingleDeviceSetup() -> some View {
         NavigationView {
-            pairingManager!.presentSingleDeviceSetup()
+            pairingManager!.presentSingleDeviceSetup{ [weak self] event in
+                self?.onGuideEnded(event: event)
+            }
         }
     }
     
     @MainActor
     private func presentSetupGuide() -> some View {
         NavigationView {
-            pairingManager!.presentSetupGuide()
+            pairingManager!.presentSetupGuide{ [weak self] event in
+                self?.onGuideEnded(event: event)
+            }
         }
         .navigationViewStyle(.stack)
     }
@@ -116,11 +120,40 @@ final class RootRouter: ObservableObject {
     @MainActor
     private func presentSettings() -> some View {
         NavigationView {
-            pairingManager!.presentSettings()
+            pairingManager!.presentSettings { [weak self] event in
+                self?.onGuideEnded(event: event)
+            }
         }
         .navigationViewStyle(.stack)
     }
-
+    
+    private func onGuideEnded(event: PairingManager.GuideAction) {
+        Log.info("[SDK Tester Root Router] got Setup Guide event: \(event)")
+        switch event {
+        case .cancel:
+            DispatchQueue.main.async {
+                self.route = .placeDevices(nil)
+            }
+        case .startPairing(roomId: let roomId):
+            (self.pairingManager!.api as? WebAPI)?.listPlaceZones(for: self.pairingManager!.placeId)
+                .compactMap { zones in
+                    zones.flatMap(\.rooms).first { room in
+                        room.id == roomId
+                    }?.externalId
+                }
+                .sink { _ in } receiveValue: { roomUuid in
+                    DispatchQueue.main.async {
+                        self.route = .pairing(roomUuid, nil)
+                    }
+                }
+                .store(in: &cancellables)
+        case .error(let error):
+            Log.warning("[Setup Guide] some error occurred: \(error.localizedDescription)")
+            break
+//            self.currentError = NamiError(error)
+        }
+    }
+    
     private func subscribeToPairingManagerErrors() {
         pairingManager?.errorPublisher
             .receive(on: DispatchQueue.main)
