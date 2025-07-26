@@ -20,7 +20,7 @@ final class DeviceRepositionViewModel: ObservableObject {
     }
     
     func updateDevices<API: PairingWebAPIProtocol>(api: API) {
-        api.listDevices(query: DeviceQuery())
+        api.listDevices(query: NamiDevicesQuery())
             .map(\.devices)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in

@@ -10,35 +10,33 @@ final class PairingManager {
     public var errorPublisher = PassthroughSubject<Error, Never>()
     
     // MARK: Lifecycle
-
-    init?(sessionCode: String, onError: ((CompanionError) -> Void)? = nil) {
-        self.onError = onError
-
-        do {
-            // Initialize pairing inside the do block after the stored properties are set
-            // Using built in SDK's WiFi Storage and Thread Dataset Store, data stored are only available in one session
-            // self.pairing = try NamiPairing<ViewsContainer>(sessionCode: sessionCode, wifiStorage: InMemoryWiFiStorage(), threadDatasetStore: InMemoryThreadDatasetStorage.self)
-            
-            self.pairing = try NamiPairing<ViewsContainer>(
-                sessionCode: sessionCode, 
-                wifiStorage: KeychainWiFiStorage(), 
-                threadDatasetStore: KeychainThreadDatasetStorage.self, 
-                onError: { [weak self] error in
-                    guard let self = self else { return }
-                    
-                    Log.warning("[PairingManager] Error occurred: \(error.localizedDescription)")
-                    self.errorPublisher.send(error)
-                    self.onError?(CompanionError(error: error, detailedMessage: error.localizedDescription))
-                }
-            )
-            setupSubscription()
-        } catch {
-            self.onError?(handleError(error))
-        }
+    
+    init(sessionCode: String, clientId: String, templatesBaseUrl: String, countryCode: String, language: String, appearance: NamiAppearance, measurementSystem: NamiMeasurementSystem, onError: @escaping (Error) -> Void) throws {
+        self.sessionCode = sessionCode
+        self.clientId = clientId
+        self.templatesBaseUrl = templatesBaseUrl
+        self.countryCode = countryCode
+        self.language = language
+        self.appearance = appearance
+        self.measurementSystem = measurementSystem
+        self.onErrorCallback = onError
+        self.pairing = try NamiPairing<ViewsContainer>(
+            sessionCode: sessionCode,
+            clientId: clientId,
+            templatesBaseUrl: templatesBaseUrl,
+            countryCode: countryCode,
+            language: language,
+            appearance: appearance,
+            measurementSystem: measurementSystem,
+            wifiStorage: InMemoryWiFiStorage(),
+            threadDatasetStore: InMemoryThreadDatasetStorage.self
+        )
+        
+        try setupSubscription()
     }
-
+    
     // MARK: Internal
-
+    
     func startPairing(
         roomId: String,
         bssidPin: [UInt8]?,
@@ -47,91 +45,133 @@ final class PairingManager {
         self.onPairingComplete = onPairingComplete
         do {
             return try AnyView(
-                pairing?.startPairing(
+                pairing.startPairing(
                     roomId: roomId,
                     pairingSteps: ViewsContainer(),
+                    // Plaese notice the BSSID pin is passed here to limit the WIFi networks search.
+                    // Here it is in form of `[UInt8]` but also could be `Data` or ":"-separated MAC-formatted `String`.
                     pairingParameters: bssidPin == nil ? NamiPairing.PairingParameters() : NamiPairing.PairingParameters(bssid: bssidPin!)
                 )
             )
         } catch {
-            self.onError?(handleError(error))
             return AnyView(
-                VStack {
+                VStack{
                     Text("The Room ID provided could not be found in the Place topology.")
                     Button("Back to Place") {
                         self.completePairing()
                     }
                     .buttonStyle(.bordered)
                     .padding()
-                }
-            )
+                })
         }
     }
-
+    
     func startPositioning(deviceName: String, deviceUid: String, onPositioningComplete: (() -> Void)? = nil) -> some View {
         self.onPositioningComplete = onPositioningComplete
         do {
             return try AnyView(
-                pairing?.startPositioning(
-                    deviceName: deviceName,
-                    deviceUid: deviceUid,
-                    pairingSteps: ViewsContainer(),
-                    onPositioningEnded: { result in
+                pairing.startPositioning(
+                    deviceName: deviceName, 
+                    deviceUid: deviceUid, 
+                    pairingSteps: ViewsContainer(), 
+                    onPositioningEnded: { result in 
                         self.completePositioning()
                     })
             )
         } catch {
-            self.onError?(handleError(error))
             return AnyView(
-                VStack {
-                    Text("The Device name or UID provided could not be found.")
+                VStack{
+                    Text("The Device name or UID provided could not be found in.")
                     Button("Back to Place") {
                         self.completePositioning()
                     }
                     .buttonStyle(.bordered)
                     .padding()
-                }
-            )
+                })
         }
     }
-
+    
+    @MainActor func presentSingleDeviceSetup() -> some View {
+        return AnyView(
+            pairing.presentEntryPoint(entrypoint: .setupDeviceGuide, pairingSteps: ViewsContainer())
+        )
+    }
+    
+    @MainActor func presentSetupGuide() -> some View {
+        return AnyView(
+            pairing.presentEntryPoint(entrypoint: .setupKitGuide, pairingSteps: ViewsContainer())
+        )
+    }
+    
+    @MainActor func presentSettings() -> some View {
+        return AnyView(
+            pairing.presentEntryPoint(entrypoint: .settings, pairingSteps: ViewsContainer())
+        )
+    }
+    
     // MARK: Private
-
-    private var pairing: NamiPairing<ViewsContainer>? // Make optional to allow initialization inside init
+    
     private var subscriptions = Set<AnyCancellable>()
     private var device: Device?
     private var onPairingComplete: (([UInt8]?, DeviceID?, Bool?) -> Void)?
     private var onPositioningComplete: (() -> Void)?
-    private var onError: ((CompanionError) -> Void)?
-
-    var api: (any PairingWebAPIProtocol)? {
-        pairing?.api
+    private let sessionCode: String
+    private let clientId: String
+    private let templatesBaseUrl: String
+    private let countryCode: String
+    private let language: String
+    private let appearance: NamiAppearance
+    private let measurementSystem: NamiMeasurementSystem
+    private let onErrorCallback: (Error) -> Void
+    private let pairing: NamiPairing<ViewsContainer>
+    
+    var api: any PairingWebAPIProtocol {
+        pairing.api
     }
 
-    private func setupSubscription() {
-        pairing?.devicePairingState
+    var threadDatasetProvider: any PairingThreadOperationalDatasetProviderProtocol {
+        pairing.threadDatasetProvider
+    }
+    
+    var placeId: PlaceID {
+        pairing.placeId
+    } 
+    
+    private func setupSubscription() throws {
+        pairing.devicePairingState
             .subscribe(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 if case let .failure(error) = completion {
-                    if let error = self?.handleError(error) {
-                        self?.onError?(error)
-                    }
+                    Log.warning("[PairingManager] Device state publisher failed with error: \(error.localizedDescription)")
                 }
-                self?.completePairing()
+                guard let self else { return }
+                self.completePairing()
             } receiveValue: { [weak self] deviceState in
                 Log.info("[PairingManager] got device state \(deviceState)")
                 switch deviceState {
                 case .deviceCommisionedAtCloud(let device, in: _):
+                    // Here the associated values might be obtained for case:
+                    // `.deviceCommisionedAtCloud(device, in: placeId)`.
+                    // For this demo we don't store device but would later obtain it from API.
+                    // The pairing is not over yet.
                     self?.device = device as? Device
+                    break
                 case .deviceOperable(let deviceId, _, ssid: _, bssid: let bssid, positionAdjustmentNeeded: let repositionNeeded):
+                    // Device is fully commisioned.
+                    // Values with device ID, network SSID and BSSID pin could be obtained `.deviceOperable(deviceId, ssid: ssid, bssid: bssid)`.
                     if repositionNeeded == true {
                         self?.completePairing(bssid: bssid, deviceId: deviceId, repositionNeeded: repositionNeeded)
-                    } else {
-                        self?.completePairing(bssid: bssid)
+                        break
                     }
+                    self?.completePairing(bssid: bssid)
                 case .deviceDecommissioned:
+                    // Pairing was cancelled/errored unrecoverably after commisioning the Device in nami cloud.
+                    // Value with device ID could be obtained `.deviceDecommissioned(deviceId)`
+                    // to revert the actions the SDK consumer might took
+                    // after getting the device on `.deviceCommisionedAtCloud(device, in: placeId)` event.
                     self?.completePairing()
                 case .pairingCancelled:
+                    // Pairing was cancelled prior commisioning the Device in nami cloud.
                     self?.completePairing()
                 @unknown default:
                     break
@@ -139,35 +179,12 @@ final class PairingManager {
             }
             .store(in: &subscriptions)
     }
-
-    private func handleError(_ error: Error) -> CompanionError {
-        if let e = error as? NetworkError {
-            let message = "[Pairing init] Network Error: \(e.localizedDescription)"
-            Log.warning(message)
-            return CompanionError(error: e, detailedMessage: message)
-        } else if let e = error as? SDKError {
-            switch e {
-            case let .sessionActivateMalformedResponse(data):
-                let message = "[Pairing init] SDK Error: \(e.localizedDescription), containing unparsed data: \(String(data: data, encoding: .utf8) ?? "failed to encode into utf8 string")"
-                Log.warning(message)
-                return CompanionError(error: e, detailedMessage: message)
-            default:
-                let message = "[Pairing init] SDK Error: \(e.localizedDescription)"
-                Log.warning(message)
-                return CompanionError(error: e, detailedMessage: message)
-            }
-        } else {
-            let message = "[Pairing init] Unknown Error: \(error.localizedDescription)"
-            Log.warning(message)
-            return CompanionError(error: error, detailedMessage: message)
-        }
-    }
     
     private func completePairing(bssid: [UInt8]? = nil, deviceId: DeviceID? = nil, repositionNeeded: Bool? = nil) {
         onPairingComplete?(bssid, deviceId, repositionNeeded)
         onPairingComplete = nil
     }
-
+    
     private func completePositioning() {
         onPositioningComplete?()
         onPositioningComplete = nil

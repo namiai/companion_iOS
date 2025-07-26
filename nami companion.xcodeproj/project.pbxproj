@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		203076822E2E679200A6EB7D /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203076812E2E679200A6EB7D /* Device.swift */; };
 		204957DB2BECE51A000707BF /* CustomTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204957DA2BECE51A000707BF /* CustomTheme.swift */; };
 		204A11822CD334C8001D2744 /* KeychainWiFiStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204A11812CD334C8001D2744 /* KeychainWiFiStorage.swift */; };
 		204A11842CD334D4001D2744 /* KeychainThreadDatasetStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204A11832CD334D4001D2744 /* KeychainThreadDatasetStorage.swift */; };
@@ -46,6 +47,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		203076812E2E679200A6EB7D /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		204957C82BEB3B23000707BF /* CustomTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTheme.swift; sourceTree = "<group>"; };
 		204957DA2BECE51A000707BF /* CustomTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTheme.swift; sourceTree = "<group>"; };
 		204A11812CD334C8001D2744 /* KeychainWiFiStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainWiFiStorage.swift; sourceTree = "<group>"; };
@@ -87,6 +89,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		203076802E2E678100A6EB7D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				203076812E2E679200A6EB7D /* Device.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		204957D82BECE3F0000707BF /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
@@ -148,6 +158,7 @@
 				49E2212A29A75669008DF366 /* nami_companionApp.swift */,
 				20D98D472C1BCF78004EFAD0 /* CustomWordings.swift */,
 				204957DA2BECE51A000707BF /* CustomTheme.swift */,
+				203076802E2E678100A6EB7D /* Models */,
 				204A11802CD334B4001D2744 /* Storage */,
 				49E2214229A77667008DF366 /* SessionCode */,
 				49E2214329A7767B008DF366 /* DevicesList */,
@@ -285,6 +296,7 @@
 				49E2213F29A75C80008DF366 /* RootRouter.swift in Sources */,
 				49E2213D29A758CC008DF366 /* SessionCodeViewModel.swift in Sources */,
 				49E2215029A7A563008DF366 /* ErrorPresentationView.swift in Sources */,
+				203076822E2E679200A6EB7D /* Device.swift in Sources */,
 				2068BC912D5B54CC006F6DF1 /* NamiError.swift in Sources */,
 				49E2214929A792AE008DF366 /* PlaceDevicesListView.swift in Sources */,
 				49E2214B29A79C26008DF366 /* PairingManager.swift in Sources */,
@@ -424,7 +436,7 @@
 				CODE_SIGN_ENTITLEMENTS = "nami companion/nami_companion.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 24;
+				CURRENT_PROJECT_VERSION = 31;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"nami companion/Preview Content\"";
 				DEVELOPMENT_TEAM = PTKKJUD9AS;
@@ -433,6 +445,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "nami-companion-Info.plist";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Discover and add nami devices";
 				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Discover and add nami devices";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera access for QR scanner";
@@ -451,7 +464,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ai.nami.nami-companion";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -473,7 +486,7 @@
 				CODE_SIGN_ENTITLEMENTS = "nami companion/nami_companion.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 24;
+				CURRENT_PROJECT_VERSION = 31;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"nami companion/Preview Content\"";
 				DEVELOPMENT_TEAM = PTKKJUD9AS;
@@ -482,6 +495,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "nami-companion-Info.plist";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Discover and add nami devices";
 				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Discover and add nami devices";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera access for QR scanner";
@@ -500,7 +514,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ai.nami.nami-companion";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -551,7 +565,7 @@
 			repositoryURL = "https://github.com/namiai/NamiPairing_iOS.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.0;
+				minimumVersion = 4.0.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
