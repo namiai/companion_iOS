@@ -24,7 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/namiai/NamiPairing_iOS.git",
       "state" : {
-        "revision" : "123444d798a55d096a0b63523fe7e88643c7f1d1"
+        "revision" : "fa303df11fd7c8418436b584305a37402bfc3466",
+        "version" : "4.0.1"
       }
     },
     {
@@ -50,7 +51,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/namiai/vgsl.git",
       "state" : {
-        "revision" : "3a1ce6687505ef40965930d198c0f700234bf70b"
+        "revision" : "3a1ce6687505ef40965930d198c0f700234bf70b",
+        "version" : "7.4.2"
       }
     }
   ],
