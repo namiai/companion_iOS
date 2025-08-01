@@ -24,8 +24,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/namiai/NamiPairing_iOS.git",
       "state" : {
-        "revision" : "fa303df11fd7c8418436b584305a37402bfc3466",
-        "version" : "4.0.1"
+        "revision" : "44831161c97a821b6b80f8812890f64578eaad6a"
       }
     },
     {

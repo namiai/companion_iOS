@@ -101,14 +101,18 @@ final class RootRouter: ObservableObject {
     @MainActor
     private func presentSingleDeviceSetup() -> some View {
         NavigationView {
-            pairingManager!.presentSingleDeviceSetup()
+            pairingManager!.presentSingleDeviceSetup{ [weak self] event in
+                self?.onGuideEnded(event: event)
+            }
         }
     }
     
     @MainActor
     private func presentSetupGuide() -> some View {
         NavigationView {
-            pairingManager!.presentSetupGuide()
+            pairingManager!.presentSetupGuide{ [weak self] event in
+                self?.onGuideEnded(event: event)
+            }
         }
         .navigationViewStyle(.stack)
     }
@@ -116,9 +120,38 @@ final class RootRouter: ObservableObject {
     @MainActor
     private func presentSettings() -> some View {
         NavigationView {
-            pairingManager!.presentSettings()
+            pairingManager!.presentSettings { [weak self] event in
+                self?.onGuideEnded(event: event)
+            }
         }
         .navigationViewStyle(.stack)
+    }
+    
+    private func onGuideEnded(event: PairingManager.GuideAction) {
+        Log.info("[SDK Tester Root Router] got Setup Guide event: \(event)")
+        switch event {
+        case .cancel:
+            DispatchQueue.main.async {
+                self.route = .placeDevices(nil)
+            }
+        case .startPairing(roomId: let roomId):
+            (self.pairingManager!.api as? WebAPI)?.listPlaceZones(for: self.pairingManager!.placeId)
+                .compactMap { zones in
+                    zones.flatMap(\.rooms).first { room in
+                        room.id == roomId
+                    }?.externalId
+                }
+                .sink { _ in } receiveValue: { roomUuid in
+                    DispatchQueue.main.async {
+                        self.route = .pairing(roomUuid, nil)
+                    }
+                }
+                .store(in: &cancellables)
+        case .error(let error):
+            Log.warning("[Setup Guide] some error occurred: \(error.localizedDescription)")
+            break
+//            self.currentError = NamiError(error)
+        }
     }
 
     private func subscribeToPairingManagerErrors() {

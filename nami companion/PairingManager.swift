@@ -7,7 +7,14 @@ import StandardPairingUI
 import SwiftUI
 
 final class PairingManager {
+    public enum GuideAction {
+        case startPairing(roomId: RoomID)
+        case cancel
+        case error(Error)
+    }
+    
     public var errorPublisher = PassthroughSubject<Error, Never>()
+    private var config: NamiSdkConfig
     
     // MARK: Lifecycle
     
@@ -20,14 +27,16 @@ final class PairingManager {
         self.appearance = appearance
         self.measurementSystem = measurementSystem
         self.onErrorCallback = onError
+        self.config = NamiSdkConfig(
+            baseURL: URL(string:templatesBaseUrl)!,
+            countryCode: countryCode,
+            measurementSystem: measurementSystem,
+            clientId: clientId,
+            language: language,
+            appearance: appearance
+        )
         self.pairing = try NamiPairing<ViewsContainer>(
             sessionCode: sessionCode,
-            clientId: clientId,
-            templatesBaseUrl: templatesBaseUrl,
-            countryCode: countryCode,
-            language: language,
-            appearance: appearance,
-            measurementSystem: measurementSystem,
             wifiStorage: InMemoryWiFiStorage(),
             threadDatasetStore: InMemoryThreadDatasetStorage.self
         )
@@ -91,21 +100,24 @@ final class PairingManager {
         }
     }
     
-    @MainActor func presentSingleDeviceSetup() -> some View {
+    @MainActor func presentSingleDeviceSetup(onGuideComplete: ((GuideAction) -> Void)?) -> some View {
+        self.onGuideComplete = onGuideComplete
         return AnyView(
-            pairing.presentEntryPoint(entrypoint: .setupDeviceGuide, pairingSteps: ViewsContainer())
+            pairing.presentEntryPoint(entrypoint: .setupDeviceGuide, config: self.config, pairingSteps: ViewsContainer())
         )
     }
     
-    @MainActor func presentSetupGuide() -> some View {
+    @MainActor func presentSetupGuide(onGuideComplete: ((GuideAction) -> Void)?) -> some View {
+        self.onGuideComplete = onGuideComplete
         return AnyView(
-            pairing.presentEntryPoint(entrypoint: .setupKitGuide, pairingSteps: ViewsContainer())
+            pairing.presentEntryPoint(entrypoint: .setupKitGuide, config: self.config, pairingSteps: ViewsContainer())
         )
     }
     
-    @MainActor func presentSettings() -> some View {
+    @MainActor func presentSettings(onGuideComplete: ((GuideAction) -> Void)?) -> some View {
+        self.onGuideComplete = onGuideComplete
         return AnyView(
-            pairing.presentEntryPoint(entrypoint: .settings, pairingSteps: ViewsContainer())
+            pairing.presentEntryPoint(entrypoint: .settings, config: self.config, pairingSteps: ViewsContainer())
         )
     }
     
@@ -115,6 +127,7 @@ final class PairingManager {
     private var device: Device?
     private var onPairingComplete: (([UInt8]?, DeviceID?, Bool?) -> Void)?
     private var onPositioningComplete: (() -> Void)?
+    private var onGuideComplete: ((GuideAction) -> Void)?
     private let sessionCode: String
     private let clientId: String
     private let templatesBaseUrl: String
@@ -176,6 +189,30 @@ final class PairingManager {
                 @unknown default:
                     break
                 }
+            }
+            .store(in: &subscriptions)
+        
+        pairing.setupGuideState
+            .subscribe(on: DispatchQueue.main)
+            .sink { [weak self] completion in
+                if case let .failure(error) = completion {
+                    Log.warning("[PairingManager] Guide state publisher failed with error: \(error.localizedDescription)")
+                    
+                    self?.onGuideComplete?(.error(error))
+                }
+            } receiveValue: { [weak self] event in
+                switch event {
+                case .gotUrl(_):
+                    break
+                case .variableUpdated(_, _):
+                    break
+                case .viewDismissed:
+                    self?.onGuideComplete?(.cancel)
+                case let .pairingRequested(_, _, roomId, _, _):
+//                    self?.onGuideComplete?(.startPairing(roomId: roomId))
+                    break
+                }
+                
             }
             .store(in: &subscriptions)
     }

@@ -564,8 +564,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/namiai/NamiPairing_iOS.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.0.1;
+				kind = revision;
+				revision = 44831161c97a821b6b80f8812890f64578eaad6a;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
