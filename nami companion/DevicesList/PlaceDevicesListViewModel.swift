@@ -35,7 +35,7 @@ final class PlaceDevicesListViewModel: ObservableObject {
     private var disposable = Set<AnyCancellable>()
     
     func updateDevices<API: PairingWebAPIProtocol>(api: API) {
-        api.listDevices(query: NamiDevicesQuery(placeIds: [self.state.placeId]))
+        api.listDevices(query: DevicesQuery(placeIds: [self.state.placeId]))
             .map(\.devices)
             .map { $0.map(Device.init) }
             .receive(on: DispatchQueue.main)
