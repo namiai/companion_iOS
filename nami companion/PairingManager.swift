@@ -15,6 +15,7 @@ final class PairingManager {
     
     public var errorPublisher = PassthroughSubject<Error, Never>()
     private var config: NamiSdkConfig
+    
     // MARK: Lifecycle
     
     init(sessionCode: String, clientId: String, templatesBaseUrl: String, countryCode: String, language: String, appearance: NamiAppearance, measurementSystem: NamiMeasurementSystem, onError: @escaping (Error) -> Void) throws {
@@ -102,21 +103,32 @@ final class PairingManager {
     @MainActor func presentSingleDeviceSetup(onGuideComplete: ((GuideAction) -> Void)?) -> some View {
         self.onGuideComplete = onGuideComplete
         return AnyView(
-            pairing.presentEntryPoint(entrypoint: .setupDeviceGuide, config: self.config, pairingSteps: ViewsContainer())
+            pairing.presentEntryPoint(entrypoint: RemoteTemplateEntrypoint.setupDeviceGuide, config: self.config, pairingSteps: ViewsContainer())
         )
     }
     
     @MainActor func presentSetupGuide(onGuideComplete: ((GuideAction) -> Void)?) -> some View {
         self.onGuideComplete = onGuideComplete
         return AnyView(
-            pairing.presentEntryPoint(entrypoint: .setupKitGuide, config: self.config, pairingSteps: ViewsContainer())
+            pairing.presentEntryPoint(entrypoint: RemoteTemplateEntrypoint.setupKitGuide, config: self.config, pairingSteps: ViewsContainer())
         )
     }
     
     @MainActor func presentSettings(onGuideComplete: ((GuideAction) -> Void)?) -> some View {
         self.onGuideComplete = onGuideComplete
         return AnyView(
-            pairing.presentEntryPoint(entrypoint: .settings, config: self.config, pairingSteps: ViewsContainer())
+            pairing.presentEntryPoint(entrypoint: RemoteTemplateEntrypoint.settings, config: self.config, pairingSteps: ViewsContainer())
+        )
+    }
+    
+    enum TemporarilyEndpoint: String, RemoteTemplateEntrypointProtocol {
+        case namePin = "/name-pin.json"
+    }
+    
+    @MainActor func presentPinCreation(onGuideComplete: ((GuideAction) -> Void)?) -> some View {
+        self.onGuideComplete = onGuideComplete
+        return AnyView(
+            pairing.presentEntryPoint(entrypoint: TemporarilyEndpoint.namePin, config: self.config, pairingSteps: ViewsContainer())
         )
     }
     

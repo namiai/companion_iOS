@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/divkit/divkit-ios",
       "state" : {
-        "revision" : "2797238d04e001f3f9441244a617232d280f9bcf",
-        "version" : "32.9.0"
+        "revision" : "52c164c795e75480ae5b96cc787c79dc2e3bbc66",
+        "version" : "32.12.0"
       }
     },
     {
@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/namiai/NamiPairing_iOS.git",
       "state" : {
-        "revision" : "fa303df11fd7c8418436b584305a37402bfc3466",
-        "version" : "4.0.1"
+        "revision" : "6176242e53276fbafa088ff0f15fc48219532721",
+        "version" : "4.1.0"
       }
     },
     {

@@ -14,7 +14,7 @@ struct Device {
         self.id = apiDevice.id
         self.uid = apiDevice.uid
         self.name = apiDevice.name
-        self.type = apiDevice.codeName
+        self.type = apiDevice.model.codeName
         self.roomId = String(apiDevice.roomId)
     }
 } 
