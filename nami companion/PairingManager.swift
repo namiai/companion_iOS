@@ -219,7 +219,7 @@ final class PairingManager {
                     break
                 case .viewDismissed:
                     self?.onGuideComplete?(.cancel)
-                case let .pairingRequested(_, _, roomId, _, _):
+                case let .pairingRequested(_, _, roomId, _, _, _):
 //                    self?.onGuideComplete?(.startPairing(roomId: roomId))
                     break
                 }
