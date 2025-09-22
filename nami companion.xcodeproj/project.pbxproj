@@ -15,7 +15,6 @@
 		2068BC912D5B54CC006F6DF1 /* NamiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2068BC902D5B54CC006F6DF1 /* NamiError.swift */; };
 		206A03DF2BDB8745007DFF2E /* DeviceRepositionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206A03DE2BDB8745007DFF2E /* DeviceRepositionView.swift */; };
 		206A03E12BDB8752007DFF2E /* DeviceRepositionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206A03E02BDB8752007DFF2E /* DeviceRepositionViewModel.swift */; };
-		207621CF2BC6777100CA4D88 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 207621CE2BC6777100CA4D88 /* Lottie */; };
 		20A95E512CE6F5F400BC91D9 /* NamiPairing in Frameworks */ = {isa = PBXBuildFile; productRef = 20A95E502CE6F5F400BC91D9 /* NamiPairing */; };
 		20B9EF932C082DFC000EFA6E /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20D4AAC12BF477930059F9A3 /* Montserrat-Bold.ttf */; };
 		20B9EF942C082DFF000EFA6E /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20D4AAC02BF477930059F9A3 /* Montserrat-Regular.ttf */; };
@@ -82,7 +81,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				20A95E512CE6F5F400BC91D9 /* NamiPairing in Frameworks */,
-				207621CF2BC6777100CA4D88 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -228,7 +226,6 @@
 			);
 			name = "nami companion";
 			packageProductDependencies = (
-				207621CE2BC6777100CA4D88 /* Lottie */,
 				20A95E502CE6F5F400BC91D9 /* NamiPairing */,
 			);
 			productName = "nami companion";
@@ -262,7 +259,6 @@
 			);
 			mainGroup = 49E2211E29A75669008DF366;
 			packageReferences = (
-				207621CD2BC6777100CA4D88 /* XCRemoteSwiftPackageReference "lottie-spm" */,
 				20A95E4F2CE6F5F400BC91D9 /* XCRemoteSwiftPackageReference "NamiPairing_iOS" */,
 			);
 			productRefGroup = 49E2212829A75669008DF366 /* Products */;
@@ -436,7 +432,7 @@
 				CODE_SIGN_ENTITLEMENTS = "nami companion/nami_companion.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 42;
+				CURRENT_PROJECT_VERSION = 45;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"nami companion/Preview Content\"";
 				DEVELOPMENT_TEAM = PTKKJUD9AS;
@@ -464,7 +460,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 2.3.9;
+				MARKETING_VERSION = 2.3.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "ai.nami.nami-companion";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -486,7 +482,7 @@
 				CODE_SIGN_ENTITLEMENTS = "nami companion/nami_companion.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 42;
+				CURRENT_PROJECT_VERSION = 45;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"nami companion/Preview Content\"";
 				DEVELOPMENT_TEAM = PTKKJUD9AS;
@@ -514,7 +510,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 2.3.9;
+				MARKETING_VERSION = 2.3.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "ai.nami.nami-companion";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -552,30 +548,17 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		207621CD2BC6777100CA4D88 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.4.2;
-			};
-		};
 		20A95E4F2CE6F5F400BC91D9 /* XCRemoteSwiftPackageReference "NamiPairing_iOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/namiai/NamiPairing_iOS.git";
 			requirement = {
 				kind = revision;
-				revision = 88c5dd4e426471eaccff9754ebf55f1783d3046f;
+				revision = 55aef56da2934db99aa89862d1785fdae8df92a5;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		207621CE2BC6777100CA4D88 /* Lottie */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 207621CD2BC6777100CA4D88 /* XCRemoteSwiftPackageReference "lottie-spm" */;
-			productName = Lottie;
-		};
 		20A95E502CE6F5F400BC91D9 /* NamiPairing */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 20A95E4F2CE6F5F400BC91D9 /* XCRemoteSwiftPackageReference "NamiPairing_iOS" */;

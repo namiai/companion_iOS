@@ -222,6 +222,8 @@ final class PairingManager {
                 case let .pairingRequested(_, _, roomId, _, _, _):
 //                    self?.onGuideComplete?(.startPairing(roomId: roomId))
                     break
+                case .warning(_):
+                    break
                 }
                 
             }
