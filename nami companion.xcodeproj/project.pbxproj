@@ -219,6 +219,7 @@
 				49E2212429A75669008DF366 /* Frameworks */,
 				49E2212529A75669008DF366 /* Resources */,
 				492CF30A2AAAF141006DE914 /* Embed Frameworks */,
+				20EA61912F2F784A00F76A1F /* Generate Pairing dSYMs */,
 			);
 			buildRules = (
 			);
@@ -285,6 +286,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		20EA61912F2F784A00F76A1F /* Generate Pairing dSYMs */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Generate Pairing dSYMs";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "FRAMEWORKS_DIR=\"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}\"\nDSYM_DEST=\"${DWARF_DSYM_FOLDER_PATH}\"\n\nif [[ -z \"${FRAMEWORKS_FOLDER_PATH}\" || -z \"${DWARF_DSYM_FOLDER_PATH}\" ]]; then\n  exit 0\nfi\n\nif [[ ! -d \"${FRAMEWORKS_DIR}\" ]]; then\n  exit 0\nfi\n\nFRAMEWORK_NAMES=(NamiPairingFramework StandardPairingUI)\n\nfor name in \"${FRAMEWORK_NAMES[@]}\"; do\n  binary=\"${FRAMEWORKS_DIR}/${name}.framework/${name}\"\n  output=\"${DSYM_DEST}/${name}.framework.dSYM\"\n\n  if [[ ! -f \"${binary}\" ]]; then\n    echo \"warning: Expected binary not found at ${binary}\"\n    continue\n  fi\n\n  if [[ -d \"${output}\" ]]; then\n    continue\n  fi\n\n  echo \"Generating dSYM for ${name}\"\n\n  if ! dsymutil \"${binary}\" -o \"${output}\" >/dev/null 2>&1; then\n    echo \"warning: Failed to generate dSYM for ${name}\"\n    rm -rf \"${output}\"\n  fi\ndone\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		49E2212329A75669008DF366 /* Sources */ = {
