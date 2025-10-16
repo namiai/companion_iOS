@@ -1,0 +1,36 @@
+{
+  "configurations" : [
+    {
+      "id" : "04F388C8-5C97-4BB8-8FC3-7D00D9A4A47D",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "environmentVariableEntries" : [
+      {
+        "key" : "NAMI_SESSION_CODE",
+        "value" : "$(NAMI_SESSION_CODE)"
+      }
+    ],
+    "performanceAntipatternCheckerEnabled" : true,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:nami companion.xcodeproj",
+      "identifier" : "49E2212629A75669008DF366",
+      "name" : "nami companion"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:nami companion.xcodeproj",
+        "identifier" : "B184C9E72EA0F3CF0012A980",
+        "name" : "nami companionUITests"
+      }
+    }
+  ],
+  "version" : 1
+}
