@@ -11,8 +11,8 @@
   "defaultOptions" : {
     "environmentVariableEntries" : [
       {
-        "key" : "NAMI_SESSION_CODE",
-        "value" : "$(NAMI_SESSION_CODE)"
+        "key" : "NAMI_ACCESS_TOKEN",
+        "value" : "$(NAMI_ACCESS_TOKEN)"
       }
     ],
     "performanceAntipatternCheckerEnabled" : true,
