@@ -5,6 +5,7 @@
 //  Created by Gleb Vodovozov on 16/10/25.
 //
 
+import CoreGraphics
 import Foundation
 import XCTest
 
@@ -105,6 +106,76 @@ final class nami_companionUITests: XCTestCase {
         for entry in expectedSettingsEntries {
             XCTAssertTrue(app.staticTexts[entry].waitForExistence(timeout: 10), "Expected settings entry '\(entry)' not found.")
         }
+
+        let entryExitDelaysCell = app.staticTexts["Entry & exit delays"]
+        XCTAssertTrue(entryExitDelaysCell.waitForExistence(timeout: 5))
+        entryExitDelaysCell.tap()
+
+        let entryDelayHeader = app.staticTexts["Entry delay"]
+        XCTAssertTrue(entryDelayHeader.waitForExistence(timeout: 5), "Entry & exit delays screen did not appear.")
+
+        let saveButton = app.collectionViews.containing(.staticText, identifier: "Save").firstMatch
+        XCTAssertTrue(saveButton.waitForExistence(timeout: 5), "Save button not found on Entry & exit delays screen.")
+
+        saveButton.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.1)).tap()
+        XCTAssertTrue(entryDelayHeader.exists, "Entry & exit delays screen unexpectedly dismissed after tapping disabled save button.")
+
+        let helpButton = Self.helpButton(in: app)
+        XCTAssertTrue(helpButton.waitForExistence(timeout: 5), "Help button not found on Entry & exit delays screen.")
+        helpButton.tap()
+
+        XCTAssertTrue(Self.dismissHelpIfPresented(app: app, timeout: 10), "Help screen did not appear or failed to dismiss.")
+        XCTAssertTrue(entryDelayHeader.waitForExistence(timeout: 5), "Entry & exit delays screen did not reappear after closing help.")
+
+        let delayValueLabels = app.staticTexts.matching(NSPredicate(format: "label CONTAINS[c] %@", "seconds"))
+        XCTAssertGreaterThanOrEqual(delayValueLabels.count, 2, "Expected to find entry and exit delay selectors.")
+
+        let entryDelayValueLabel = delayValueLabels.element(boundBy: 0)
+        let exitDelayValueLabel = delayValueLabels.element(boundBy: 1)
+        XCTAssertTrue(entryDelayValueLabel.exists)
+        XCTAssertTrue(exitDelayValueLabel.exists)
+
+        let entryDelayInitialValue = entryDelayValueLabel.label
+        entryDelayValueLabel.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+
+        let entryDelayOptions = [
+            "0 seconds",
+            "30 seconds",
+            "45 seconds",
+            "60 seconds",
+            "120 seconds",
+        ]
+
+        for option in entryDelayOptions {
+            XCTAssertTrue(app.staticTexts[option].waitForExistence(timeout: 5), "Entry delay option '\(option)' not found.")
+        }
+
+        let entryDelayNewValue = entryDelayOptions.first { $0 != entryDelayInitialValue } ?? entryDelayOptions.last!
+        app.staticTexts[entryDelayNewValue].tap()
+        XCTAssertTrue(entryDelayValueLabel.waitForLabel(entryDelayNewValue, timeout: 5), "Entry delay value did not update.")
+
+        let exitDelayInitialValue = exitDelayValueLabel.label
+        exitDelayValueLabel.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+
+        let exitDelayOptions = [
+            "30 seconds",
+            "45 seconds",
+            "60 seconds",
+            "120 seconds",
+        ]
+
+        for option in exitDelayOptions {
+            XCTAssertTrue(app.staticTexts[option].waitForExistence(timeout: 5), "Exit delay option '\(option)' not found.")
+        }
+
+        let exitDelayNewValue = exitDelayOptions.first { $0 != exitDelayInitialValue } ?? exitDelayOptions.last!
+        app.staticTexts[exitDelayNewValue].tap()
+        XCTAssertTrue(exitDelayValueLabel.waitForLabel(exitDelayNewValue, timeout: 5), "Exit delay value did not update.")
+
+        saveButton.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+
+        XCTAssertTrue(entryDelayHeader.waitToDisappear(timeout: 5), "Entry & exit delays screen did not dismiss after saving.")
+        XCTAssertTrue(app.cells.staticTexts["Entry & exit delays"].waitForExistence(timeout: 5), "Settings list did not reappear after saving entry & exit delays.")
     }
 }
 
@@ -124,6 +195,21 @@ private extension XCUIElement {
         typeText(deleteString)
         typeText(text)
     }
+
+    @discardableResult
+    func waitForLabel(_ label: String, timeout: TimeInterval) -> Bool {
+        let predicate = NSPredicate(format: "label == %@", label)
+        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: self)
+        return XCTWaiter().wait(for: [expectation], timeout: timeout) == .completed
+    }
+
+    @discardableResult
+    func waitToDisappear(timeout: TimeInterval) -> Bool {
+        let predicate = NSPredicate(format: "exists == false")
+        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: self)
+        return XCTWaiter().wait(for: [expectation], timeout: timeout) == .completed
+    }
+
 }
 
 private extension nami_companionUITests {
@@ -225,5 +311,60 @@ private extension nami_companionUITests {
                 return "Session code response did not contain a code."
             }
         }
+    }
+}
+
+private extension nami_companionUITests {
+    static func helpButton(in app: XCUIApplication) -> XCUIElement {
+        let questionImage = app.images.matching(identifier: "Question").firstMatch
+        if questionImage.exists {
+            return questionImage
+        }
+
+        let candidateButtons = ["Help", "?", "Info", "Information", "Learn more"]
+        for label in candidateButtons {
+            let button = app.buttons[label]
+            if button.exists { return button }
+        }
+
+        if app.buttons.count > 0 {
+            return app.buttons.element(boundBy: app.buttons.count - 1)
+        }
+
+        return questionImage
+    }
+
+    static func dismissHelpIfPresented(app: XCUIApplication, timeout: TimeInterval) -> Bool {
+        let webView = app.webViews.firstMatch
+        let halfTimeout = timeout / 2
+        let webViewAppeared = webView.waitForExistence(timeout: halfTimeout)
+
+        let closeButtonLabels = ["Done", "Close", "Cancel", "Dismiss"]
+        var closeButton: XCUIElement?
+        for label in closeButtonLabels {
+            let button = app.buttons[label]
+            if button.waitForExistence(timeout: halfTimeout / Double(closeButtonLabels.count)) {
+                closeButton = button
+                break
+            }
+        }
+
+        if closeButton == nil {
+            let safariDoneButton = app.buttons["SafariViewControllerDoneButton"]
+            if safariDoneButton.waitForExistence(timeout: halfTimeout) {
+                closeButton = safariDoneButton
+            }
+        }
+
+        guard webViewAppeared || closeButton != nil else {
+            return false
+        }
+
+        guard let button = closeButton else {
+            return false
+        }
+
+        button.tap()
+        return true
     }
 }
