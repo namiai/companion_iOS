@@ -61,23 +61,9 @@ final class nami_companionUITests: XCTestCase {
         XCTAssertTrue(app.buttons["Confirm"].isEnabled)
     }
 
-    func testSessionCodeSubmissionNavigatesToDevicesListAndSettings() throws {
-        guard let sessionCode, !sessionCode.isEmpty else {
-            throw XCTSkip("Failed to resolve session code; ensure NAMI_ACCESS_TOKEN is set.")
-        }
-
-        let sessionCodeField = app.textFields["Session Code"]
-        XCTAssertTrue(sessionCodeField.waitForExistence(timeout: 5))
-        sessionCodeField.tap()
-        sessionCodeField.clearAndEnterText(sessionCode)
-
-        let confirmButton = app.buttons["Confirm"]
-        XCTAssertTrue(confirmButton.waitForExistence(timeout: 2))
-        XCTAssertTrue(confirmButton.isEnabled)
-        confirmButton.tap()
-
-        let devicesListNavigationBar = app.navigationBars["Place devices list"]
-        XCTAssertTrue(devicesListNavigationBar.waitForExistence(timeout: 10))
+    func testDevicesListShowsAddMenuOptions() throws {
+        let sessionCode = try requireSessionCode()
+        let devicesListNavigationBar = navigateToDevicesList(sessionCode: sessionCode)
 
         let addButton = devicesListNavigationBar.buttons.firstMatch
         XCTAssertTrue(addButton.waitForExistence(timeout: 2), "Add (+) button not found on devices list screen.")
@@ -92,10 +78,11 @@ final class nami_companionUITests: XCTestCase {
         for item in expectedMenuItems {
             XCTAssertTrue(app.buttons[item].waitForExistence(timeout: 2), "Menu item '\(item)' not found.")
         }
+    }
 
-        let showSettingsButton = app.buttons["Show settings"]
-        XCTAssertTrue(showSettingsButton.waitForExistence(timeout: 5))
-        showSettingsButton.tap()
+    func testSettingsScreenShowsExpectedEntries() throws {
+        let sessionCode = try requireSessionCode()
+        navigateToSettingsList(sessionCode: sessionCode)
 
         let expectedSettingsEntries = [
             "PINs",
@@ -104,8 +91,13 @@ final class nami_companionUITests: XCTestCase {
         ]
 
         for entry in expectedSettingsEntries {
-            XCTAssertTrue(app.staticTexts[entry].waitForExistence(timeout: 10), "Expected settings entry '\(entry)' not found.")
+            XCTAssertTrue(app.staticTexts[entry].waitForExistence(timeout: 5), "Expected settings entry '\(entry)' not found.")
         }
+    }
+
+    func testEntryExitDelaysWorkflow() throws {
+        let sessionCode = try requireSessionCode()
+        navigateToSettingsList(sessionCode: sessionCode)
 
         let entryExitDelaysCell = app.staticTexts["Entry & exit delays"]
         XCTAssertTrue(entryExitDelaysCell.waitForExistence(timeout: 5))
@@ -158,6 +150,7 @@ final class nami_companionUITests: XCTestCase {
         exitDelayValueLabel.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
 
         let exitDelayOptions = [
+            "0 seconds",
             "30 seconds",
             "45 seconds",
             "60 seconds",
@@ -213,6 +206,43 @@ private extension XCUIElement {
 }
 
 private extension nami_companionUITests {
+    func requireSessionCode(file: StaticString = #filePath, line: UInt = #line) throws -> String {
+        guard let sessionCode, !sessionCode.isEmpty else {
+            throw XCTSkip("Failed to resolve session code; ensure NAMI_ACCESS_TOKEN is set.")
+        }
+        return sessionCode
+    }
+
+    @discardableResult
+    func navigateToDevicesList(sessionCode: String) -> XCUIElement {
+        let sessionCodeField = app.textFields["Session Code"]
+        XCTAssertTrue(sessionCodeField.waitForExistence(timeout: 5))
+        sessionCodeField.tap()
+        sessionCodeField.clearAndEnterText(sessionCode)
+
+        let confirmButton = app.buttons["Confirm"]
+        XCTAssertTrue(confirmButton.waitForExistence(timeout: 2))
+        XCTAssertTrue(confirmButton.isEnabled)
+        confirmButton.tap()
+
+        let devicesListNavigationBar = app.navigationBars["Place devices list"]
+        XCTAssertTrue(devicesListNavigationBar.waitForExistence(timeout: 10))
+        return devicesListNavigationBar
+    }
+
+    func navigateToSettingsList(sessionCode: String) {
+        let devicesListNavigationBar = navigateToDevicesList(sessionCode: sessionCode)
+        let addButton = devicesListNavigationBar.buttons.firstMatch
+        XCTAssertTrue(addButton.waitForExistence(timeout: 2), "Add (+) button not found on devices list screen.")
+        addButton.tap()
+
+        let showSettingsButton = app.buttons["Show settings"]
+        XCTAssertTrue(showSettingsButton.waitForExistence(timeout: 5), "Show settings menu item not found.")
+        showSettingsButton.tap()
+
+        XCTAssertTrue(app.staticTexts["PINs"].waitForExistence(timeout: 5), "Settings list did not appear.")
+    }
+
     static func resolveSessionCode() throws -> String {
         return try fetchSessionCodeUsingAccessToken()
     }
