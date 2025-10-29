@@ -18,6 +18,12 @@ final class SessionCodeViewModel: ObservableObject {
     init(setupPairingManager: @escaping (PairingManager) -> Void, nextRoute: @escaping (RootRouter.Routes) -> Void) {
         self.setupPairingManager = setupPairingManager
         self.nextRoute = nextRoute
+        if let override = ProcessInfo.processInfo.environment["NAMI_TEMPLATES_BASE_URL"]?
+            .trimmingCharacters(in: .whitespacesAndNewlines),
+           override.isEmpty == false,
+           URL(string: override) != nil {
+            self.state.baseUrl = override
+        }
     }
     
     struct State {

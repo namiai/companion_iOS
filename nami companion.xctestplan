@@ -13,6 +13,10 @@
       {
         "key" : "NAMI_ACCESS_TOKEN",
         "value" : "$(NAMI_ACCESS_TOKEN)"
+      },
+      {
+        "key" : "NAMI_TEMPLATES_BASE_URL",
+        "value" : "$(NAMI_TEMPLATES_BASE_URL)"
       }
     ],
     "performanceAntipatternCheckerEnabled" : true,

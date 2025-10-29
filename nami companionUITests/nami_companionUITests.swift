@@ -13,12 +13,21 @@ final class nami_companionUITests: XCTestCase {
 
     private var app: XCUIApplication!
     private var sessionCode: String?
+    private var templatesBaseURLOverride: String?
 
     override func setUpWithError() throws {
         continueAfterFailure = false
 
         sessionCode = try Self.resolveSessionCode()
+        if let override = ProcessInfo.processInfo.environment["NAMI_TEMPLATES_BASE_URL"]?.trimmingCharacters(in: .whitespacesAndNewlines), !override.isEmpty {
+            templatesBaseURLOverride = override
+        } else {
+            templatesBaseURLOverride = nil
+        }
         app = XCUIApplication()
+        if let templatesBaseURLOverride {
+            app.launchEnvironment["NAMI_TEMPLATES_BASE_URL"] = templatesBaseURLOverride
+        }
         app.launch()
     }
 
@@ -45,7 +54,8 @@ final class nami_companionUITests: XCTestCase {
         XCTAssertTrue(sessionCodeValue.isEmpty || sessionCodeValue == sessionCodeField.placeholderValue)
 
         XCTAssertEqual(app.textFields["Client ID"].stringValue, "nami_dev")
-        XCTAssertEqual(app.textFields["Base URL"].stringValue, "https://mobile-screens.nami.surf/divkit/v0.5.0/precompiled_layouts")
+        let expectedBaseURL = templatesBaseURLOverride ?? "https://mobile-screens.nami.surf/divkit/v0.5.0/precompiled_layouts"
+        XCTAssertEqual(app.textFields["Base URL"].stringValue, expectedBaseURL)
         XCTAssertEqual(app.textFields["Country code"].stringValue.lowercased(), "us")
         XCTAssertEqual(app.textFields["Language"].stringValue, "en-US")
         XCTAssertFalse(app.buttons["Confirm"].isEnabled)
@@ -103,10 +113,28 @@ final class nami_companionUITests: XCTestCase {
         XCTAssertTrue(entryExitDelaysCell.waitForExistence(timeout: 5))
         entryExitDelaysCell.tap()
 
+        let entryExitLayout = app.otherElements["entry_exit_delays_layout"]
+        XCTAssertTrue(entryExitLayout.waitForExistence(timeout: 5), "Entry & exit delays layout not found.")
+
+        let entryExitContainer = app.otherElements["entry_exit_delay_container"]
+        XCTAssertTrue(entryExitContainer.waitForExistence(timeout: 5), "Entry & exit delays container not found.")
+
+        let entryDelayCard = app.otherElements["entry_delay_card"]
+        XCTAssertTrue(entryDelayCard.waitForExistence(timeout: 5), "Entry delay card not found.")
+
+        let exitDelayCard = app.otherElements["exit_delay_card"]
+        XCTAssertTrue(exitDelayCard.waitForExistence(timeout: 5), "Exit delay card not found.")
+
+        let entryDelaySelector = app.otherElements["entry_delay_selector"]
+        XCTAssertTrue(entryDelaySelector.waitForExistence(timeout: 5), "Entry delay selector not found.")
+
+        let exitDelaySelector = app.otherElements["exit_delay_selector"]
+        XCTAssertTrue(exitDelaySelector.waitForExistence(timeout: 5), "Exit delay selector not found.")
+
         let entryDelayHeader = app.staticTexts["Entry delay"]
         XCTAssertTrue(entryDelayHeader.waitForExistence(timeout: 5), "Entry & exit delays screen did not appear.")
 
-        let saveButton = app.collectionViews.containing(.staticText, identifier: "Save").firstMatch
+        let saveButton = app.otherElements["save_button"]
         XCTAssertTrue(saveButton.waitForExistence(timeout: 5), "Save button not found on Entry & exit delays screen.")
 
         saveButton.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.1)).tap()
@@ -119,16 +147,13 @@ final class nami_companionUITests: XCTestCase {
         XCTAssertTrue(Self.dismissHelpIfPresented(app: app, timeout: 10), "Help screen did not appear or failed to dismiss.")
         XCTAssertTrue(entryDelayHeader.waitForExistence(timeout: 5), "Entry & exit delays screen did not reappear after closing help.")
 
-        let delayValueLabels = app.staticTexts.matching(NSPredicate(format: "label CONTAINS[c] %@", "seconds"))
-        XCTAssertGreaterThanOrEqual(delayValueLabels.count, 2, "Expected to find entry and exit delay selectors.")
-
-        let entryDelayValueLabel = delayValueLabels.element(boundBy: 0)
-        let exitDelayValueLabel = delayValueLabels.element(boundBy: 1)
-        XCTAssertTrue(entryDelayValueLabel.exists)
-        XCTAssertTrue(exitDelayValueLabel.exists)
+        let entryDelayValueLabel = entryDelaySelector.staticTexts.matching(NSPredicate(format: "label CONTAINS[c] %@", "seconds")).firstMatch
+        XCTAssertTrue(entryDelayValueLabel.exists, "Entry delay value label not found.")
+        let exitDelayValueLabel = exitDelaySelector.staticTexts.matching(NSPredicate(format: "label CONTAINS[c] %@", "seconds")).firstMatch
+        XCTAssertTrue(exitDelayValueLabel.exists, "Exit delay value label not found.")
 
         let entryDelayInitialValue = entryDelayValueLabel.label
-        entryDelayValueLabel.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        entryDelaySelector.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
 
         let entryDelayOptions = [
             "0 seconds",
@@ -143,14 +168,13 @@ final class nami_companionUITests: XCTestCase {
         }
 
         let entryDelayNewValue = entryDelayOptions.first { $0 != entryDelayInitialValue } ?? entryDelayOptions.last!
-        app.staticTexts[entryDelayNewValue].tap()
+        selectDropdownOption(entryDelayNewValue, in: entryDelaySelector)
         XCTAssertTrue(entryDelayValueLabel.waitForLabel(entryDelayNewValue, timeout: 5), "Entry delay value did not update.")
 
         let exitDelayInitialValue = exitDelayValueLabel.label
-        exitDelayValueLabel.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        exitDelaySelector.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
 
         let exitDelayOptions = [
-            "0 seconds",
             "30 seconds",
             "45 seconds",
             "60 seconds",
@@ -162,7 +186,7 @@ final class nami_companionUITests: XCTestCase {
         }
 
         let exitDelayNewValue = exitDelayOptions.first { $0 != exitDelayInitialValue } ?? exitDelayOptions.last!
-        app.staticTexts[exitDelayNewValue].tap()
+        selectDropdownOption(exitDelayNewValue, in: exitDelaySelector)
         XCTAssertTrue(exitDelayValueLabel.waitForLabel(exitDelayNewValue, timeout: 5), "Exit delay value did not update.")
 
         saveButton.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
@@ -206,6 +230,20 @@ private extension XCUIElement {
 }
 
 private extension nami_companionUITests {
+    func selectDropdownOption(_ label: String, in selector: XCUIElement, timeout: TimeInterval = 5) {
+        let predicate = NSPredicate(format: "label == %@", label)
+        let optionsQuery = selector.staticTexts.matching(predicate)
+        let firstMatch = optionsQuery.firstMatch
+        XCTAssertTrue(firstMatch.waitForExistence(timeout: timeout), "Dropdown option '\(label)' not found.")
+
+        let candidates = optionsQuery.allElementsBoundByIndex
+        guard let target = candidates.first(where: { $0.isHittable }) ?? candidates.last else {
+            XCTFail("No tappable element found for dropdown option '\(label)'.")
+            return
+        }
+        target.tap()
+    }
+
     func requireSessionCode(file: StaticString = #filePath, line: UInt = #line) throws -> String {
         guard let sessionCode, !sessionCode.isEmpty else {
             throw XCTSkip("Failed to resolve session code; ensure NAMI_ACCESS_TOKEN is set.")
@@ -219,6 +257,13 @@ private extension nami_companionUITests {
         XCTAssertTrue(sessionCodeField.waitForExistence(timeout: 5))
         sessionCodeField.tap()
         sessionCodeField.clearAndEnterText(sessionCode)
+
+        // Base URL is pre-populated by the app when NAMI_TEMPLATES_BASE_URL is provided.
+        if let templatesBaseURLOverride {
+            let baseURLField = app.textFields["Base URL"]
+            XCTAssertTrue(baseURLField.waitForExistence(timeout: 2), "Base URL text field not found.")
+            XCTAssertEqual(baseURLField.stringValue, templatesBaseURLOverride, "Base URL field does not reflect NAMI_TEMPLATES_BASE_URL override.")
+        }
 
         let confirmButton = app.buttons["Confirm"]
         XCTAssertTrue(confirmButton.waitForExistence(timeout: 2))
