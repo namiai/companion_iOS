@@ -94,14 +94,18 @@ final class nami_companionUITests: XCTestCase {
         let sessionCode = try requireSessionCode()
         navigateToSettingsList(sessionCode: sessionCode)
 
-        let expectedSettingsEntries = [
-            "PINs",
-            "Entry & exit delays",
-            "Sensitivity",
+        let listContainer = element(withIdentifier: "settings_list_container")
+        XCTAssertTrue(listContainer.exists, "Settings list container not found.")
+
+        let expectedIdentifiers = [
+            "pins_list_item",
+            "entry_exit_delay_list_item",
+            "sensitivity_list_item",
         ]
 
-        for entry in expectedSettingsEntries {
-            XCTAssertTrue(app.staticTexts[entry].waitForExistence(timeout: 5), "Expected settings entry '\(entry)' not found.")
+        for identifier in expectedIdentifiers {
+            let item = element(withIdentifier: identifier)
+            XCTAssertTrue(item.exists, "Settings entry '\(identifier)' not found.")
         }
     }
 
@@ -109,9 +113,8 @@ final class nami_companionUITests: XCTestCase {
         let sessionCode = try requireSessionCode()
         navigateToSettingsList(sessionCode: sessionCode)
 
-        let entryExitDelaysCell = app.staticTexts["Entry & exit delays"]
-        XCTAssertTrue(entryExitDelaysCell.waitForExistence(timeout: 5))
-        entryExitDelaysCell.tap()
+        let entryExitDelaysCell = element(withIdentifier: "entry_exit_delay_list_item")
+        entryExitDelaysCell.tapOrCoordinate()
 
         let entryExitLayout = app.otherElements["entry_exit_delays_layout"]
         XCTAssertTrue(entryExitLayout.waitForExistence(timeout: 5), "Entry & exit delays layout not found.")
@@ -194,6 +197,69 @@ final class nami_companionUITests: XCTestCase {
         XCTAssertTrue(entryDelayHeader.waitToDisappear(timeout: 5), "Entry & exit delays screen did not dismiss after saving.")
         XCTAssertTrue(app.cells.staticTexts["Entry & exit delays"].waitForExistence(timeout: 5), "Settings list did not reappear after saving entry & exit delays.")
     }
+
+    func testSensitivityScreenRendersExpectedContent() throws {
+        let sessionCode = try requireSessionCode()
+        navigateToSettingsList(sessionCode: sessionCode)
+
+        openSensitivitySettings()
+
+        let sensitivityLayout = element(withIdentifier: "sensitivity_layout")
+
+        let contentContainer = element(withIdentifier: "sensitivity_content_container")
+
+        let gallery = element(withIdentifier: "sensitivity_level_gallery")
+
+        let cards = loadSensitivityCards()
+        XCTAssertEqual(cards.count, 3, "Expected to find exactly three sensitivity level cards.")
+        for card in cards {
+            XCTAssertFalse(card.title.isEmpty, "Sensitivity card '\(card.identifier)' did not expose a title.")
+        }
+
+        let infoCard = element(withIdentifier: "info_card")
+    }
+
+    func testSensitivityLearnMoreOpensInAppBrowser() throws {
+        let sessionCode = try requireSessionCode()
+        navigateToSettingsList(sessionCode: sessionCode)
+
+        openSensitivitySettings()
+
+        let sensitivityLayout = element(withIdentifier: "sensitivity_layout")
+        let infoCard = element(withIdentifier: "info_card")
+
+        let learnMoreElement = learnMoreElement(in: infoCard)
+        learnMoreElement.tap()
+
+        XCTAssertTrue(Self.dismissHelpIfPresented(app: app, timeout: 10), "In-app browser did not appear after tapping Learn more.")
+    }
+
+    func testChangingSensitivityUpdatesSettingsSummary() throws {
+        let sessionCode = try requireSessionCode()
+        navigateToSettingsList(sessionCode: sessionCode)
+
+        let initialSummary = sensitivitySummaryValue()
+        XCTAssertFalse(initialSummary.isEmpty, "Sensitivity summary should not be empty before opening the screen.")
+
+        openSensitivitySettings()
+
+        let sensitivityLayout = element(withIdentifier: "sensitivity_layout")
+
+        let cards = loadSensitivityCards()
+        let targetCard = cards.first {
+            !$0.title.isEmpty && $0.title.caseInsensitiveCompare(initialSummary) != .orderedSame
+        } ?? cards.last
+        XCTAssertNotNil(targetCard, "Failed to find an alternative sensitivity card to select.")
+
+        guard let nextCard = targetCard else { return }
+
+        let expectedSummary = nextCard.title
+        nextCard.element.tap()
+
+        XCTAssertTrue(sensitivityLayout.waitToDisappear(timeout: 5), "Sensitivity screen did not dismiss after selecting a level.")
+        XCTAssertTrue(app.staticTexts["Sensitivity"].waitForExistence(timeout: 5), "Settings list did not reappear after selecting a sensitivity level.")
+        XCTAssertTrue(waitForSensitivitySummary(expectedSummary, timeout: 5), "Sensitivity summary did not update to '\(expectedSummary)'.")
+    }
 }
 
 private extension XCUIElement {
@@ -227,6 +293,30 @@ private extension XCUIElement {
         return XCTWaiter().wait(for: [expectation], timeout: timeout) == .completed
     }
 
+    func primaryLabel(excluding excludedLabels: Set<String> = []) -> String {
+        let labels = staticTexts.allElementsBoundByIndex
+            .map(\.label)
+            .filter { !$0.isEmpty && !excludedLabels.contains($0) }
+
+        if let shortest = labels.min(by: { $0.count < $1.count }) {
+            return shortest
+        }
+
+        let fallback = label
+        if !fallback.isEmpty && !excludedLabels.contains(fallback) {
+            return fallback
+        }
+
+        return labels.first ?? ""
+    }
+
+    func tapOrCoordinate() {
+        if isHittable {
+            tap()
+        } else {
+            coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        }
+    }
 }
 
 private extension nami_companionUITests {
@@ -285,7 +375,94 @@ private extension nami_companionUITests {
         XCTAssertTrue(showSettingsButton.waitForExistence(timeout: 5), "Show settings menu item not found.")
         showSettingsButton.tap()
 
-        XCTAssertTrue(app.staticTexts["PINs"].waitForExistence(timeout: 5), "Settings list did not appear.")
+        _ = element(withIdentifier: "settings_layout")
+    }
+
+    func sensitivitySettingsCell(timeout: TimeInterval = 5, file: StaticString = #filePath, line: UInt = #line) -> XCUIElement {
+        element(withIdentifier: "sensitivity_list_item", timeout: timeout, file: file, line: line)
+    }
+
+    @discardableResult
+    func sensitivitySummaryLabel(timeout: TimeInterval = 5, file: StaticString = #filePath, line: UInt = #line) -> XCUIElement {
+        let cell = sensitivitySettingsCell(timeout: timeout, file: file, line: line)
+        let predicate = NSPredicate(format: "label != '' AND label != %@", "Sensitivity")
+        let summaryCandidates = cell.staticTexts.matching(predicate).allElementsBoundByIndex
+        guard let summary = summaryCandidates.first else {
+            XCTFail("Sensitivity summary label not found.", file: file, line: line)
+            return cell
+        }
+        return summary
+    }
+
+    func sensitivitySummaryValue(timeout: TimeInterval = 5, file: StaticString = #filePath, line: UInt = #line) -> String {
+        let label = sensitivitySummaryLabel(timeout: timeout, file: file, line: line)
+        return label.label
+    }
+
+    func openSensitivitySettings(timeout: TimeInterval = 5, file: StaticString = #filePath, line: UInt = #line) {
+        let cell = sensitivitySettingsCell(timeout: timeout, file: file, line: line)
+        cell.tapOrCoordinate()
+    }
+
+    func element(withIdentifier identifier: String, timeout: TimeInterval = 5, file: StaticString = #filePath, line: UInt = #line) -> XCUIElement {
+        let candidates: [XCUIElement] = [
+            app.otherElements[identifier],
+            app.cells[identifier],
+            app.collectionViews.cells[identifier],
+            app.scrollViews.otherElements[identifier],
+            app.collectionViews.otherElements[identifier],
+            app.descendants(matching: .any)[identifier]
+        ]
+
+        for element in candidates {
+            if element.waitForExistence(timeout: timeout) {
+                return element
+            }
+        }
+
+        XCTFail("Element with identifier '\(identifier)' not found.", file: file, line: line)
+        return candidates.last ?? app.otherElements.firstMatch
+    }
+
+    @discardableResult
+    func waitForSensitivitySummary(_ expected: String, timeout: TimeInterval = 5, file: StaticString = #filePath, line: UInt = #line) -> Bool {
+        let summaryLabel = sensitivitySummaryLabel(timeout: timeout, file: file, line: line)
+        return summaryLabel.waitForLabel(expected, timeout: timeout)
+    }
+
+    struct SensitivityCard {
+        let identifier: String
+        let title: String
+        let element: XCUIElement
+    }
+
+    func loadSensitivityCards(timeout: TimeInterval = 5, file: StaticString = #filePath, line: UInt = #line) -> [SensitivityCard] {
+        let identifiers = ["sensitivity_level_card_low", "sensitivity_level_card_default", "sensitivity_level_card_high"]
+        var cards: [SensitivityCard] = []
+
+        for identifier in identifiers {
+            let element = element(withIdentifier: identifier, timeout: timeout, file: file, line: line)
+            let title = element.primaryLabel()
+            cards.append(SensitivityCard(identifier: identifier, title: title, element: element))
+        }
+
+        return cards
+    }
+
+    func learnMoreElement(in infoCard: XCUIElement, timeout: TimeInterval = 5, file: StaticString = #filePath, line: UInt = #line) -> XCUIElement {
+        let direct = infoCard.staticTexts["Learn more"]
+        if direct.exists && direct.isHittable {
+            return direct
+        }
+
+        if direct.waitForExistence(timeout: timeout) {
+            return direct
+        }
+
+        let predicate = NSPredicate(format: "label CONTAINS[c] %@", "learn more")
+        let fallback = infoCard.staticTexts.matching(predicate).firstMatch
+        XCTAssertTrue(fallback.waitForExistence(timeout: timeout), "'Learn more' text not found inside info card.", file: file, line: line)
+        return fallback
     }
 
     static func resolveSessionCode() throws -> String {
