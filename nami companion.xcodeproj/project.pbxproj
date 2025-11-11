@@ -157,11 +157,11 @@
 				20D98D472C1BCF78004EFAD0 /* CustomWordings.swift */,
 				204957DA2BECE51A000707BF /* CustomTheme.swift */,
 				203076802E2E678100A6EB7D /* Models */,
-				204A11802CD334B4001D2744 /* Storage */,
 				49E2214229A77667008DF366 /* SessionCode */,
 				49E2214329A7767B008DF366 /* DevicesList */,
 				206A03DD2BDB8726007DFF2E /* DeviceReposition */,
 				49E2214C29A7A301008DF366 /* ErrorPresentation */,
+				204A11802CD334B4001D2744 /* Storage */,
 				49E2213E29A75C80008DF366 /* RootRouter.swift */,
 				49E2214A29A79C26008DF366 /* PairingManager.swift */,
 				49E2212E29A7566B008DF366 /* Assets.xcassets */,
@@ -456,7 +456,7 @@
 				CODE_SIGN_ENTITLEMENTS = "nami companion/nami_companion.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 50;
+				CURRENT_PROJECT_VERSION = 55;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"nami companion/Preview Content\"";
 				DEVELOPMENT_TEAM = PTKKJUD9AS;
@@ -484,7 +484,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 2.3.16;
+				MARKETING_VERSION = 2.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ai.nami.nami-companion";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -506,7 +506,7 @@
 				CODE_SIGN_ENTITLEMENTS = "nami companion/nami_companion.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 50;
+				CURRENT_PROJECT_VERSION = 55;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"nami companion/Preview Content\"";
 				DEVELOPMENT_TEAM = PTKKJUD9AS;
@@ -534,7 +534,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 2.3.16;
+				MARKETING_VERSION = 2.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ai.nami.nami-companion";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -577,7 +577,7 @@
 			repositoryURL = "https://github.com/namiai/NamiPairing_iOS.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 4.3.1;
+				minimumVersion = 4.4.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

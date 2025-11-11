@@ -59,7 +59,7 @@ final class PairingManager {
                     pairingSteps: ViewsContainer(),
                     // Plaese notice the BSSID pin is passed here to limit the WIFi networks search.
                     // Here it is in form of `[UInt8]` but also could be `Data` or ":"-separated MAC-formatted `String`.
-                    pairingParameters: bssidPin == nil ? NamiPairing.PairingParameters() : NamiPairing.PairingParameters(bssid: bssidPin!)
+                    pairingParameters: bssidPin == nil ? NamiPairing.PairingParameters(updateWiFiCredentials: false) : NamiPairing.PairingParameters(bssid: bssidPin!)
                 )
             )
         } catch {
@@ -76,28 +76,7 @@ final class PairingManager {
     }
     
     func startPositioning(deviceName: String, deviceUid: String, onPositioningComplete: (() -> Void)? = nil) -> some View {
-        self.onPositioningComplete = onPositioningComplete
-        do {
-            return try AnyView(
-                pairing.startPositioning(
-                    deviceName: deviceName, 
-                    deviceUid: deviceUid, 
-                    pairingSteps: ViewsContainer(), 
-                    onPositioningEnded: { result in 
-                        self.completePositioning()
-                    })
-            )
-        } catch {
-            return AnyView(
-                VStack{
-                    Text("The Device name or UID provided could not be found in.")
-                    Button("Back to Place") {
-                        self.completePositioning()
-                    }
-                    .buttonStyle(.bordered)
-                    .padding()
-                })
-        }
+        EmptyView()
     }
     
     @MainActor func presentSingleDeviceSetup(onGuideComplete: ((GuideAction) -> Void)?) -> some View {
@@ -223,6 +202,10 @@ final class PairingManager {
 //                    self?.onGuideComplete?(.startPairing(roomId: roomId))
                     break
                 case .warning(_):
+                    break
+                case .updateWiFiCredsRequested(_, _, _, _, _, _, _, _):
+                    break
+                @unknown default:
                     break
                 }
                 
