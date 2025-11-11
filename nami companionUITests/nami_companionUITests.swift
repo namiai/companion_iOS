@@ -11,9 +11,9 @@ import XCTest
 
 final class nami_companionUITests: XCTestCase {
 
-    private var app: XCUIApplication!
-    private var sessionCode: String?
-    private var templatesBaseURLOverride: String?
+    private(set) var app: XCUIApplication!
+    private(set) var sessionCode: String?
+    private(set) var templatesBaseURLOverride: String?
 
     override func setUpWithError() throws {
         continueAfterFailure = false
@@ -35,234 +35,9 @@ final class nami_companionUITests: XCTestCase {
         app = nil
     }
 
-    func testSessionCodeScreenElements() throws {
-        XCTAssert(app.staticTexts["Please enter the session code acquired from the partner's application"].exists)
-        XCTAssert(app.textFields["Session Code"].exists)
-        XCTAssert(app.textFields["Client ID"].exists)
-        XCTAssert(app.textFields["Base URL"].exists)
-        XCTAssert(app.textFields["Country code"].exists)
-        XCTAssert(app.textFields["Language"].exists)
-        XCTAssert(app.buttons["Appearance, Light"].exists)
-        XCTAssert(app.buttons["Measurement system, Metric"].exists)
-        XCTAssert(app.buttons["Confirm"].exists)
-    }
-
-    func testSessionCodeScreenShowsDefaultValues() throws {
-        let sessionCodeField = app.textFields["Session Code"]
-        XCTAssert(sessionCodeField.exists)
-        let sessionCodeValue = sessionCodeField.stringValue
-        XCTAssertTrue(sessionCodeValue.isEmpty || sessionCodeValue == sessionCodeField.placeholderValue)
-
-        XCTAssertEqual(app.textFields["Client ID"].stringValue, "nami_dev")
-        let expectedBaseURL = templatesBaseURLOverride ?? "https://mobile-screens.nami.surf/divkit/v0.5.0/precompiled_layouts"
-        XCTAssertEqual(app.textFields["Base URL"].stringValue, expectedBaseURL)
-        XCTAssertEqual(app.textFields["Country code"].stringValue.lowercased(), "us")
-        XCTAssertEqual(app.textFields["Language"].stringValue, "en-US")
-        XCTAssertFalse(app.buttons["Confirm"].isEnabled)
-    }
-
-    func testConfirmButtonEnablesAfterEnteringSessionCode() throws {
-        let sessionCodeField = app.textFields["Session Code"]
-        XCTAssert(sessionCodeField.exists)
-        XCTAssert(!app.buttons["Confirm"].isEnabled)
-        sessionCodeField.tap()
-        sessionCodeField.typeText(sessionCode ?? "ABC123")
-
-        XCTAssertTrue(app.buttons["Confirm"].isEnabled)
-    }
-
-    func testDevicesListShowsAddMenuOptions() throws {
-        let sessionCode = try requireSessionCode()
-        let devicesListNavigationBar = navigateToDevicesList(sessionCode: sessionCode)
-
-        let addButton = devicesListNavigationBar.buttons.firstMatch
-        XCTAssertTrue(addButton.waitForExistence(timeout: 2), "Add (+) button not found on devices list screen.")
-        addButton.tap()
-
-        let expectedMenuItems = [
-            "Add Single Device",
-            "Start Setup Guide",
-            "Show settings",
-        ]
-
-        for item in expectedMenuItems {
-            XCTAssertTrue(app.buttons[item].waitForExistence(timeout: 2), "Menu item '\(item)' not found.")
-        }
-    }
-
-    func testSettingsScreenShowsExpectedEntries() throws {
-        let sessionCode = try requireSessionCode()
-        navigateToSettingsList(sessionCode: sessionCode)
-
-        let listContainer = element(withIdentifier: "settings_list_container")
-        XCTAssertTrue(listContainer.exists, "Settings list container not found.")
-
-        let expectedIdentifiers = [
-            "pins_list_item",
-            "entry_exit_delay_list_item",
-            "sensitivity_list_item",
-        ]
-
-        for identifier in expectedIdentifiers {
-            let item = element(withIdentifier: identifier)
-            XCTAssertTrue(item.exists, "Settings entry '\(identifier)' not found.")
-        }
-    }
-
-    func testEntryExitDelaysWorkflow() throws {
-        let sessionCode = try requireSessionCode()
-        navigateToSettingsList(sessionCode: sessionCode)
-
-        let entryExitDelaysCell = element(withIdentifier: "entry_exit_delay_list_item")
-        entryExitDelaysCell.tapOrCoordinate()
-
-        let entryExitLayout = app.otherElements["entry_exit_delays_layout"]
-        XCTAssertTrue(entryExitLayout.waitForExistence(timeout: 5), "Entry & exit delays layout not found.")
-
-        let entryExitContainer = app.otherElements["entry_exit_delay_container"]
-        XCTAssertTrue(entryExitContainer.waitForExistence(timeout: 5), "Entry & exit delays container not found.")
-
-        let entryDelayCard = app.otherElements["entry_delay_card"]
-        XCTAssertTrue(entryDelayCard.waitForExistence(timeout: 5), "Entry delay card not found.")
-
-        let exitDelayCard = app.otherElements["exit_delay_card"]
-        XCTAssertTrue(exitDelayCard.waitForExistence(timeout: 5), "Exit delay card not found.")
-
-        let entryDelaySelector = app.otherElements["entry_delay_selector"]
-        XCTAssertTrue(entryDelaySelector.waitForExistence(timeout: 5), "Entry delay selector not found.")
-
-        let exitDelaySelector = app.otherElements["exit_delay_selector"]
-        XCTAssertTrue(exitDelaySelector.waitForExistence(timeout: 5), "Exit delay selector not found.")
-
-        let entryDelayHeader = app.staticTexts["Entry delay"]
-        XCTAssertTrue(entryDelayHeader.waitForExistence(timeout: 5), "Entry & exit delays screen did not appear.")
-
-        let saveButton = app.otherElements["save_button"]
-        XCTAssertTrue(saveButton.waitForExistence(timeout: 5), "Save button not found on Entry & exit delays screen.")
-
-        saveButton.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.1)).tap()
-        XCTAssertTrue(entryDelayHeader.exists, "Entry & exit delays screen unexpectedly dismissed after tapping disabled save button.")
-
-        let helpButton = Self.helpButton(in: app)
-        XCTAssertTrue(helpButton.waitForExistence(timeout: 5), "Help button not found on Entry & exit delays screen.")
-        helpButton.tap()
-
-        XCTAssertTrue(Self.dismissHelpIfPresented(app: app, timeout: 10), "Help screen did not appear or failed to dismiss.")
-        XCTAssertTrue(entryDelayHeader.waitForExistence(timeout: 5), "Entry & exit delays screen did not reappear after closing help.")
-
-        let entryDelayValueLabel = entryDelaySelector.staticTexts.matching(NSPredicate(format: "label CONTAINS[c] %@", "seconds")).firstMatch
-        XCTAssertTrue(entryDelayValueLabel.exists, "Entry delay value label not found.")
-        let exitDelayValueLabel = exitDelaySelector.staticTexts.matching(NSPredicate(format: "label CONTAINS[c] %@", "seconds")).firstMatch
-        XCTAssertTrue(exitDelayValueLabel.exists, "Exit delay value label not found.")
-
-        let entryDelayInitialValue = entryDelayValueLabel.label
-        entryDelaySelector.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
-
-        let entryDelayOptions = [
-            "0 seconds",
-            "30 seconds",
-            "45 seconds",
-            "60 seconds",
-            "120 seconds",
-        ]
-
-        for option in entryDelayOptions {
-            XCTAssertTrue(app.staticTexts[option].waitForExistence(timeout: 5), "Entry delay option '\(option)' not found.")
-        }
-
-        let entryDelayNewValue = entryDelayOptions.first { $0 != entryDelayInitialValue } ?? entryDelayOptions.last!
-        selectDropdownOption(entryDelayNewValue, in: entryDelaySelector)
-        XCTAssertTrue(entryDelayValueLabel.waitForLabel(entryDelayNewValue, timeout: 5), "Entry delay value did not update.")
-
-        let exitDelayInitialValue = exitDelayValueLabel.label
-        exitDelaySelector.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
-
-        let exitDelayOptions = [
-            "30 seconds",
-            "45 seconds",
-            "60 seconds",
-            "120 seconds",
-        ]
-
-        for option in exitDelayOptions {
-            XCTAssertTrue(app.staticTexts[option].waitForExistence(timeout: 5), "Exit delay option '\(option)' not found.")
-        }
-
-        let exitDelayNewValue = exitDelayOptions.first { $0 != exitDelayInitialValue } ?? exitDelayOptions.last!
-        selectDropdownOption(exitDelayNewValue, in: exitDelaySelector)
-        XCTAssertTrue(exitDelayValueLabel.waitForLabel(exitDelayNewValue, timeout: 5), "Exit delay value did not update.")
-
-        saveButton.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
-
-        XCTAssertTrue(entryDelayHeader.waitToDisappear(timeout: 5), "Entry & exit delays screen did not dismiss after saving.")
-        XCTAssertTrue(app.cells.staticTexts["Entry & exit delays"].waitForExistence(timeout: 5), "Settings list did not reappear after saving entry & exit delays.")
-    }
-
-    func testSensitivityScreenRendersExpectedContent() throws {
-        let sessionCode = try requireSessionCode()
-        navigateToSettingsList(sessionCode: sessionCode)
-
-        openSensitivitySettings()
-
-        let sensitivityLayout = element(withIdentifier: "sensitivity_layout")
-
-        let contentContainer = element(withIdentifier: "sensitivity_content_container")
-
-        let gallery = element(withIdentifier: "sensitivity_level_gallery")
-
-        let cards = loadSensitivityCards()
-        XCTAssertEqual(cards.count, 3, "Expected to find exactly three sensitivity level cards.")
-        for card in cards {
-            XCTAssertFalse(card.title.isEmpty, "Sensitivity card '\(card.identifier)' did not expose a title.")
-        }
-
-        let infoCard = element(withIdentifier: "info_card")
-    }
-
-    func testSensitivityLearnMoreOpensInAppBrowser() throws {
-        let sessionCode = try requireSessionCode()
-        navigateToSettingsList(sessionCode: sessionCode)
-
-        openSensitivitySettings()
-
-        let sensitivityLayout = element(withIdentifier: "sensitivity_layout")
-        let infoCard = element(withIdentifier: "info_card")
-
-        let learnMoreElement = learnMoreElement(in: infoCard)
-        learnMoreElement.tap()
-
-        XCTAssertTrue(Self.dismissHelpIfPresented(app: app, timeout: 10), "In-app browser did not appear after tapping Learn more.")
-    }
-
-    func testChangingSensitivityUpdatesSettingsSummary() throws {
-        let sessionCode = try requireSessionCode()
-        navigateToSettingsList(sessionCode: sessionCode)
-
-        let initialSummary = sensitivitySummaryValue()
-        XCTAssertFalse(initialSummary.isEmpty, "Sensitivity summary should not be empty before opening the screen.")
-
-        openSensitivitySettings()
-
-        let sensitivityLayout = element(withIdentifier: "sensitivity_layout")
-
-        let cards = loadSensitivityCards()
-        let targetCard = cards.first {
-            !$0.title.isEmpty && $0.title.caseInsensitiveCompare(initialSummary) != .orderedSame
-        } ?? cards.last
-        XCTAssertNotNil(targetCard, "Failed to find an alternative sensitivity card to select.")
-
-        guard let nextCard = targetCard else { return }
-
-        let expectedSummary = nextCard.title
-        nextCard.element.tap()
-
-        XCTAssertTrue(sensitivityLayout.waitToDisappear(timeout: 5), "Sensitivity screen did not dismiss after selecting a level.")
-        XCTAssertTrue(app.staticTexts["Sensitivity"].waitForExistence(timeout: 5), "Settings list did not reappear after selecting a sensitivity level.")
-        XCTAssertTrue(waitForSensitivitySummary(expectedSummary, timeout: 5), "Sensitivity summary did not update to '\(expectedSummary)'.")
-    }
 }
 
-private extension XCUIElement {
+extension XCUIElement {
     var stringValue: String {
         (value as? String) ?? ""
     }
@@ -319,7 +94,7 @@ private extension XCUIElement {
     }
 }
 
-private extension nami_companionUITests {
+extension nami_companionUITests {
     func selectDropdownOption(_ label: String, in selector: XCUIElement, timeout: TimeInterval = 5) {
         let predicate = NSPredicate(format: "label == %@", label)
         let optionsQuery = selector.staticTexts.matching(predicate)
@@ -382,20 +157,18 @@ private extension nami_companionUITests {
         element(withIdentifier: "sensitivity_list_item", timeout: timeout, file: file, line: line)
     }
 
-    @discardableResult
-    func sensitivitySummaryLabel(timeout: TimeInterval = 5, file: StaticString = #filePath, line: UInt = #line) -> XCUIElement {
+    func sensitivitySummaryLabel(timeout: TimeInterval = 5, file: StaticString = #filePath, line: UInt = #line) -> XCUIElement? {
         let cell = sensitivitySettingsCell(timeout: timeout, file: file, line: line)
-        let predicate = NSPredicate(format: "label != '' AND label != %@", "Sensitivity")
-        let summaryCandidates = cell.staticTexts.matching(predicate).allElementsBoundByIndex
-        guard let summary = summaryCandidates.first else {
-            XCTFail("Sensitivity summary label not found.", file: file, line: line)
-            return cell
+        let summaryCandidates = cell.staticTexts.allElementsBoundByIndex.filter {
+            $0.label.caseInsensitiveCompare("Sensitivity") != .orderedSame
         }
-        return summary
+        return summaryCandidates.first
     }
 
     func sensitivitySummaryValue(timeout: TimeInterval = 5, file: StaticString = #filePath, line: UInt = #line) -> String {
-        let label = sensitivitySummaryLabel(timeout: timeout, file: file, line: line)
+        guard let label = sensitivitySummaryLabel(timeout: timeout, file: file, line: line) else {
+            return ""
+        }
         return label.label
     }
 
@@ -426,8 +199,15 @@ private extension nami_companionUITests {
 
     @discardableResult
     func waitForSensitivitySummary(_ expected: String, timeout: TimeInterval = 5, file: StaticString = #filePath, line: UInt = #line) -> Bool {
-        let summaryLabel = sensitivitySummaryLabel(timeout: timeout, file: file, line: line)
-        return summaryLabel.waitForLabel(expected, timeout: timeout)
+        let deadline = Date().addingTimeInterval(timeout)
+        while Date() < deadline {
+            if let label = sensitivitySummaryLabel(timeout: 1, file: file, line: line),
+               label.label == expected {
+                return true
+            }
+            RunLoop.current.run(until: Date().addingTimeInterval(0.1))
+        }
+        return false
     }
 
     struct SensitivityCard {
@@ -566,7 +346,7 @@ private extension nami_companionUITests {
     }
 }
 
-private extension nami_companionUITests {
+extension nami_companionUITests {
     static func helpButton(in app: XCUIApplication) -> XCUIElement {
         let questionImage = app.images.matching(identifier: "Question").firstMatch
         if questionImage.exists {
