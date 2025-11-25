@@ -23,7 +23,7 @@ final class SessionCodeViewModel: ObservableObject {
     struct State {
         var sessionCode: String = ""
         var clientId: String = "nami_dev"
-        var baseUrl: String = "https://mobile-screens.nami.surf/divkit/v0.6.0/precompiled_layouts"
+        var baseUrl: String = "https://mobile-screens.nami.surf/divkit/v0.7.0/precompiled_layouts"
         var countryCode: String = "us"
         var language: String = "en-US"
         var appearance: NamiAppearance = .light
