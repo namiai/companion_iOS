@@ -153,6 +153,36 @@ extension nami_companionUITests {
         _ = element(withIdentifier: "settings_layout")
     }
 
+    enum PinsScreenState {
+        case list(layout: XCUIElement)
+        case empty(layout: XCUIElement)
+    }
+
+    @discardableResult
+    func openPinsSettings(sessionCode: String) -> PinsScreenState {
+        navigateToSettingsList(sessionCode: sessionCode)
+
+        let pinsCell = element(withIdentifier: "pins_list_item")
+        pinsCell.tapOrCoordinate()
+
+        _ = element(withIdentifier: "settings_pins_layout")
+
+        let listLayout = app.otherElements["settings_pins_list_layout"]
+        XCTAssertTrue(listLayout.waitForExistence(timeout: 5), "Settings PINs list layout not found.")
+
+        let emptyLayout = app.otherElements["settings_pins_empty_layout"]
+        XCTAssertTrue(emptyLayout.waitForExistence(timeout: 5), "Settings PINs empty layout not found.")
+
+        let emptyHero = app.images["no_pins_hero_image"]
+        if (emptyHero.waitForExistence(timeout: 1) && emptyHero.isHittable) || emptyLayout.isHittable {
+            return .empty(layout: emptyLayout)
+        }
+
+        let pinListContainer = app.otherElements["pin_list_container"]
+        XCTAssertTrue(pinListContainer.waitForExistence(timeout: 5), "PIN list container not found.")
+        return .list(layout: listLayout)
+    }
+
     func sensitivitySettingsCell(timeout: TimeInterval = 5, file: StaticString = #filePath, line: UInt = #line) -> XCUIElement {
         element(withIdentifier: "sensitivity_list_item", timeout: timeout, file: file, line: line)
     }
@@ -177,14 +207,17 @@ extension nami_companionUITests {
         cell.tapOrCoordinate()
     }
 
-    func element(withIdentifier identifier: String, timeout: TimeInterval = 5, file: StaticString = #filePath, line: UInt = #line) -> XCUIElement {
+    func element(withIdentifier identifier: String, within container: XCUIElement? = nil, timeout: TimeInterval = 5, file: StaticString = #filePath, line: UInt = #line) -> XCUIElement {
+        let root = container ?? app
         let candidates: [XCUIElement] = [
-            app.otherElements[identifier],
-            app.cells[identifier],
-            app.collectionViews.cells[identifier],
-            app.scrollViews.otherElements[identifier],
-            app.collectionViews.otherElements[identifier],
-            app.descendants(matching: .any)[identifier]
+            root.otherElements[identifier],
+            root.buttons[identifier],
+            root.cells[identifier],
+            root.collectionViews.cells[identifier],
+            root.scrollViews.otherElements[identifier],
+            root.collectionViews.otherElements[identifier],
+            root.staticTexts[identifier],
+            root.descendants(matching: .any)[identifier]
         ]
 
         for element in candidates {
