@@ -26,8 +26,8 @@ final class SessionCodeViewModel: ObservableObject {
         var baseUrl: String = "https://mobile-screens.nami.surf/divkit/v0.6.0/precompiled_layouts"
         var countryCode: String = "us"
         var language: String = "en-US"
-        var appearance: NamiAppearance = .light
-        var measurementSystem: NamiMeasurementSystem = .metric
+        var appearance: NamiSdkConfig.Appearance = .light
+        var measurementSystem: NamiSdkConfig.MeasurementSystem = .metric
         var buttonTapped = false
         var error: CompanionError? = nil 
         
@@ -59,31 +59,16 @@ final class SessionCodeViewModel: ObservableObject {
                     appearance: state.appearance,
                     measurementSystem: state.measurementSystem,
                     onError: { error in
-                        DispatchQueue.main.async {
-                            self.state.error = CompanionError(error: error, detailedMessage: error.localizedDescription)
-                        }
+//                        DispatchQueue.main.async {
+//                            self.state.error = CompanionError(error: error, detailedMessage: error.localizedDescription)
+//                        }
+                        fatalError(error.localizedDescription)
                     }
                 )
                 setupPairingManager(pairingManager)
             } catch {
                 DispatchQueue.main.async {
-                    if let e = error as? NetworkError {
-                        Log.warning("[Pairing init] Network Error: \(e.localizedDescription)")
-                        self.state.error = CompanionError(error: e, detailedMessage: e.localizedDescription)
-                    } else if let e = error as? SDKError {
-                        switch e {
-                        case let .sessionActivateMalformedResponse(data):
-                            let message = "[Pairing init] SDK Error: \(e.localizedDescription), containing unparsed data: \(String(data: data, encoding: .utf8) ?? "failed to encode into utf8 string")"
-                            Log.warning(message)
-                            self.state.error = CompanionError(error: e, detailedMessage: e.localizedDescription)
-                        default:
-                            Log.warning("[Pairing init] SDK Error: \(e.localizedDescription)")
-                            self.state.error = CompanionError(error: e, detailedMessage: e.localizedDescription)
-                        }
-                    } else {
-                        Log.warning("[Pairing init] SDK Error: \(error.localizedDescription)")
-                        self.state.error = CompanionError(error: error, detailedMessage: error.localizedDescription)
-                    }
+                    print(error.localizedDescription)
                     self.state.buttonTapped = false
                     onError()
                 }
@@ -100,7 +85,7 @@ final class SessionCodeViewModel: ObservableObject {
                 // To request the pre-existent BSSID pin from the user as it might be requested from the application useing the framework
                 // is out of scope for this demo app.
                 // Pin would be obtained for the subsequent pairings on pairing success (see `PairingManager.startPairing(...)`) and shown on top of devices list.
-                self.nextRoute(.placeDevices(nil))
+                self.nextRoute(.placeDevices)
                 self.state.buttonTapped = false
             }
         }
