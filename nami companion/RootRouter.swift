@@ -1,10 +1,7 @@
-// Copyright (c) nami.ai
-
 import Foundation
 import SwiftUI
 import NamiPairingFramework
 import Combine
-
 
 typealias RoomUUID = String
 
@@ -19,11 +16,13 @@ final class RootRouter: ObservableObject {
     
     @Published var route = Routes.codeInput
     @Published var currentError: NamiError?
+    
     var pairingManager: PairingManager? {
         didSet {
             subscribeToPairingManagerErrors()
         }
     }
+    
     var currentRoomUUID: RoomUUID?
     private var cancellables = Set<AnyCancellable>()
     
@@ -46,7 +45,7 @@ final class RootRouter: ObservableObject {
             )
         case .presentSingleDeviceSetup:
             presentSingleDeviceSetup()
-        case .presentSetupGuide: 
+        case .presentSetupGuide:
             presentSetupGuide()
         case .presentSettings:
             presentSettings()
@@ -58,7 +57,7 @@ final class RootRouter: ObservableObject {
             pairingManager!.startPositioning(deviceName: deviceName, deviceUid: deviceUid) { 
                 DispatchQueue.main.async {
                     self.route = .placeDevices
-                }  
+                }
             }
         }
         .navigationViewStyle(.stack)
