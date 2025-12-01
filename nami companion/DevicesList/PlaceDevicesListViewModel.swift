@@ -4,6 +4,7 @@ import Foundation
 import Combine
 import SwiftUI
 import NamiPairingFramework
+import WebAPI
 
 // MARK: - PlaceDevicesListViewModel
 
@@ -17,24 +18,33 @@ final class PlaceDevicesListViewModel: ObservableObject {
         var bssid: [UInt8]?
         var offerRetry = false
         var presentingPairing = false
+        var devices: [Device] = []
     }
     
-    init(state: State, nextRoute: @escaping (RootRouter.Routes) -> Void) {
+    init(state: State, api: WebAPI, nextRoute: @escaping (RootRouter.Routes) -> Void) {
         self.state = state
+        self.api = api
         self.nextRoute = nextRoute
+        
+        api.listDevices(query: .parameters(placeIds: [state.placeId].map(\.rawValue)))
+            .map(\.devices)
+            .sink { completion in
+                if case let .failure(error) = completion {
+                    print("Failed to fetch devices: \(error)")
+                }
+            } receiveValue: { [weak self] devices in
+                self?.state.devices = devices
+            }
+            .store(in: &disposable)
     }
     
     @Published var state: State
+    let api: WebAPI
     let nextRoute: (RootRouter.Routes) -> Void
     private var disposable = Set<AnyCancellable>()
     
     func presentPairing() {
-//        nextRoute(.pairing(state.pairingInRoomId, state.devices.isEmpty ? nil : state.bssid))
         nextRoute(.presentSingleDeviceSetup)
-    }
-    
-    func presentPositioning(deviceName: String, deviceUid: NamiDeviceUniversalID) {
-//        nextRoute(.positioning(state.pairingInRoomId, state.bssid, deviceName, deviceUid))
     }
     
     func presentSetupGuide() {

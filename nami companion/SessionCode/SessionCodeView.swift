@@ -57,15 +57,15 @@ struct SessionCodeView: View {
                         .disableAutocorrection(true)
                         .textInputAutocapitalization(.never)
 
-//                    Picker("Appearance", selection: $viewModel.state.appearance) {
-//                        Text("\(NamiSdkConfig.Appearance.system)").tag(NamiSdkConfig.Appearance.system)
-//                        Text("\(NamiSdkConfig.Appearance.light)").tag(NamiSdkConfig.Appearance.light)
-//                        Text("\(NamiSdkConfig.Appearance.dark)").tag(NamiSdkConfig.Appearance.dark)
-//                    }
-//                    Picker("Measurement system", selection: $viewModel.state.measurementSystem) {
-//                        Text("\(NamiSdkConfig.MeasurementSystem.metric)").tag(NamiSdkConfig.MeasurementSystem.metric)
-//                        Text("\(NamiSdkConfig.MeasurementSystem.imperial)").tag(NamiSdkConfig.MeasurementSystem.imperial)
-//                    }
+                    Picker("Appearance", selection: $viewModel.state.appearance) {
+                        Text("\(NamiSdkConfig.Appearance.system)").tag(NamiSdkConfig.Appearance.system)
+                        Text("\(NamiSdkConfig.Appearance.light)").tag(NamiSdkConfig.Appearance.light)
+                        Text("\(NamiSdkConfig.Appearance.dark)").tag(NamiSdkConfig.Appearance.dark)
+                    }
+                    Picker("Measurement system", selection: $viewModel.state.measurementSystem) {
+                        Text("\(NamiSdkConfig.MeasurementSystem.metric)").tag(NamiSdkConfig.MeasurementSystem.metric)
+                        Text("\(NamiSdkConfig.MeasurementSystem.imperial)").tag(NamiSdkConfig.MeasurementSystem.imperial)
+                    }
                 }
                 Button("Confirm") {
                     viewModel.confirmTapped(onError: { showErrorPopover = true })

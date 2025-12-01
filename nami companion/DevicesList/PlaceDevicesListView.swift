@@ -2,6 +2,7 @@
 
 import SwiftUI
 import NamiPairingFramework
+import WebAPI
 
 struct PlaceDevicesListView: View {
     init(viewModel: PlaceDevicesListViewModel) {
@@ -16,6 +17,18 @@ struct PlaceDevicesListView: View {
                         Text("BSSID Pin: " + bssid.map { String(format: "%02.2hhx", $0) }.joined(separator: ":"))
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal)
+                    }
+                }
+                List(viewModel.state.devices) { (device: Device) in
+                    VStack {
+                        Text("\(device.name)")
+                            .font(.title2)
+                        HStack {
+                            Text("Model \(device.model.productLabel)")
+                                .font(.footnote)
+                            Text("Paired at: \(device.createdAt.formatted(date: .abbreviated, time: .shortened))")
+                                .font(.footnote)
+                        }
                     }
                 }
             }

@@ -4,6 +4,8 @@ import Foundation
 import Combine
 import NamiPairingFramework
 import SwiftUI
+import TokenStore
+import WebAPI
 
 struct CompanionError: Error, Equatable {
     let error: Error
@@ -15,7 +17,7 @@ struct CompanionError: Error, Equatable {
 }
 
 final class SessionCodeViewModel: ObservableObject {    
-    init(setupPairingManager: @escaping (PairingManager) -> Void, nextRoute: @escaping (RootRouter.Routes) -> Void) {
+    init(setupPairingManager: @escaping (PairingManager, WebAPI) -> Void, nextRoute: @escaping (RootRouter.Routes) -> Void) {
         self.setupPairingManager = setupPairingManager
         self.nextRoute = nextRoute
     }
@@ -26,7 +28,7 @@ final class SessionCodeViewModel: ObservableObject {
         var baseUrl: String = "https://mobile-screens.nami.surf/divkit/v0.6.0/precompiled_layouts"
         var countryCode: String = "us"
         var language: String = "en-US"
-        var appearance: NamiSdkConfig.Appearance = .light
+        var appearance: NamiSdkConfig.Appearance = .system
         var measurementSystem: NamiSdkConfig.MeasurementSystem = .metric
         var buttonTapped = false
         var error: CompanionError? = nil 
@@ -40,7 +42,7 @@ final class SessionCodeViewModel: ObservableObject {
     @Published var state: State = State()
     private var pairingManager: PairingManager?
     private var disposable = Set<AnyCancellable>()
-    private var setupPairingManager: (PairingManager) -> Void
+    private var setupPairingManager: (PairingManager, WebAPI) -> Void
     private var nextRoute: (RootRouter.Routes) -> Void
     
     func clearError() {
@@ -50,8 +52,10 @@ final class SessionCodeViewModel: ObservableObject {
         self.state.buttonTapped = true
         DispatchQueue(label: "PairingInitializingQueue", qos: .default).async { [unowned self] in
             do {
+                let tokenStore = TokenSecureStorage(server: "nami.companionapp.apitoken.securestorage.dev")
                 let pairingManager = try PairingManager(
-                    sessionCode: state.sessionCode, 
+                    sessionCode: state.sessionCode,
+                    tokenStore: tokenStore,
                     clientId: state.clientId,
                     templatesBaseUrl: state.baseUrl,
                     countryCode: state.countryCode,
@@ -59,13 +63,16 @@ final class SessionCodeViewModel: ObservableObject {
                     appearance: state.appearance,
                     measurementSystem: state.measurementSystem,
                     onError: { error in
-//                        DispatchQueue.main.async {
-//                            self.state.error = CompanionError(error: error, detailedMessage: error.localizedDescription)
-//                        }
                         fatalError(error.localizedDescription)
                     }
                 )
-                setupPairingManager(pairingManager)
+                let api = WebAPI(
+                    base: PairingHelper.baseUrl,
+                    signUpBase: PairingHelper.baseUrl,
+                    session: URLSession.shared,
+                    tokenStore: tokenStore
+                )
+                setupPairingManager(pairingManager, api)
             } catch {
                 DispatchQueue.main.async {
                     print(error.localizedDescription)

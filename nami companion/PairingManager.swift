@@ -20,7 +20,7 @@ final class PairingManager {
     
     // MARK: Lifecycle
     
-    init(sessionCode: String, clientId: String, templatesBaseUrl: String, countryCode: String, language: String, appearance: NamiSdkConfig.Appearance, measurementSystem: NamiSdkConfig.MeasurementSystem, onError: @escaping (Error) -> Void) throws {
+    init(sessionCode: String, tokenStore: TokenSecureStorage, clientId: String, templatesBaseUrl: String, countryCode: String, language: String, appearance: NamiSdkConfig.Appearance, measurementSystem: NamiSdkConfig.MeasurementSystem, onError: @escaping (Error) -> Void) throws {
         self.sessionCode = sessionCode
         self.clientId = clientId
         self.templatesBaseUrl = templatesBaseUrl
@@ -39,11 +39,20 @@ final class PairingManager {
         )
         self.session = try! Self.activateSession(code: sessionCode).get()
         let urlSession = URLSession.shared
-        let tokenStore = TokenSecureStorage(server: "nami.companionapp.apitoken.securestorage.dev")
         tokenStore.store(token: session?.authentication.accessToken, at: .access)
         tokenStore.store(token: session?.authentication.refreshToken, at: .refresh)
         
         self.pairing = NamiPairing(baseURL: PairingHelper.baseUrl, session: urlSession, tokenStore: tokenStore)
+        self.pairing.sdkEventsPublisher.sink { [weak self] completion in
+            if case let .failure(error) = completion {
+                self?.onGuideComplete?(.error(error))
+            }
+        } receiveValue: { [weak self] event in
+            if case .dismissView = event {
+                self?.onGuideComplete?(.cancel)
+            }
+        }
+        .store(in: &cancellables)
     }
     
     // MARK: Internal
@@ -100,6 +109,7 @@ final class PairingManager {
     private let measurementSystem: NamiSdkConfig.MeasurementSystem
     private let onErrorCallback: (Error) -> Void
     private let pairing: NamiPairing
+    private var cancellables = Set<AnyCancellable>()
     
     var placeId: NamiPlaceID {
         NamiPlaceID(session!.place.id)
@@ -237,7 +247,6 @@ struct CompanionModeUser: Decodable {
 struct PairingHelper {
     static let decoder = JSONDecoder.ISO8601Msec()
     static let baseUrl = URL(string: "https://mimizan.nami.surf")!
-    static let templateBaseURL = URL(string: "https://mobile-screens.nami.surf/divkit/precompiled_layouts_dev")!
 }
 
 struct AccessToken: Equatable, Codable {

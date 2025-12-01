@@ -2,6 +2,7 @@ import Foundation
 import SwiftUI
 import NamiPairingFramework
 import Combine
+import WebAPI
 
 typealias RoomUUID = String
 
@@ -22,45 +23,47 @@ final class RootRouter: ObservableObject {
             subscribeToPairingManagerErrors()
         }
     }
+    var api: WebAPI?
     
     var currentRoomUUID: RoomUUID?
     private var cancellables = Set<AnyCancellable>()
     
     @MainActor
-    @ViewBuilder
+//    @ViewBuilder
     func buildView() -> some View {
         switch route {
         case .codeInput:
-            SessionCodeView(viewModel: SessionCodeViewModel(setupPairingManager: { pairingManager in
-                self.pairingManager = pairingManager 
+            return SessionCodeView(viewModel: SessionCodeViewModel(setupPairingManager: { pairingManager, api in
+                self.pairingManager = pairingManager
+                self.api = api
             }, nextRoute: { route in
-                self.route = route
-            }))
-        case .placeDevices:
-            PlaceDevicesListView(viewModel: PlaceDevicesListViewModel(
-                state: PlaceDevicesListViewModel.State(placeId: pairingManager!.placeId),
-                nextRoute: { route in
+                DispatchQueue.main.async {
                     self.route = route
+                }
+            }))
+            .anyView
+        case .placeDevices:
+            print("[RootRouter] building placeDevices view")
+            return PlaceDevicesListView(viewModel: PlaceDevicesListViewModel(
+                state: PlaceDevicesListViewModel.State(placeId: pairingManager!.placeId),
+                api: api!,
+                nextRoute: { route in
+                    DispatchQueue.main.async {
+                        self.route = route
+                    }
                 })
             )
+            .anyView
         case .presentSingleDeviceSetup:
-            presentSingleDeviceSetup()
+            return presentSingleDeviceSetup()
+                .anyView
         case .presentSetupGuide:
-            presentSetupGuide()
+            return presentSetupGuide()
+                .anyView
         case .presentSettings:
-            presentSettings()
+            return presentSettings()
+                .anyView
         }
-    }
-    
-    private func positioning(roomUuid: RoomUUID, bssid: [UInt8]?, deviceName: String, deviceUid: String) -> some View {
-        NavigationView {
-            pairingManager!.startPositioning(deviceName: deviceName, deviceUid: deviceUid) { 
-                DispatchQueue.main.async {
-                    self.route = .placeDevices
-                }
-            }
-        }
-        .navigationViewStyle(.stack)
     }
     
     @MainActor
@@ -124,5 +127,11 @@ final class RootRouter: ObservableObject {
         } else {
             self.route = .codeInput
         }
+    }
+}
+
+extension View {
+    var anyView: AnyView {
+        AnyView(self)
     }
 }
