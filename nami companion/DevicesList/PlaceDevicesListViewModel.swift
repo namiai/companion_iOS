@@ -28,6 +28,7 @@ final class PlaceDevicesListViewModel: ObservableObject {
         
         api.listDevices(query: .parameters(placeIds: [state.placeId].map(\.rawValue)))
             .map(\.devices)
+            .receive(on: DispatchQueue.main)
             .sink { completion in
                 if case let .failure(error) = completion {
                     print("Failed to fetch devices: \(error)")

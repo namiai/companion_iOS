@@ -43,7 +43,8 @@ final class PairingManager {
         tokenStore.store(token: session?.authentication.refreshToken, at: .refresh)
         
         self.pairing = NamiPairing(baseURL: PairingHelper.baseUrl, session: urlSession, tokenStore: tokenStore)
-        self.pairing.sdkEventsPublisher.sink { [weak self] completion in
+        self.pairing.sdkEventsPublisher
+            .sink { [weak self] completion in
             if case let .failure(error) = completion {
                 self?.onGuideComplete?(.error(error))
             }
