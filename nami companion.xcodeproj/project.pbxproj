@@ -259,6 +259,10 @@
 				cs,
 				fr,
 				es,
+				de,
+				pl,
+				it,
+				tr,
 			);
 			mainGroup = 49E2211E29A75669008DF366;
 			packageReferences = (
