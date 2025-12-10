@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/airbnb/lottie-spm.git",
       "state" : {
-        "revision" : "1d29eccc24cc8b75bff9f6804155112c0ffc9605",
-        "version" : "4.4.3"
+        "revision" : "04f2fd18cc9404a0a0917265a449002674f24ec9",
+        "version" : "4.5.2"
       }
     },
     {
@@ -15,7 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/namiai/NamiPairing_iOS.git",
       "state" : {
-        "revision" : "991bca63150934b140e029de1e30d8e3b46cb5db"
+        "revision" : "5aefec04aab48f4a821e3b3e63272dd4f6d978ee",
+        "version" : "4.6.0"
       }
     }
   ],
