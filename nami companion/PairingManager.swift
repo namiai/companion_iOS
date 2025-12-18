@@ -8,6 +8,8 @@ import CommonTypes
 import ISO8601MsecDecoder
 import WebAPI
 import TokenStore
+import SecureStorage
+import ThreadOperationalDatasetProvider
 
 final class PairingManager {
     enum GuideAction {
@@ -42,7 +44,10 @@ final class PairingManager {
         tokenStore.store(token: session?.authentication.accessToken, at: .access)
         tokenStore.store(token: session?.authentication.refreshToken, at: .refresh)
         
-        self.pairing = NamiPairing(baseURL: PairingHelper.baseUrl, session: urlSession, tokenStore: tokenStore)
+        self.pairing = NamiPairing(baseURL: PairingHelper.baseUrl,
+                                   session: urlSession,
+                                   tokenStore: tokenStore,
+                                   threadDatasetProvider: ThreadOperationalDatasetProvider(secureStoreServer: "thread_dataset_storage_companion", storage: SecureStorage.self))
         self.pairing.sdkEventsPublisher
             .sink { [weak self] completion in
             if case let .failure(error) = completion {
@@ -307,5 +312,29 @@ extension TokenSecureStorage: @retroactive NamiPairingTokenStore {
         if let storeKey = Tokens(rawValue: key) {
             self.delete(at: storeKey)
         }
+    }
+}
+
+
+extension SecureStorage: @retroactive ThreadSecureStorageProtocol { }
+extension NamiThreadOperationalDataset: @retroactive SDKThreadOperationalDatasetProtocol { }
+extension ThreadOperationalDatasetProvider<SecureStorage>: @retroactive SDKThreadOperationalDatasetProviderProtocol {
+    public func getDataset(for placeId: NamiPlaceID) -> AnyPublisher<NamiThreadOperationalDataset, any Error> {
+        guard let dataset = self.retrieve(placeId: placeId.rawValue) else {
+            return Fail(error: NSError(domain: "NODATASET", code: 1)).eraseToAnyPublisher()
+        }
+        return Just(dataset).setFailureType(to: Error.self).eraseToAnyPublisher()
+    }
+    
+    public func removeDataset(for placeId: NamiPairingFramework.NamiPlaceID) {
+        self.removeDataset(for: placeId.rawValue)
+    }
+    
+    public func storeDataset(_ dataset: Data, for placeId: NamiPairingFramework.NamiPlaceID) {
+        self.storeDataset(dataset, for: placeId.rawValue)
+    }
+    
+    public func storeDataset(_ dataset: NamiThreadOperationalDataset, for placeId: NamiPairingFramework.NamiPlaceID) {
+        self.storeDataset(dataset.data, for: placeId.rawValue)
     }
 }

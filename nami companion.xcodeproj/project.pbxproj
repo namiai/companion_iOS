@@ -11,6 +11,7 @@
 		2068BC912D5B54CC006F6DF1 /* NamiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2068BC902D5B54CC006F6DF1 /* NamiError.swift */; };
 		20B9EF932C082DFC000EFA6E /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20D4AAC12BF477930059F9A3 /* Montserrat-Bold.ttf */; };
 		20B9EF942C082DFF000EFA6E /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20D4AAC02BF477930059F9A3 /* Montserrat-Regular.ttf */; };
+		494708612EEFA1E0001EBFEA /* ThreadOperationalDatasetProvider in Frameworks */ = {isa = PBXBuildFile; productRef = 494708602EEFA1E0001EBFEA /* ThreadOperationalDatasetProvider */; };
 		497762622ED95DA800C6D308 /* WebAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 497762612ED95DA800C6D308 /* WebAPI */; };
 		49941B262ED06DB3002C4D18 /* NamiPairingFramework.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49941B052ECEF75D002C4D18 /* NamiPairingFramework.xcframework */; };
 		49941B272ED06DB3002C4D18 /* NamiPairingFramework.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 49941B052ECEF75D002C4D18 /* NamiPairingFramework.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -73,6 +74,7 @@
 			files = (
 				49941B262ED06DB3002C4D18 /* NamiPairingFramework.xcframework in Frameworks */,
 				49B848362ED4565000909EB9 /* Lottie in Frameworks */,
+				494708612EEFA1E0001EBFEA /* ThreadOperationalDatasetProvider in Frameworks */,
 				497762622ED95DA800C6D308 /* WebAPI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -192,6 +194,7 @@
 			packageProductDependencies = (
 				49B848352ED4565000909EB9 /* Lottie */,
 				497762612ED95DA800C6D308 /* WebAPI */,
+				494708602EEFA1E0001EBFEA /* ThreadOperationalDatasetProvider */,
 			);
 			productName = "nami companion";
 			productReference = 49E2212729A75669008DF366 /* nami companion.app */;
@@ -228,6 +231,7 @@
 			packageReferences = (
 				49B848342ED4565000909EB9 /* XCRemoteSwiftPackageReference "lottie-spm" */,
 				497762602ED95DA800C6D308 /* XCLocalSwiftPackageReference "../nami_libraries/NamiPairingFramework/nami_libraries/WebAPI_iOS" */,
+				4947085F2EEFA1E0001EBFEA /* XCLocalSwiftPackageReference "../nami_libraries/ThreadOperationalDatasetProvider_iOS" */,
 			);
 			productRefGroup = 49E2212829A75669008DF366 /* Products */;
 			projectDirPath = "";
@@ -530,6 +534,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
+		4947085F2EEFA1E0001EBFEA /* XCLocalSwiftPackageReference "../nami_libraries/ThreadOperationalDatasetProvider_iOS" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../nami_libraries/ThreadOperationalDatasetProvider_iOS;
+		};
 		497762602ED95DA800C6D308 /* XCLocalSwiftPackageReference "../nami_libraries/NamiPairingFramework/nami_libraries/WebAPI_iOS" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = ../nami_libraries/NamiPairingFramework/nami_libraries/WebAPI_iOS;
@@ -548,6 +556,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		494708602EEFA1E0001EBFEA /* ThreadOperationalDatasetProvider */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ThreadOperationalDatasetProvider;
+		};
 		497762612ED95DA800C6D308 /* WebAPI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = WebAPI;
