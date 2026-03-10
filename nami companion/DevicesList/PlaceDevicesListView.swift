@@ -2,7 +2,6 @@
 
 import SwiftUI
 import NamiPairingFramework
-import StandardPairingUI
 
 struct PlaceDevicesListView: View {
     init(viewModel: PlaceDevicesListViewModel) {
@@ -21,15 +20,15 @@ struct PlaceDevicesListView: View {
                 }
                 
                 if viewModel.state.devices.isEmpty == false {
-                    Button("Delete Thread credentials") {
-                        viewModel.deleteThreadCredentials()
-                    }
-                    
                     List {
-                        ForEach(viewModel.state.devices, id: \.id) { device in
+                        ForEach(viewModel.state.devices, id: \.id.rawValue) { device in
                             deviceRow(for: device)
                         }
                     }
+                } else {
+                    Text("Use the menu to start pairing or setup.")
+                        .padding()
+                    Spacer()
                 }
             }
             .navigationTitle("Place devices list")
@@ -42,8 +41,18 @@ struct PlaceDevicesListView: View {
                         Button("Start Setup Guide") {
                             viewModel.presentSetupGuide()
                         }
+                        Divider()
                         Button("Show settings") {
                             viewModel.presentSettings()
+                        }
+                        Button("Create PIN") {
+                            viewModel.presentPinCreation()
+                        }
+                        Button("System test") {
+                            viewModel.presentSystemCheckup()
+                        }
+                        Button("Entry & Exit delay") {
+                            viewModel.presentEntryExitDelays()
                         }
                     } label: {
                         Image(systemName: "plus")
@@ -56,15 +65,14 @@ struct PlaceDevicesListView: View {
     @ViewBuilder
     private func deviceRow(for device: Device) -> some View {
         HStack {
-            Text(device.type ?? "unknown")
-            Spacer()
-            if device.type == "thread_widar_sensor" {
-                Button {
-                    viewModel.presentPositioning(deviceName: device.name, deviceUid: device.uid)
-                } label: {
-                    Text("Reposition")
-                }
+            VStack(alignment: .leading) {
+                Text(device.name)
+                    .font(.headline)
+                Text(device.type ?? "unknown")
+                    .font(.subheadline)
             }
+            
+            Spacer()
         }
         .contextMenu {
             Button(action: {

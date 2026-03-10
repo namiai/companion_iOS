@@ -2,7 +2,12 @@
 
 import NamiPairingFramework
 
-final public class KeychainThreadDatasetStorage: ThreadSecureStorageProtocol {
+final public class KeychainThreadDatasetStorage: NamiThreadSecureStorage {
+    public typealias SecureStorageError = KeychainStorageError
+    
+    public enum KeychainStorageError: Error {
+        case cantRetrieve
+    }
 
     public static func storeOrUpdate(with data: Data, at key: String, server: String) {
         let query: [String: Any] = [
@@ -16,7 +21,7 @@ final public class KeychainThreadDatasetStorage: ThreadSecureStorageProtocol {
         SecItemAdd(query as CFDictionary, nil)
     }
 
-    public static func retrieve(at key: String, server: String) -> Result<Data, NamiPairingFramework.InMemoryThreadDatasetStorage.Thread_SecureStorageError> {
+    public static func retrieve(at key: String, server: String) -> Result<Data, KeychainStorageError> {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrAccount as String: key,

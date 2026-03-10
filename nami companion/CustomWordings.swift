@@ -1,7 +1,7 @@
 // Copyright (c) nami.ai
 
 import SwiftUI
-import StandardPairingUI
+import NamiPairingFramework
 
 //class CustomWordings: WordingProtocol {
 //    // MARK: - General

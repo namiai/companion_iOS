@@ -14,8 +14,8 @@ struct DeviceRepositionView: View {
                     .padding(.horizontal)
                 Spacer()
                 Button { 
-                    if let deviceName = viewModel.state.device?.name, let deviceUid = viewModel.state.device?.uid {
-                        viewModel.presentPositioning(deviceName: deviceName, deviceUid: deviceUid)
+                    if let deviceName = viewModel.state.device?.name {
+                        viewModel.presentPositioning(deviceName: deviceName, deviceUid: "")
                     }
                 } label: {
                     Text("Start positioning")
