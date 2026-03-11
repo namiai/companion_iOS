@@ -461,7 +461,7 @@
 				CODE_SIGN_ENTITLEMENTS = "nami companion/nami_companion.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 68;
+				CURRENT_PROJECT_VERSION = 69;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"nami companion/Preview Content\"";
 				DEVELOPMENT_TEAM = PTKKJUD9AS;
@@ -511,7 +511,7 @@
 				CODE_SIGN_ENTITLEMENTS = "nami companion/nami_companion.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 68;
+				CURRENT_PROJECT_VERSION = 69;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"nami companion/Preview Content\"";
 				DEVELOPMENT_TEAM = PTKKJUD9AS;
@@ -582,7 +582,7 @@
 			repositoryURL = "https://github.com/namiai/NamiPairing_iOS.git";
 			requirement = {
 				kind = revision;
-				revision = a18774870477197ee64de614262bf1834425d579;
+				revision = 775045314121ca13ce5258ee250ea3244e14ae4a;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
