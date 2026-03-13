@@ -45,7 +45,7 @@ final class PairingManager {
         self.pairing = NamiPairing(
             baseURL: Self.baseUrl,
             tokenStore: tokenStore,
-            threadDatasetProvider: InMemoryThreadDatasetProvider()
+            threadDatasetProvider: ThreadOperationalDatasetProvider()
         )
         
         self.pairing.sdkEventsPublisher
@@ -259,7 +259,7 @@ final class InMemoryWiFiStorage: SDKWiFiStorageProtocol, @unchecked Sendable {
     }
 }
 
-final class InMemoryThreadDatasetProvider: SDKThreadOperationalDatasetProviderProtocol, @unchecked Sendable {
+final class ThreadOperationalDatasetProvider: SDKThreadOperationalDatasetProviderProtocol, @unchecked Sendable {
     struct Dataset: SDKThreadOperationalDatasetProtocol {
         var data: Data
 
@@ -281,32 +281,37 @@ final class InMemoryThreadDatasetProvider: SDKThreadOperationalDatasetProviderPr
         }
     }
 
-    private var datasets: [Int64: Data] = [:]
+    private static let secureStoreServer = "thread_dataset_storage_companion"
 
     func newRandomDataset(networkName: String?) -> Dataset {
         Dataset(data: Self.generateRandomThreadDataset(networkName: networkName))
     }
 
     func getDataset(for placeId: NamiPlaceID) -> AnyPublisher<Dataset, any Error> {
-        if let data = datasets[placeId.rawValue] {
+        let key = String(placeId.rawValue)
+        switch KeychainThreadDatasetStorage.retrieve(at: key, server: Self.secureStoreServer) {
+        case .success(let data):
             return Just(Dataset(data: data))
                 .setFailureType(to: Error.self)
                 .eraseToAnyPublisher()
+        case .failure:
+            return Fail(error: NSError(domain: "ThreadDataset", code: -1, userInfo: [NSLocalizedDescriptionKey: "No dataset found"]))
+                .eraseToAnyPublisher()
         }
-        return Fail(error: NSError(domain: "ThreadDataset", code: -1, userInfo: [NSLocalizedDescriptionKey: "No dataset found"]))
-            .eraseToAnyPublisher()
     }
 
     func removeDataset(for placeId: NamiPlaceID) {
-        datasets.removeValue(forKey: placeId.rawValue)
+        let key = String(placeId.rawValue)
+        KeychainThreadDatasetStorage.delete(at: key, server: Self.secureStoreServer)
     }
 
     func storeDataset(_ dataset: Data, for placeId: NamiPlaceID) {
-        datasets[placeId.rawValue] = dataset
+        let key = String(placeId.rawValue)
+        KeychainThreadDatasetStorage.storeOrUpdate(with: dataset, at: key, server: Self.secureStoreServer)
     }
 
     func storeDataset(_ dataset: Dataset, for placeId: NamiPlaceID) {
-        datasets[placeId.rawValue] = dataset.data
+        storeDataset(dataset.data, for: placeId)
     }
 
     // MARK: - Thread Operational Dataset TLV Generation
