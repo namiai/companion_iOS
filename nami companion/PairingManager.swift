@@ -3,7 +3,6 @@
 import Combine
 import Foundation
 import NamiPairingFramework
-import Security
 import SwiftUI
 
 final class PairingManager {
@@ -45,7 +44,7 @@ final class PairingManager {
         self.pairing = NamiPairing(
             baseURL: Self.baseUrl,
             tokenStore: tokenStore,
-            threadDatasetProvider: InMemoryThreadDatasetProvider()
+            threadSecureStorage: KeychainThreadDatasetStorage.self
         )
         
         self.pairing.sdkEventsPublisher
@@ -256,142 +255,6 @@ final class InMemoryWiFiStorage: SDKWiFiStorageProtocol, @unchecked Sendable {
     
     func removeAll() {
         storage.removeAll()
-    }
-}
-
-final class InMemoryThreadDatasetProvider: SDKThreadOperationalDatasetProviderProtocol, @unchecked Sendable {
-    struct Dataset: SDKThreadOperationalDatasetProtocol {
-        var data: Data
-
-        func equalsNumericalPanID<ID>(_ panId: ID) -> Bool where ID: FixedWidthInteger {
-            // Parse PAN ID TLV (type 0x01) from data to compare
-            var offset = 0
-            let bytes = [UInt8](data)
-            while offset + 1 < bytes.count {
-                let type = bytes[offset]
-                let length = Int(bytes[offset + 1])
-                if offset + 2 + length > bytes.count { break }
-                if type == 0x01 && length == 2 {
-                    let storedPanId = UInt16(bytes[offset + 2]) << 8 | UInt16(bytes[offset + 3])
-                    return UInt16(panId) == storedPanId
-                }
-                offset += 2 + length
-            }
-            return false
-        }
-    }
-
-    private var datasets: [Int64: Data] = [:]
-
-    func newRandomDataset(networkName: String?) -> Dataset {
-        Dataset(data: Self.generateRandomThreadDataset(networkName: networkName))
-    }
-
-    func getDataset(for placeId: NamiPlaceID) -> AnyPublisher<Dataset, any Error> {
-        if let data = datasets[placeId.rawValue] {
-            return Just(Dataset(data: data))
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        }
-        return Fail(error: NSError(domain: "ThreadDataset", code: -1, userInfo: [NSLocalizedDescriptionKey: "No dataset found"]))
-            .eraseToAnyPublisher()
-    }
-
-    func removeDataset(for placeId: NamiPlaceID) {
-        datasets.removeValue(forKey: placeId.rawValue)
-    }
-
-    func storeDataset(_ dataset: Data, for placeId: NamiPlaceID) {
-        datasets[placeId.rawValue] = dataset
-    }
-
-    func storeDataset(_ dataset: Dataset, for placeId: NamiPlaceID) {
-        datasets[placeId.rawValue] = dataset.data
-    }
-
-    // MARK: - Thread Operational Dataset TLV Generation
-
-    /// Generates a valid Thread Operational Dataset in TLV format matching the Thread MeshCoP specification.
-    private static func generateRandomThreadDataset(networkName: String?) -> Data {
-        var tlvData = Data()
-
-        // Channel (type 0x00): 1 byte channel page + 2 bytes channel number (big-endian)
-        let channel = UInt16(Int.random(in: 11...26))
-        tlvData.append(contentsOf: [0x00, 0x03, 0x00] + channel.bigEndianBytes)
-
-        // PAN ID (type 0x01): 2 bytes (big-endian)
-        let panId = UInt16.random(in: 0...UInt16.max)
-        tlvData.append(contentsOf: [0x01, 0x02] + panId.bigEndianBytes)
-
-        // Extended PAN ID (type 0x02): 8 bytes (big-endian)
-        let extPanId = UInt64.random(in: 0...UInt64.max)
-        tlvData.append(contentsOf: [0x02, 0x08] + extPanId.bigEndianBytes)
-
-        // Network Name (type 0x03): UTF-8, max 16 bytes
-        let name: String
-        if let networkName, !networkName.isEmpty {
-            name = String(networkName.prefix(16))
-        } else {
-            let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-            name = String((0..<16).map { _ in chars.randomElement()! })
-        }
-        let nameBytes = Array(name.utf8)
-        tlvData.append(contentsOf: [0x03, UInt8(nameBytes.count)] + nameBytes)
-
-        // PSKC (type 0x04): 16 random bytes
-        var pskc = [UInt8](repeating: 0, count: 16)
-        _ = SecRandomCopyBytes(kSecRandomDefault, 16, &pskc)
-        tlvData.append(contentsOf: [0x04, 0x10] + pskc)
-
-        // Network Key (type 0x05): 16 random bytes
-        var networkKey = [UInt8](repeating: 0, count: 16)
-        _ = SecRandomCopyBytes(kSecRandomDefault, 16, &networkKey)
-        tlvData.append(contentsOf: [0x05, 0x10] + networkKey)
-
-        // Mesh Local Prefix (type 0x07): 8 bytes, ULA prefix starting with 0xFD
-        var meshPrefix = [UInt8](repeating: 0, count: 8)
-        _ = SecRandomCopyBytes(kSecRandomDefault, 8, &meshPrefix)
-        meshPrefix[0] = 0xFD // ULA prefix
-        tlvData.append(contentsOf: [0x07, 0x08] + meshPrefix)
-
-        // Security Policy (type 0x0C): 4 bytes
-        // Default: rotation time 672h, standard flags
-        let securityPolicy: UInt32 = (672 << 16) | 0xFF_F8
-        tlvData.append(contentsOf: [0x0C, 0x04] + securityPolicy.bigEndianBytes)
-
-        // Active Timestamp (type 0x0E): 8 bytes
-        // Seconds since epoch shifted left by 16, with tick=0 and authoritative=1
-        let seconds = UInt64(Date().timeIntervalSince1970)
-        let timestamp = (seconds << 16) | 1 // authoritative bit set
-        tlvData.append(contentsOf: [0x0E, 0x08] + timestamp.bigEndianBytes)
-
-        // Channel Mask (type 0x35): channel page (1) + mask length (1) + mask (4) = 6 bytes
-        // Set bits for channels 11-26
-        var mask: UInt32 = 0
-        for ch in 11...26 {
-            mask |= 1 << ch
-        }
-        tlvData.append(contentsOf: [0x35, 0x06, 0x00, 0x04] + mask.bigEndianBytes)
-
-        return tlvData
-    }
-}
-
-private extension UInt16 {
-    var bigEndianBytes: [UInt8] {
-        withUnsafeBytes(of: bigEndian) { Array($0) }
-    }
-}
-
-private extension UInt32 {
-    var bigEndianBytes: [UInt8] {
-        withUnsafeBytes(of: bigEndian) { Array($0) }
-    }
-}
-
-private extension UInt64 {
-    var bigEndianBytes: [UInt8] {
-        withUnsafeBytes(of: bigEndian) { Array($0) }
     }
 }
 
