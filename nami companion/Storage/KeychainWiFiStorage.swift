@@ -4,7 +4,7 @@ import Foundation
 import Security
 import NamiPairingFramework
 
-final public class KeychainWiFiStorage: PairingWiFiStorageProtocol {
+final public class KeychainWiFiStorage: SDKWiFiStorageProtocol, @unchecked Sendable {
 
     public init() {}
 

@@ -13,52 +13,27 @@ final class PlaceDevicesListViewModel: ObservableObject {
     }
     
     struct State {
-        var placeId: PlaceID
         var bssid: [UInt8]?
         var devices: [Device] = []
         var offerRetry = false
         var presentingPairing = false
     }
     
-    init(state: State, api: some PairingWebAPIProtocol, threadDatasetProvider: some PairingThreadOperationalDatasetProviderProtocol, nextRoute: @escaping (RootRouter.Routes) -> Void) {
-        self.state = state
-        self.api = api
-        self.threadDatasetProvider = threadDatasetProvider
+    init(pairingManager: PairingManager, nextRoute: @escaping (RootRouter.Routes) -> Void) {
+        self.state = State()
+        self.pairingManager = pairingManager
         self.nextRoute = nextRoute
-        self.updateDevices(api: api)
+        
+        refreshDevices()
     }
     
     @Published var state: State
+    let pairingManager: PairingManager
     let nextRoute: (RootRouter.Routes) -> Void
-    private let api: any PairingWebAPIProtocol
-    private let threadDatasetProvider: any PairingThreadOperationalDatasetProviderProtocol
     private var disposable = Set<AnyCancellable>()
     
-    func updateDevices<API: PairingWebAPIProtocol>(api: API) {
-        api.listDevices(query: DevicesQuery(placeIds: [self.state.placeId]))
-            .map(\.devices)
-            .map { $0.map(Device.init) }
-            .receive(on: DispatchQueue.main)
-            .sink(
-                receiveCompletion: { [weak self] completion in
-                    guard let self, case .failure = completion else { return }
-                    self.state.offerRetry = true
-                },
-                receiveValue: { [weak self] devices in
-                    self?.state.devices = devices
-                    self?.state.offerRetry = false
-                }
-            )
-            .store(in: &disposable)
-    }
-    
     func presentPairing() {
-//        nextRoute(.pairing(state.pairingInRoomId, state.devices.isEmpty ? nil : state.bssid))
         nextRoute(.presentSingleDeviceSetup)
-    }
-    
-    func presentPositioning(deviceName: String, deviceUid: DeviceUniversalID) {
-//        nextRoute(.positioning(state.pairingInRoomId, state.bssid, deviceName, deviceUid))
     }
     
     func presentSetupGuide() {
@@ -69,26 +44,97 @@ final class PlaceDevicesListViewModel: ObservableObject {
         nextRoute(.presentSettings)
     }
     
-    func deleteDevice(deviceId: DeviceID) {
-        api.deleteDevice(id: deviceId)
+    func presentPinCreation() {
+        nextRoute(.presentPinCreation)
+    }
+    
+    func presentSystemCheckup() {
+        nextRoute(.presentSystemCheckup)
+    }
+    
+    func presentEntryExitDelays() {
+        nextRoute(.presentEntryExitDelays)
+    }
+    
+    func refreshDevices() {
+        guard let token = pairingManager.accessToken else { return }
+        let placeId = pairingManager.placeId.rawValue
+        
+        var request = URLRequest(url: URL(string: "\(PairingManager.baseUrl)/devices?place_ids=\(placeId)")!)
+        request.httpMethod = "GET"
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        URLSession.shared.dataTaskPublisher(for: request)
+            .map(\.data)
+            .decode(type: DevicesResponse.self, decoder: Self.apiDecoder)
+            .map { $0.devices.map { Device(id: NamiDeviceID($0.id), name: $0.name, type: $0.model?.codeName) } }
             .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { [self] completion in
-                switch completion {
-                case .finished:
-                    // Handle successful completion
-                    self.updateDevices(api: self.api)
-                case .failure(let error):
-                    // Handle failure
-                    print("Failed to delete device: \(error)")
-                    // Optionally, you can show an alert or perform any other error handling here
+            .sink { completion in
+                if case let .failure(error) = completion {
+                    print("Failed to fetch devices: \(error)")
                 }
-            }, receiveValue: { _ in
-                // Do nothing here since we are only interested in completion events
-            })
+            } receiveValue: { [weak self] devices in
+                self?.state.devices = devices
+            }
             .store(in: &disposable)
     }
     
-    func deleteThreadCredentials() {        
-        threadDatasetProvider.removeDataset(for: state.placeId)
+    func deleteDevice(deviceId: NamiDeviceID) {
+        guard let token = pairingManager.accessToken else { return }
+        
+        var request = URLRequest(url: URL(string: "\(PairingManager.baseUrl)/devices/\(deviceId.rawValue)")!)
+        request.httpMethod = "DELETE"
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        URLSession.shared.dataTaskPublisher(for: request)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { [weak self] completion in
+                switch completion {
+                case .finished:
+                    self?.refreshDevices()
+                case .failure(let error):
+                    print("Failed to delete device: \(error)")
+                }
+            }, receiveValue: { _ in })
+            .store(in: &disposable)
+    }
+    
+    private static let apiDecoder: JSONDecoder = {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .custom { decoder in
+            let container = try decoder.singleValueContainer()
+            let dateString = try container.decode(String.self)
+            let formatter = ISO8601DateFormatter()
+            formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+            if let date = formatter.date(from: dateString) { return date }
+            formatter.formatOptions = [.withInternetDateTime]
+            if let date = formatter.date(from: dateString) { return date }
+            throw DecodingError.dataCorruptedError(in: container, debugDescription: "Cannot decode date: \(dateString)")
+        }
+        return decoder
+    }()
+}
+
+// MARK: - API Response Models
+
+private struct DevicesResponse: Decodable {
+    let devices: [APIDevice]
+}
+
+private struct APIDevice: Decodable {
+    let id: Int64
+    let name: String
+    let model: APIDeviceModel?
+    
+    enum CodingKeys: String, CodingKey {
+        case id, name, model
+    }
+}
+
+private struct APIDeviceModel: Decodable {
+    let codeName: String
+    
+    enum CodingKeys: String, CodingKey {
+        case codeName = "code_name"
     }
 }

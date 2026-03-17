@@ -58,15 +58,15 @@ struct SessionCodeView: View {
                         .textInputAutocapitalization(.never)
 
                     Picker("Appearance", selection: $viewModel.state.appearance) {
-                        ForEach(NamiAppearance.allCases) { appearance in
-                            Text(appearance.rawValue.capitalized)
-                        }
+                        Text("\(NamiSdkConfig.Appearance.system)").tag(NamiSdkConfig.Appearance.system)
+                        Text("\(NamiSdkConfig.Appearance.light)").tag(NamiSdkConfig.Appearance.light)
+                        Text("\(NamiSdkConfig.Appearance.dark)").tag(NamiSdkConfig.Appearance.dark)
                     }
                     Picker("Measurement system", selection: $viewModel.state.measurementSystem) {
-                        ForEach(NamiMeasurementSystem.allCases) { measurementSystem in
-                            Text(measurementSystem.rawValue.capitalized)
-                        }
+                        Text("\(NamiSdkConfig.MeasurementSystem.metric)").tag(NamiSdkConfig.MeasurementSystem.metric)
+                        Text("\(NamiSdkConfig.MeasurementSystem.imperial)").tag(NamiSdkConfig.MeasurementSystem.imperial)
                     }
+                    Toggle("Topology Rooms Supported", isOn: $viewModel.state.topologyRoomsSupported)
                 }
                 Button("Confirm") {
                     viewModel.confirmTapped(onError: { showErrorPopover = true })

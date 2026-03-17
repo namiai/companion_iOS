@@ -23,11 +23,12 @@ final class SessionCodeViewModel: ObservableObject {
     struct State {
         var sessionCode: String = ""
         var clientId: String = "nami_dev"
-        var baseUrl: String = "https://mobile-screens.nami.surf/divkit/v0.10.0/precompiled_layouts"
+        var baseUrl: String = "https://mobile-screens.nami.surf/divkit/v0.11.0/precompiled_layouts"
         var countryCode: String = "us"
         var language: String = "en-US"
-        var appearance: NamiAppearance = .light
-        var measurementSystem: NamiMeasurementSystem = .metric
+        var appearance: NamiSdkConfig.Appearance = .system
+        var measurementSystem: NamiSdkConfig.MeasurementSystem = .metric
+        var topologyRoomsSupported: Bool = false
         var buttonTapped = false
         var error: CompanionError? = nil 
         
@@ -58,6 +59,7 @@ final class SessionCodeViewModel: ObservableObject {
                     language: state.language,
                     appearance: state.appearance,
                     measurementSystem: state.measurementSystem,
+                    topologyRoomsSupported: state.topologyRoomsSupported,
                     onError: { error in
                         DispatchQueue.main.async {
                             self.state.error = CompanionError(error: error, detailedMessage: error.localizedDescription)
@@ -67,21 +69,18 @@ final class SessionCodeViewModel: ObservableObject {
                 setupPairingManager(pairingManager)
             } catch {
                 DispatchQueue.main.async {
-                    if let e = error as? NetworkError {
-                        Log.warning("[Pairing init] Network Error: \(e.localizedDescription)")
-                        self.state.error = CompanionError(error: e, detailedMessage: e.localizedDescription)
-                    } else if let e = error as? SDKError {
+                    if let e = error as? SDKError {
                         switch e {
                         case let .sessionActivateMalformedResponse(data):
                             let message = "[Pairing init] SDK Error: \(e.localizedDescription), containing unparsed data: \(String(data: data, encoding: .utf8) ?? "failed to encode into utf8 string")"
-                            Log.warning(message)
+                            print(message)
                             self.state.error = CompanionError(error: e, detailedMessage: e.localizedDescription)
                         default:
-                            Log.warning("[Pairing init] SDK Error: \(e.localizedDescription)")
+                            print("[Pairing init] SDK Error: \(e.localizedDescription)")
                             self.state.error = CompanionError(error: e, detailedMessage: e.localizedDescription)
                         }
                     } else {
-                        Log.warning("[Pairing init] SDK Error: \(error.localizedDescription)")
+                        print("[Pairing init] Error: \(error.localizedDescription)")
                         self.state.error = CompanionError(error: error, detailedMessage: error.localizedDescription)
                     }
                     self.state.buttonTapped = false
@@ -91,16 +90,7 @@ final class SessionCodeViewModel: ObservableObject {
             }
             
             DispatchQueue.main.async {
-                // BSSID pin yet unknown here.
-                // It is okay for the new place and for a place with only nami devices
-                // because the pin would be set for first paired device or
-                // in case if there are any nami devices paired already in the sensing zone and no explicit pin is passed to pairing
-                // the pin would be obtained from backend.
-                // If no nami devices were paired in the sensing zone a BSSID pin should be passed to the pairing.
-                // To request the pre-existent BSSID pin from the user as it might be requested from the application useing the framework
-                // is out of scope for this demo app.
-                // Pin would be obtained for the subsequent pairings on pairing success (see `PairingManager.startPairing(...)`) and shown on top of devices list.
-                self.nextRoute(.placeDevices(nil))
+                self.nextRoute(.placeDevices)
                 self.state.buttonTapped = false
             }
         }

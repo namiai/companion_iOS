@@ -3,22 +3,20 @@
 import Combine
 import Foundation
 import NamiPairingFramework
-import StandardPairingUI
 import SwiftUI
 
 final class PairingManager {
-    public enum GuideAction {
-        case startPairing(roomId: RoomID)
+    enum GuideAction {
         case cancel
         case error(Error)
     }
     
-    public var errorPublisher = PassthroughSubject<Error, Never>()
+    var errorPublisher = PassthroughSubject<Error, Never>()
     private var config: NamiSdkConfig
     
     // MARK: Lifecycle
     
-    init(sessionCode: String, clientId: String, templatesBaseUrl: String, countryCode: String, language: String, appearance: NamiAppearance, measurementSystem: NamiMeasurementSystem, onError: @escaping (Error) -> Void) throws {
+    init(sessionCode: String, clientId: String, templatesBaseUrl: String, countryCode: String, language: String, appearance: NamiSdkConfig.Appearance, measurementSystem: NamiSdkConfig.MeasurementSystem, topologyRoomsSupported: Bool, onError: @escaping (Error) -> Void) throws {
         self.sessionCode = sessionCode
         self.clientId = clientId
         self.templatesBaseUrl = templatesBaseUrl
@@ -28,52 +26,41 @@ final class PairingManager {
         self.measurementSystem = measurementSystem
         self.onErrorCallback = onError
         self.config = NamiSdkConfig(
-            baseURL: URL(string:templatesBaseUrl)!,
+            baseURL: URL(string: templatesBaseUrl)!,
             countryCode: countryCode,
             measurementSystem: measurementSystem,
             clientId: clientId,
             language: language,
-            appearance: appearance
+            appearance: appearance,
+            topologyRoomsSupported: topologyRoomsSupported
         )
-        self.pairing = try NamiPairing<ViewsContainer>(
-            sessionCode: sessionCode,
-            wifiStorage: InMemoryWiFiStorage(),
-            threadDatasetStore: InMemoryThreadDatasetStorage.self
+
+        self.session = try Self.activateSession(code: sessionCode).get()
+
+        let tokenStore = CompanionTokenStore()
+        tokenStore.store(session!.authentication.accessToken, at: "access_token")
+        tokenStore.store(session!.authentication.refreshToken, at: "refresh_token")
+
+        self.pairing = NamiPairing(
+            baseURL: Self.baseUrl,
+            tokenStore: tokenStore,
+            threadSecureStorage: KeychainThreadDatasetStorage.self
         )
         
-        try setupSubscription()
+        self.pairing.sdkEventsPublisher
+            .sink { [weak self] completion in
+                if case let .failure(error) = completion {
+                    self?.onGuideComplete?(.error(error))
+                }
+            } receiveValue: { [weak self] event in
+                if case .dismissView = event {
+                    self?.onGuideComplete?(.cancel)
+                }
+            }
+            .store(in: &cancellables)
     }
     
     // MARK: Internal
-    
-    func startPairing(
-        roomId: String,
-        bssidPin: [UInt8]?,
-        onPairingComplete: (([UInt8]?, DeviceID?, Bool?) -> Void)? = nil
-    ) -> some View {
-        self.onPairingComplete = onPairingComplete
-        do {
-            return try AnyView(
-                pairing.startPairing(
-                    roomId: roomId,
-                    pairingSteps: ViewsContainer(),
-                    // Plaese notice the BSSID pin is passed here to limit the WIFi networks search.
-                    // Here it is in form of `[UInt8]` but also could be `Data` or ":"-separated MAC-formatted `String`.
-                    pairingParameters: bssidPin == nil ? NamiPairing.PairingParameters(updateWiFiCredentials: false) : NamiPairing.PairingParameters(bssid: bssidPin!)
-                )
-            )
-        } catch {
-            return AnyView(
-                VStack{
-                    Text("The Room ID provided could not be found in the Place topology.")
-                    Button("Back to Place") {
-                        self.completePairing()
-                    }
-                    .buttonStyle(.bordered)
-                    .padding()
-                })
-        }
-    }
     
     func startPositioning(deviceName: String, deviceUid: String, onPositioningComplete: (() -> Void)? = nil) -> some View {
         EmptyView()
@@ -82,138 +69,92 @@ final class PairingManager {
     @MainActor func presentSingleDeviceSetup(onGuideComplete: ((GuideAction) -> Void)?) -> some View {
         self.onGuideComplete = onGuideComplete
         return AnyView(
-            pairing.presentEntryPoint(entrypoint: RemoteTemplateEntrypoint.setupDeviceGuide, config: self.config, pairingSteps: ViewsContainer())
+            try! pairing.presentEntryPoint(RemoteTemplateEntrypoint.setupDeviceGuide, placeId: NamiPlaceID(session!.place.id), config: self.config)
         )
     }
     
     @MainActor func presentSetupGuide(onGuideComplete: ((GuideAction) -> Void)?) -> some View {
         self.onGuideComplete = onGuideComplete
         return AnyView(
-            pairing.presentEntryPoint(entrypoint: RemoteTemplateEntrypoint.setupKitGuide, config: self.config, pairingSteps: ViewsContainer())
+            try! pairing.presentEntryPoint(RemoteTemplateEntrypoint.setupKitGuide, placeId: NamiPlaceID(session!.place.id), config: self.config)
         )
     }
     
     @MainActor func presentSettings(onGuideComplete: ((GuideAction) -> Void)?) -> some View {
         self.onGuideComplete = onGuideComplete
         return AnyView(
-            pairing.presentEntryPoint(entrypoint: RemoteTemplateEntrypoint.settings, config: self.config, pairingSteps: ViewsContainer())
+            try! pairing.presentEntryPoint(RemoteTemplateEntrypoint.settings, placeId: NamiPlaceID(session!.place.id), config: self.config)
         )
     }
     
-    enum TemporarilyEndpoint: String, RemoteTemplateEntrypointProtocol {
-        case namePin = "/name-pin.json"
+    @MainActor func presentEntryExitDelaySettings(onGuideComplete: ((GuideAction) -> Void)?) -> some View {
+        self.onGuideComplete = onGuideComplete
+        return AnyView(
+            try! pairing.presentEntryPoint(RemoteTemplateEntrypoint.settingsEntryExitDelays, placeId: NamiPlaceID(session!.place.id), config: self.config)
+        )
+    }
+    
+    @MainActor func presentSystemCheckup(onGuideComplete: ((GuideAction) -> Void)?) -> some View {
+        self.onGuideComplete = onGuideComplete
+        return AnyView(
+            try! pairing.presentEntryPoint(RemoteTemplateEntrypoint.testSystem,
+                                           placeId: NamiPlaceID(session!.place.id),
+                                           config: self.config)
+        )
+    }
+    
+    enum TemporarilyEndpoint: String, SDKRemoteTemplateEntrypointProtocol {
+        case testSystems = "/test-system/kit/alarm_com_falcon.json"
+        case namePin = "/settings-pins.json"
+    }
+    
+    @MainActor func presentTestSystems(onGuideComplete: ((GuideAction) -> Void)?) -> some View {
+        self.onGuideComplete = onGuideComplete
+        return AnyView(
+            try! pairing.presentEntryPoint(TemporarilyEndpoint.testSystems,
+                                           placeId: NamiPlaceID(session!.place.id),
+                                           config: self.config)
+        )
     }
     
     @MainActor func presentPinCreation(onGuideComplete: ((GuideAction) -> Void)?) -> some View {
         self.onGuideComplete = onGuideComplete
         return AnyView(
-            pairing.presentEntryPoint(entrypoint: TemporarilyEndpoint.namePin, config: self.config, pairingSteps: ViewsContainer())
+            try! pairing.presentEntryPoint(TemporarilyEndpoint.namePin,
+                                           placeId: NamiPlaceID(session!.place.id),
+                                           config: self.config)
         )
     }
     
     // MARK: Private
     
     private var subscriptions = Set<AnyCancellable>()
-    private var device: Device?
-    private var onPairingComplete: (([UInt8]?, DeviceID?, Bool?) -> Void)?
+    private var cancellables = Set<AnyCancellable>()
+    private var onPairingComplete: (([UInt8]?, NamiDeviceID?, Bool?) -> Void)?
     private var onPositioningComplete: (() -> Void)?
     private var onGuideComplete: ((GuideAction) -> Void)?
     private let sessionCode: String
+    private var session: SessionCodeActivateResult?
     private let clientId: String
     private let templatesBaseUrl: String
     private let countryCode: String
     private let language: String
-    private let appearance: NamiAppearance
-    private let measurementSystem: NamiMeasurementSystem
+    private let appearance: NamiSdkConfig.Appearance
+    private let measurementSystem: NamiSdkConfig.MeasurementSystem
     private let onErrorCallback: (Error) -> Void
-    private let pairing: NamiPairing<ViewsContainer>
+    private let pairing: NamiPairing
     
-    var api: any PairingWebAPIProtocol {
-        pairing.api
-    }
-
-    var threadDatasetProvider: any PairingThreadOperationalDatasetProviderProtocol {
-        pairing.threadDatasetProvider
+    static let baseUrl = URL(string: "https://mimizan.nami.surf")!
+    
+    var placeId: NamiPlaceID {
+        NamiPlaceID(session!.place.id)
     }
     
-    var placeId: PlaceID {
-        pairing.placeId
-    } 
-    
-    private func setupSubscription() throws {
-        pairing.devicePairingState
-            .subscribe(on: DispatchQueue.main)
-            .sink { [weak self] completion in
-                if case let .failure(error) = completion {
-                    Log.warning("[PairingManager] Device state publisher failed with error: \(error.localizedDescription)")
-                }
-                guard let self else { return }
-                self.completePairing()
-            } receiveValue: { [weak self] deviceState in
-                Log.info("[PairingManager] got device state \(deviceState)")
-                switch deviceState {
-                case .deviceCommisionedAtCloud(let device, in: _):
-                    // Here the associated values might be obtained for case:
-                    // `.deviceCommisionedAtCloud(device, in: placeId)`.
-                    // For this demo we don't store device but would later obtain it from API.
-                    // The pairing is not over yet.
-                    self?.device = device as? Device
-                    break
-                case .deviceOperable(let deviceId, _, ssid: _, bssid: let bssid, positionAdjustmentNeeded: let repositionNeeded):
-                    // Device is fully commisioned.
-                    // Values with device ID, network SSID and BSSID pin could be obtained `.deviceOperable(deviceId, ssid: ssid, bssid: bssid)`.
-                    if repositionNeeded == true {
-                        self?.completePairing(bssid: bssid, deviceId: deviceId, repositionNeeded: repositionNeeded)
-                        break
-                    }
-                    self?.completePairing(bssid: bssid)
-                case .deviceDecommissioned:
-                    // Pairing was cancelled/errored unrecoverably after commisioning the Device in nami cloud.
-                    // Value with device ID could be obtained `.deviceDecommissioned(deviceId)`
-                    // to revert the actions the SDK consumer might took
-                    // after getting the device on `.deviceCommisionedAtCloud(device, in: placeId)` event.
-                    self?.completePairing()
-                case .pairingCancelled:
-                    // Pairing was cancelled prior commisioning the Device in nami cloud.
-                    self?.completePairing()
-                @unknown default:
-                    break
-                }
-            }
-            .store(in: &subscriptions)
-        
-        pairing.setupGuideState
-            .subscribe(on: DispatchQueue.main)
-            .sink { [weak self] completion in
-                if case let .failure(error) = completion {
-                    Log.warning("[PairingManager] Guide state publisher failed with error: \(error.localizedDescription)")
-                    
-                    self?.onGuideComplete?(.error(error))
-                }
-            } receiveValue: { [weak self] event in
-                switch event {
-                case .gotUrl(_):
-                    break
-                case .variableUpdated(_, _):
-                    break
-                case .viewDismissed:
-                    self?.onGuideComplete?(.cancel)
-                case let .pairingRequested(_, _, roomId, _, _, _):
-//                    self?.onGuideComplete?(.startPairing(roomId: roomId))
-                    break
-                case .warning(_):
-                    break
-                case .updateWiFiCredsRequested(_, _, _, _, _, _, _, _):
-                    break
-                @unknown default:
-                    break
-                }
-                
-            }
-            .store(in: &subscriptions)
+    var accessToken: String? {
+        session?.authentication.accessToken.accessToken
     }
     
-    private func completePairing(bssid: [UInt8]? = nil, deviceId: DeviceID? = nil, repositionNeeded: Bool? = nil) {
+    private func completePairing(bssid: [UInt8]? = nil, deviceId: NamiDeviceID? = nil, repositionNeeded: Bool? = nil) {
         onPairingComplete?(bssid, deviceId, repositionNeeded)
         onPairingComplete = nil
     }
@@ -222,4 +163,170 @@ final class PairingManager {
         onPositioningComplete?()
         onPositioningComplete = nil
     }
+    
+    private static func activateSession(code: String) -> Result<SessionCodeActivateResult, Error> {
+        var urlComponents = URLComponents(string: baseUrl.absoluteString + "/session-codes/\(code)/activate")!
+        var request = URLRequest(url: urlComponents.url!)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let semaphore = DispatchSemaphore(value: 0)
+        var responseData: Data?
+        var errorValue: Error?
+
+        URLSession.shared.dataTask(with: request) { data, _, error in
+            defer { semaphore.signal() }
+            if let error {
+                errorValue = error
+                return
+            }
+            responseData = data
+        }
+        .resume()
+
+        semaphore.wait()
+
+        if let errorValue {
+            return .failure(errorValue)
+        }
+        guard let responseData else {
+            return .failure(SDKError.sessionActivateNoData)
+        }
+        
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .custom { decoder in
+            let container = try decoder.singleValueContainer()
+            let dateString = try container.decode(String.self)
+            
+            let formatter = ISO8601DateFormatter()
+            formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+            if let date = formatter.date(from: dateString) {
+                return date
+            }
+            formatter.formatOptions = [.withInternetDateTime]
+            if let date = formatter.date(from: dateString) {
+                return date
+            }
+            throw DecodingError.dataCorruptedError(in: container, debugDescription: "Cannot decode date: \(dateString)")
+        }
+        
+        guard let activationResult = try? decoder.decode(
+            SessionCodeActivateResult.self,
+            from: responseData
+        ) else {
+            return .failure(SDKError.sessionActivateMalformedResponse(responseData))
+        }
+
+        return .success(activationResult)
+    }
+}
+
+// MARK: - Token Store
+
+final class CompanionTokenStore: NamiPairingTokenStore {
+    private var storage: [String: Data] = [:]
+    
+    func store<TokenType>(_ token: TokenType, at key: String) where TokenType: Decodable, TokenType: Encodable {
+        storage[key] = try? JSONEncoder().encode(token)
+    }
+    
+    func retrieve<TokenType>(_ type: TokenType.Type, from key: String) -> TokenType? where TokenType: Decodable, TokenType: Encodable {
+        guard let data = storage[key] else { return nil }
+        return try? JSONDecoder().decode(type, from: data)
+    }
+    
+    func delete(at key: String) {
+        storage.removeValue(forKey: key)
+    }
+}
+
+// MARK: - In-Memory Storage Implementations
+
+final class InMemoryWiFiStorage: SDKWiFiStorageProtocol, @unchecked Sendable {
+    private var storage: [String: String] = [:]
+    
+    func save(password: String?, for networkSSID: String) {
+        storage[networkSSID] = password
+    }
+    
+    func password(for networkSSID: String) -> String? {
+        storage[networkSSID]
+    }
+    
+    func removeAll() {
+        storage.removeAll()
+    }
+}
+
+// MARK: - Session Code Activation Models
+
+typealias TokenString = String
+typealias UserID = Int64
+typealias SessionPermission = String
+typealias PlaceID = Int64
+
+struct SessionCodeActivateResult: Decodable {
+    var sessionParameters: SessionParameters
+    var authentication: CompanionModeAuthentication
+    var place: ActivatedPlace
+    
+    enum CodingKeys: String, CodingKey {
+        case sessionParameters = "session_parameters"
+        case authentication
+        case place
+    }
+}
+
+struct SessionParameters: Codable, Equatable {
+    var permissions: [SessionPermission]
+    var mode: String
+    var flatModeDefaults: [String: Int64]
+    var partnerName: String
+    var partnerLogoUrl: URL?
+    var redirectUri: URL
+    
+    enum CodingKeys: String, CodingKey {
+        case permissions
+        case mode
+        case flatModeDefaults = "flat_mode"
+        case partnerName = "partner_name"
+        case partnerLogoUrl = "partner_logo_url"
+        case redirectUri = "redirect_uri"
+    }
+}
+
+struct CompanionModeAuthentication: Decodable {
+    var user: CompanionModeUser
+    var accessToken: AccessToken
+    var refreshToken: TokenString
+    
+    enum CodingKeys: String, CodingKey {
+        case user
+        case accessToken = "access_token"
+        case refreshToken = "refresh_token"
+    }
+}
+
+struct CompanionModeUser: Decodable {
+    var id: UserID
+    var username: String
+}
+
+struct AccessToken: Equatable, Codable {
+    var accessToken: TokenString
+    var expiresAt: Date
+    
+    func isValid() -> Bool {
+        expiresAt > Date()
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case accessToken = "access_token"
+        case expiresAt = "expires_at"
+    }
+}
+
+struct ActivatedPlace: Decodable {
+    var id: PlaceID
+    var name: String
 }
