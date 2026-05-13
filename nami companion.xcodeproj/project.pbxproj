@@ -17,6 +17,7 @@
 		206A03E12BDB8752007DFF2E /* DeviceRepositionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206A03E02BDB8752007DFF2E /* DeviceRepositionViewModel.swift */; };
 		20B9EF932C082DFC000EFA6E /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20D4AAC12BF477930059F9A3 /* Montserrat-Bold.ttf */; };
 		20B9EF942C082DFF000EFA6E /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20D4AAC02BF477930059F9A3 /* Montserrat-Regular.ttf */; };
+		20CA655F2FB46B2B008A31CE /* NamiPairing in Frameworks */ = {isa = PBXBuildFile; productRef = 20CA655E2FB46B2B008A31CE /* NamiPairing */; };
 		20D98D482C1BCF7B004EFAD0 /* CustomWordings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D98D472C1BCF78004EFAD0 /* CustomWordings.swift */; };
 		49D9179E2AFCADF4000E344B /* PlaceDevicesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D9179D2AFCADF4000E344B /* PlaceDevicesListViewModel.swift */; };
 		49E2212B29A75669008DF366 /* nami_companionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2212A29A75669008DF366 /* nami_companionApp.swift */; };
@@ -79,6 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20CA655F2FB46B2B008A31CE /* NamiPairing in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,6 +227,7 @@
 			);
 			name = "nami companion";
 			packageProductDependencies = (
+				20CA655E2FB46B2B008A31CE /* NamiPairing */,
 			);
 			productName = "nami companion";
 			productReference = 49E2212729A75669008DF366 /* nami companion.app */;
@@ -458,7 +461,7 @@
 				CODE_SIGN_ENTITLEMENTS = "nami companion/nami_companion.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 76;
+				CURRENT_PROJECT_VERSION = 78;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"nami companion/Preview Content\"";
 				DEVELOPMENT_TEAM = PTKKJUD9AS;
@@ -486,7 +489,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 3.1.0;
+				MARKETING_VERSION = 3.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ai.nami.nami-companion";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -508,7 +511,7 @@
 				CODE_SIGN_ENTITLEMENTS = "nami companion/nami_companion.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 76;
+				CURRENT_PROJECT_VERSION = 78;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"nami companion/Preview Content\"";
 				DEVELOPMENT_TEAM = PTKKJUD9AS;
@@ -536,7 +539,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 3.1.0;
+				MARKETING_VERSION = 3.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ai.nami.nami-companion";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -579,10 +582,18 @@
 			repositoryURL = "https://github.com/namiai/NamiPairing_iOS";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.1.0;
+				minimumVersion = 5.2.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		20CA655E2FB46B2B008A31CE /* NamiPairing */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 495053A72F88DAB100D2BE88 /* XCRemoteSwiftPackageReference "NamiPairing_iOS" */;
+			productName = NamiPairing;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 49E2211F29A75669008DF366 /* Project object */;
 }
