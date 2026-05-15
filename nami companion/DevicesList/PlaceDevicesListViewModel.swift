@@ -43,7 +43,11 @@ final class PlaceDevicesListViewModel: ObservableObject {
     func presentSettings() {
         nextRoute(.presentSettings)
     }
-    
+
+    func presentUpdateWiFiCredentials() {
+        nextRoute(.presentUpdateWiFiCredentials)
+    }
+
     func presentPinCreation() {
         nextRoute(.presentPinCreation)
     }

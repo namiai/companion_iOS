@@ -86,7 +86,14 @@ final class PairingManager {
             try! pairing.presentEntryPoint(RemoteTemplateEntrypoint.settings, placeId: NamiPlaceID(session!.place.id), config: self.config)
         )
     }
-    
+
+    @MainActor func presentUpdateWiFiCredentials(onGuideComplete: ((GuideAction) -> Void)?) -> some View {
+        self.onGuideComplete = onGuideComplete
+        return AnyView(
+            try! pairing.presentEntryPoint(RemoteTemplateEntrypoint.updateWifiCredentials, placeId: NamiPlaceID(session!.place.id), config: self.config)
+        )
+    }
+
     @MainActor func presentEntryExitDelaySettings(onGuideComplete: ((GuideAction) -> Void)?) -> some View {
         self.onGuideComplete = onGuideComplete
         return AnyView(

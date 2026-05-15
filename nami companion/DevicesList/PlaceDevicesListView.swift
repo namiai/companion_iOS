@@ -45,6 +45,9 @@ struct PlaceDevicesListView: View {
                         Button("Show settings") {
                             viewModel.presentSettings()
                         }
+                        Button("Update Wi-Fi credentials") {
+                            viewModel.presentUpdateWiFiCredentials()
+                        }
                         Button("Create PIN") {
                             viewModel.presentPinCreation()
                         }
@@ -55,7 +58,7 @@ struct PlaceDevicesListView: View {
                             viewModel.presentEntryExitDelays()
                         }
                     } label: {
-                        Image(systemName: "plus")
+                        Image(systemName: "ellipsis")
                     }
                 }
             }

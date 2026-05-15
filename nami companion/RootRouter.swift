@@ -17,6 +17,7 @@ final class RootRouter: ObservableObject {
         case presentPinCreation
         case presentSystemCheckup
         case presentEntryExitDelays
+        case presentUpdateWiFiCredentials
     }
     
     @Published var route = Routes.codeInput
@@ -71,6 +72,9 @@ final class RootRouter: ObservableObject {
         case .presentEntryExitDelays:
             return presentEntryExitDelaySettings()
                 .anyView
+        case .presentUpdateWiFiCredentials:
+            return presentUpdateWiFiCredentials()
+                .anyView
         }
     }
     
@@ -120,6 +124,13 @@ final class RootRouter: ObservableObject {
     @MainActor
     private func presentEntryExitDelaySettings() -> some View {
         pairingManager!.presentEntryExitDelaySettings { [weak self] event in
+            self?.onGuideEnded(event: event)
+        }
+    }
+
+    @MainActor
+    private func presentUpdateWiFiCredentials() -> some View {
+        pairingManager!.presentUpdateWiFiCredentials { [weak self] event in
             self?.onGuideEnded(event: event)
         }
     }
