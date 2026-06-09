@@ -87,6 +87,17 @@ final class PairingManager {
         )
     }
 
+    @MainActor func presentSettingsForEntity(urn: String, onGuideComplete: ((GuideAction) -> Void)?) -> some View {
+        self.onGuideComplete = onGuideComplete
+        return AnyView(
+            try! pairing.presentEntryPoint(
+                RemoteTemplateEntrypoint.settings.with(entityID: urn),
+                placeId: NamiPlaceID(session!.place.id),
+                config: self.config
+            )
+        )
+    }
+
     @MainActor func presentUpdateWiFiCredentials(onGuideComplete: ((GuideAction) -> Void)?) -> some View {
         self.onGuideComplete = onGuideComplete
         return AnyView(

@@ -14,6 +14,7 @@ final class RootRouter: ObservableObject {
         case presentSingleDeviceSetup
         case presentSetupGuide
         case presentSettings
+        case presentSettingsForEntity(urn: String)
         case presentPinCreation
         case presentSystemCheckup
         case presentEntryExitDelays
@@ -63,6 +64,9 @@ final class RootRouter: ObservableObject {
         case .presentSettings:
             return presentSettings()
                 .anyView
+        case let .presentSettingsForEntity(urn):
+            return presentSettingsForEntity(urn: urn)
+                .anyView
         case .presentPinCreation:
             return presentPinCreation()
                 .anyView
@@ -106,7 +110,17 @@ final class RootRouter: ObservableObject {
         }
         .navigationViewStyle(.stack)
     }
-    
+
+    @MainActor
+    private func presentSettingsForEntity(urn: String) -> some View {
+        NavigationView {
+            pairingManager!.presentSettingsForEntity(urn: urn) { [weak self] event in
+                self?.onGuideEnded(event: event)
+            }
+        }
+        .navigationViewStyle(.stack)
+    }
+
     @MainActor
     private func presentPinCreation() -> some View {
         pairingManager!.presentPinCreation { [weak self] event in

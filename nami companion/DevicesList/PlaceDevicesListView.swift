@@ -45,6 +45,9 @@ struct PlaceDevicesListView: View {
                         Button("Show settings") {
                             viewModel.presentSettings()
                         }
+                        Button("Show settings with parameter") {
+                            viewModel.state.isEntityPickerPresented = true
+                        }
                         Button("Update Wi-Fi credentials") {
                             viewModel.presentUpdateWiFiCredentials()
                         }
@@ -62,9 +65,68 @@ struct PlaceDevicesListView: View {
                     }
                 }
             }
+            .sheet(isPresented: Binding(
+                get: { viewModel.state.isEntityPickerPresented },
+                set: { viewModel.state.isEntityPickerPresented = $0 }
+            )) {
+                entityPickerSheet
+            }
         }
     }
-    
+
+    @ViewBuilder
+    private var entityPickerSheet: some View {
+        NavigationView {
+            Group {
+                if let place = viewModel.state.place {
+                    List {
+                        ForEach(place.zones, id: \.id) { zone in
+                            Section {
+                                Button {
+                                    viewModel.presentSettings(forEntity: zone.urn)
+                                } label: {
+                                    Label(zone.name.isEmpty ? "Zone" : zone.name,
+                                          systemImage: "square")
+                                        .font(.headline)
+                                }
+                                ForEach(zone.rooms, id: \.id) { room in
+                                    Button {
+                                        viewModel.presentSettings(forEntity: room.urn)
+                                    } label: {
+                                        Label(room.name.isEmpty ? "Room" : room.name,
+                                              systemImage: "square.split.bottomrightquarter")
+                                    }
+                                    .padding(.leading, 16)
+                                    ForEach(viewModel.state.devices.filter { $0.roomId == room.id }, id: \.id.rawValue) { device in
+                                        Button {
+                                            viewModel.presentSettings(forEntity: device.urn)
+                                        } label: {
+                                            Label(device.name.isEmpty ? (device.type ?? "Device") : device.name,
+                                                  systemImage: "sensor")
+                                                .font(.subheadline)
+                                        }
+                                        .padding(.leading, 32)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    ProgressView()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
+            }
+            .navigationTitle("Pick entity")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Cancel") {
+                        viewModel.state.isEntityPickerPresented = false
+                    }
+                }
+            }
+        }
+    }
+
     @ViewBuilder
     private func deviceRow(for device: Device) -> some View {
         HStack {
