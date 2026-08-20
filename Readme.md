@@ -28,21 +28,21 @@ In the file where you plan to initialize and present the SDK, import the require
 
 ```swift
 import NamiPairingFramework
-import StandardPairingUI
 ```
 
 ### 3. Initialize the SDK
 
-The SDK requires a `sessionCode` (obtained from your backend), along with local storage providers for Wi-Fi and Thread datasets. 
+The SDK requires the API base URL, a token store carrying the session tokens, and a secure
+storage provider for Thread datasets.
 
 *Important:* The SDK instance should be created once and reused throughout the app's lifetime. The same instance can be used to present multiple screens and entry points.
 
 ```swift
 // Instantiate the pairing SDK
-let pairing = try NamiPairing<ViewsContainer>(
-    sessionCode: sessionCode,
-    wifiStorage: InMemoryWiFiStorage(),
-    threadDatasetStore: InMemoryThreadDatasetStorage.self
+let pairing = NamiPairing(
+    baseURL: baseUrl,
+    tokenStore: tokenStore,
+    threadSecureStorage: KeychainThreadDatasetStorage.self
 )
 ```
 
