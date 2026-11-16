@@ -87,11 +87,20 @@ final class PairingManager {
         )
     }
 
-    @MainActor func presentSettingsForEntity(urn: String, onGuideComplete: ((GuideAction) -> Void)?) -> some View {
+    /// Presents settings scoped to a partner entity id, passing the session's partner id.
+    ///
+    /// - Parameters:
+    ///   - entityId: The partner's id for the zone, room or device, as keyed in the backend's
+    ///     `external-device-ids` mapping.
+    ///   - onGuideComplete: Called with the guide's terminal action.
+    /// - Returns: The SDK's settings view.
+    @MainActor func presentSettingsForEntity(entityId: String, onGuideComplete: ((GuideAction) -> Void)?) -> some View {
         self.onGuideComplete = onGuideComplete
         return AnyView(
             try! pairing.presentEntryPoint(
-                RemoteTemplateEntrypoint.settings.with(entityID: urn),
+                // The companion activates the session itself and hands the SDK a token store, so
+                // the SDK has no session partner id; pass the one from the companion's activation.
+                RemoteTemplateEntrypoint.settings.with(entityID: entityId, partnerID: partnerId),
                 placeId: NamiPlaceID(session!.place.id),
                 config: self.config
             )
@@ -167,7 +176,12 @@ final class PairingManager {
     var placeId: NamiPlaceID {
         NamiPlaceID(session!.place.id)
     }
-    
+
+    /// External id of the session place's managing client (`session_parameters.partner_id`).
+    var partnerId: String? {
+        session?.sessionParameters.partnerId
+    }
+
     var accessToken: String? {
         session?.authentication.accessToken.accessToken
     }
@@ -300,14 +314,17 @@ struct SessionParameters: Codable, Equatable {
     var mode: String
     var flatModeDefaults: [String: Int64]
     var partnerName: String
+    /// External id of the place's managing client; absent when the place has none.
+    var partnerId: String?
     var partnerLogoUrl: URL?
     var redirectUri: URL
-    
+
     enum CodingKeys: String, CodingKey {
         case permissions
         case mode
         case flatModeDefaults = "flat_mode"
         case partnerName = "partner_name"
+        case partnerId = "partner_id"
         case partnerLogoUrl = "partner_logo_url"
         case redirectUri = "redirect_uri"
     }

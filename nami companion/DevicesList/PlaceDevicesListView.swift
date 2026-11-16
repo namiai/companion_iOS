@@ -46,7 +46,7 @@ struct PlaceDevicesListView: View {
                             viewModel.presentSettings()
                         }
                         Button("Show settings with parameter") {
-                            viewModel.state.isEntityPickerPresented = true
+                            viewModel.presentEntityPicker()
                         }
                         Button("Update Wi-Fi credentials") {
                             viewModel.presentUpdateWiFiCredentials()
@@ -74,49 +74,29 @@ struct PlaceDevicesListView: View {
         }
     }
 
+    /// Entity picker for settings with a parameter.
+    ///
+    /// Lists the place's zones, rooms and devices with the backend mapping keys that point at
+    /// each; only those keys resolve. The ID field takes any other id, e.g. to check that an
+    /// unmapped one is rejected.
     @ViewBuilder
     private var entityPickerSheet: some View {
+        let entityId = viewModel.state.manualEntityId.trimmingCharacters(in: .whitespacesAndNewlines)
         NavigationView {
-            Group {
-                if let place = viewModel.state.place {
-                    List {
-                        ForEach(place.zones, id: \.id) { zone in
-                            Section {
-                                Button {
-                                    viewModel.presentSettings(forEntity: zone.urn)
-                                } label: {
-                                    Label(zone.name.isEmpty ? "Zone" : zone.name,
-                                          systemImage: "square")
-                                        .font(.headline)
-                                }
-                                ForEach(zone.rooms, id: \.id) { room in
-                                    Button {
-                                        viewModel.presentSettings(forEntity: room.urn)
-                                    } label: {
-                                        Label(room.name.isEmpty ? "Room" : room.name,
-                                              systemImage: "square.split.bottomrightquarter")
-                                    }
-                                    .padding(.leading, 16)
-                                    ForEach(viewModel.state.devices.filter { $0.roomId == room.id }, id: \.id.rawValue) { device in
-                                        Button {
-                                            viewModel.presentSettings(forEntity: device.urn)
-                                        } label: {
-                                            Label(device.name.isEmpty ? (device.type ?? "Device") : device.name,
-                                                  systemImage: "sensor")
-                                                .font(.subheadline)
-                                        }
-                                        .padding(.leading, 32)
-                                    }
-                                }
-                            }
-                        }
+            Form {
+                Section("Entity ID") {
+                    TextField("alarm_dot_com:mz:<uuid>", text: $viewModel.state.manualEntityId)
+                        .textInputAutocapitalization(.never)
+                        .autocorrectionDisabled()
+                        .font(.system(.footnote, design: .monospaced))
+                    Button("Open settings for this ID") {
+                        viewModel.presentSettings(forEntity: entityId)
                     }
-                } else {
-                    ProgressView()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .disabled(entityId.isEmpty)
                 }
+                mappedEntitySections
             }
-            .navigationTitle("Pick entity")
+            .navigationTitle("Entity ID")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Cancel") {
@@ -125,6 +105,84 @@ struct PlaceDevicesListView: View {
                 }
             }
         }
+    }
+
+    /// One section per zone, then the mapping keys that match no loaded entity.
+    @ViewBuilder
+    private var mappedEntitySections: some View {
+        if viewModel.state.partnerId == nil {
+            Section {
+                Text("The session has no partner_id, so there is no mapping to list.")
+                    .foregroundStyle(.secondary)
+            }
+        } else if let tree = viewModel.state.entityPickerTree {
+            ForEach(tree.zones) { zone in
+                Section {
+                    entityRow(title: zone.title, systemImage: "square", externalIds: zone.externalIds, indent: 0)
+                    ForEach(zone.rooms) { room in
+                        entityRow(title: room.title, systemImage: "square.split.bottomrightquarter", externalIds: room.externalIds, indent: 1)
+                        ForEach(room.devices) { device in
+                            entityRow(title: device.title, systemImage: "sensor", externalIds: device.externalIds, indent: 2)
+                        }
+                    }
+                }
+            }
+            if tree.unmatched.isEmpty == false {
+                Section("Mapped to entities not in the loaded place") {
+                    ForEach(tree.unmatched) { externalId in
+                        externalIdButton(externalId)
+                    }
+                }
+            }
+        } else {
+            Section {
+                ProgressView("Loading place and external ID mapping")
+            }
+        }
+    }
+
+    /// An entity's label followed by one button per mapping key that points at it.
+    ///
+    /// - Parameters:
+    ///   - title: The entity's display name.
+    ///   - systemImage: The SF Symbol for the entity kind.
+    ///   - externalIds: The mapping keys whose URN is this entity's URN.
+    ///   - indent: Nesting depth below the zone.
+    /// - Returns: The entity's rows.
+    @ViewBuilder
+    private func entityRow(title: String, systemImage: String, externalIds: [EntityPickerTree.ExternalID], indent: Int) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Label(title, systemImage: systemImage)
+                .font(indent == 0 ? .headline : .subheadline)
+            if externalIds.isEmpty {
+                Text("No external ID")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            ForEach(externalIds) { externalId in
+                externalIdButton(externalId)
+            }
+        }
+        .padding(.leading, CGFloat(indent) * 16)
+    }
+
+    /// A button that opens settings for a mapping key, showing the key and its mapped URN.
+    ///
+    /// - Parameter externalId: The mapping key and its URN.
+    /// - Returns: The button.
+    private func externalIdButton(_ externalId: EntityPickerTree.ExternalID) -> some View {
+        Button {
+            viewModel.presentSettings(forEntity: externalId.externalId)
+        } label: {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(externalId.externalId)
+                    .font(.system(.footnote, design: .monospaced))
+                Text("→ \(externalId.urn)")
+                    .font(.system(.caption2, design: .monospaced))
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .buttonStyle(.borderless)
     }
 
     @ViewBuilder

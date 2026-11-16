@@ -30,7 +30,21 @@
 		49E2214B29A79C26008DF366 /* PairingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2214A29A79C26008DF366 /* PairingManager.swift */; };
 		49E2214E29A7A332008DF366 /* ErrorPresentationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2214D29A7A332008DF366 /* ErrorPresentationViewModel.swift */; };
 		49E2215029A7A563008DF366 /* ErrorPresentationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E2214F29A7A563008DF366 /* ErrorPresentationView.swift */; };
+		69B639914161F49AB5C84733 /* EntityPickerTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0997F54A576524E90D3F54D5 /* EntityPickerTree.swift */; };
+		E97A13F46DCA6D031BB40B88 /* EntityPickerTreeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52A004AF307EC4E8F873D70 /* EntityPickerTreeTests.swift */; };
+		E2DF02AF34BD7520773F3EDE /* EntityMappingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6C67CEA2E1631226C4EDDB /* EntityMappingTests.swift */; };
+		37A72DAB5CC77C27CDE3B43D /* SessionParametersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F1680C25AF9D9FA9B85C85A /* SessionParametersTests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E0755CEBA29FABAE3D28CE88 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 49E2211F29A75669008DF366 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 49E2212629A75669008DF366;
+			remoteInfo = "nami companion";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		492CF30A2AAAF141006DE914 /* Embed Frameworks */ = {
@@ -73,6 +87,11 @@
 		49E2214D29A7A332008DF366 /* ErrorPresentationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorPresentationViewModel.swift; sourceTree = "<group>"; };
 		49E2214F29A7A563008DF366 /* ErrorPresentationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorPresentationView.swift; sourceTree = "<group>"; };
 		49E2215129A7B14E008DF366 /* nami-companion-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "nami-companion-Info.plist"; sourceTree = SOURCE_ROOT; };
+		0997F54A576524E90D3F54D5 /* EntityPickerTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityPickerTree.swift; sourceTree = "<group>"; };
+		29CC650842BFA0E8841EEFAA /* nami companionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "nami companionTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F52A004AF307EC4E8F873D70 /* EntityPickerTreeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityPickerTreeTests.swift; sourceTree = "<group>"; };
+		9B6C67CEA2E1631226C4EDDB /* EntityMappingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityMappingTests.swift; sourceTree = "<group>"; };
+		6F1680C25AF9D9FA9B85C85A /* SessionParametersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionParametersTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +100,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				20CA655F2FB46B2B008A31CE /* NamiPairing in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BCF5B66A948D6DFA1664E8B6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,6 +159,7 @@
 			children = (
 				49CE32832A162121005876D5 /* Readme.md */,
 				49E2212929A75669008DF366 /* nami companion */,
+				0D4A0D1227830DF1A754BA37 /* nami companionTests */,
 				49E2212829A75669008DF366 /* Products */,
 				49CE32722A14D9DB005876D5 /* Frameworks */,
 				204957D82BECE3F0000707BF /* Recovered References */,
@@ -143,6 +170,7 @@
 			isa = PBXGroup;
 			children = (
 				49E2212729A75669008DF366 /* nami companion.app */,
+				29CC650842BFA0E8841EEFAA /* nami companionTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -193,6 +221,7 @@
 			children = (
 				49E2214829A792AE008DF366 /* PlaceDevicesListView.swift */,
 				49D9179D2AFCADF4000E344B /* PlaceDevicesListViewModel.swift */,
+				0997F54A576524E90D3F54D5 /* EntityPickerTree.swift */,
 			);
 			path = DevicesList;
 			sourceTree = "<group>";
@@ -206,6 +235,16 @@
 				49E2214F29A7A563008DF366 /* ErrorPresentationView.swift */,
 			);
 			path = ErrorPresentation;
+			sourceTree = "<group>";
+		};
+		0D4A0D1227830DF1A754BA37 /* nami companionTests */ = {
+			isa = PBXGroup;
+			children = (
+				9B6C67CEA2E1631226C4EDDB /* EntityMappingTests.swift */,
+				F52A004AF307EC4E8F873D70 /* EntityPickerTreeTests.swift */,
+				6F1680C25AF9D9FA9B85C85A /* SessionParametersTests.swift */,
+			);
+			path = "nami companionTests";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -233,6 +272,24 @@
 			productReference = 49E2212729A75669008DF366 /* nami companion.app */;
 			productType = "com.apple.product-type.application";
 		};
+		102F29F32ACEE6D91ABB5949 /* nami companionTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2BDC2A7B96011FC5B7194282 /* Build configuration list for PBXNativeTarget "nami companionTests" */;
+			buildPhases = (
+				402E6B551B02D4C1EF3324B4 /* Sources */,
+				BCF5B66A948D6DFA1664E8B6 /* Frameworks */,
+				C2D13741E3CF7DEB85BE135B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5590EED116218662CCB3EC88 /* PBXTargetDependency */,
+			);
+			name = "nami companionTests";
+			productName = "nami companionTests";
+			productReference = 29CC650842BFA0E8841EEFAA /* nami companionTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -245,6 +302,10 @@
 				TargetAttributes = {
 					49E2212629A75669008DF366 = {
 						CreatedOnToolsVersion = 14.2;
+					};
+					102F29F32ACEE6D91ABB5949 = {
+						CreatedOnToolsVersion = 27.2;
+						TestTargetID = 49E2212629A75669008DF366;
 					};
 				};
 			};
@@ -274,6 +335,7 @@
 			projectRoot = "";
 			targets = (
 				49E2212629A75669008DF366 /* nami companion */,
+				102F29F32ACEE6D91ABB5949 /* nami companionTests */,
 			);
 		};
 /* End PBXProject section */
@@ -287,6 +349,13 @@
 				20B9EF932C082DFC000EFA6E /* Montserrat-Bold.ttf in Resources */,
 				49E2213329A7566B008DF366 /* Preview Assets.xcassets in Resources */,
 				49E2212F29A7566B008DF366 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C2D13741E3CF7DEB85BE135B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,6 +396,7 @@
 				49E2214B29A79C26008DF366 /* PairingManager.swift in Sources */,
 				204957DB2BECE51A000707BF /* CustomTheme.swift in Sources */,
 				49D9179E2AFCADF4000E344B /* PlaceDevicesListViewModel.swift in Sources */,
+				69B639914161F49AB5C84733 /* EntityPickerTree.swift in Sources */,
 				206A03DF2BDB8745007DFF2E /* DeviceRepositionView.swift in Sources */,
 				49E2214E29A7A332008DF366 /* ErrorPresentationViewModel.swift in Sources */,
 				204A11842CD334D4001D2744 /* KeychainThreadDatasetStorage.swift in Sources */,
@@ -339,7 +409,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		402E6B551B02D4C1EF3324B4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E97A13F46DCA6D031BB40B88 /* EntityPickerTreeTests.swift in Sources */,
+				E2DF02AF34BD7520773F3EDE /* EntityMappingTests.swift in Sources */,
+				37A72DAB5CC77C27CDE3B43D /* SessionParametersTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5590EED116218662CCB3EC88 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 49E2212629A75669008DF366 /* nami companion */;
+			targetProxy = E0755CEBA29FABAE3D28CE88 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		49E2213429A7566B008DF366 /* Debug */ = {
@@ -489,7 +577,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 3.6.4;
+				MARKETING_VERSION = 3.7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ai.nami.nami-companion";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -539,7 +627,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 3.6.4;
+				MARKETING_VERSION = 3.7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ai.nami.nami-companion";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -550,6 +638,48 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		33ABFC5513CE4A1D6D2EB6E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PTKKJUD9AS;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "ai.nami.nami-companionTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/nami companion.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/nami companion";
+			};
+			name = Debug;
+		};
+		C275A1C81CD77F0326F9E7BA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "ai.nami.nami-companionTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/nami companion.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/nami companion";
 			};
 			name = Release;
 		};
@@ -574,6 +704,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		2BDC2A7B96011FC5B7194282 /* Build configuration list for PBXNativeTarget "nami companionTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				33ABFC5513CE4A1D6D2EB6E0 /* Debug */,
+				C275A1C81CD77F0326F9E7BA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -582,7 +721,7 @@
 			repositoryURL = "https://github.com/namiai/NamiPairing_iOS";
 			requirement = {
 				kind = exactVersion;
-				version = 5.4.4;
+				version = 5.5.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

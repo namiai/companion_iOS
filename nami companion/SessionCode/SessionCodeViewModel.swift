@@ -23,7 +23,8 @@ final class SessionCodeViewModel: ObservableObject {
     struct State {
         var sessionCode: String = ""
         var clientId: String = "nami_dev"
-        var baseUrl: String = "https://mobile-screens.nami.surf/divkit/v0.15.0/precompiled_layouts"
+        // SDK 5.5.x goes with the v0.16.0 precompiled DivKit layouts.
+        var baseUrl: String = "https://mobile-screens.nami.surf/divkit/v0.16.0/precompiled_layouts"
         var countryCode: String = "us"
         var language: String = "en-US"
         var appearance: NamiSdkConfig.Appearance = .system

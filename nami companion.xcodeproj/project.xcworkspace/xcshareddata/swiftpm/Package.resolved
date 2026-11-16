@@ -1,5 +1,5 @@
 {
-  "originHash" : "39030b21722aec0394d08a79cbe7ae4bf327b238ad1bd9904f1d9571965771a6",
+  "originHash" : "525b4c8747d5a3bf5bd9e5f04966ed9e56b8cd7f52ffde788bcf0727621496e3",
   "pins" : [
     {
       "identity" : "lottie-spm",
@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/namiai/NamiPairing_iOS.git",
       "state" : {
-        "revision" : "fcd27c01b3e3c3c4940aa8191701fca153799da8",
-        "version" : "5.1.0"
+        "revision" : "a3d3980a5932ade294279a97769b489cbd56205d",
+        "version" : "5.5.0"
       }
     }
   ],

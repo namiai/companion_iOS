@@ -13,21 +13,44 @@ final class PlaceDevicesListViewModel: ObservableObject {
     }
     
     struct State {
+        /// External id of the place's managing client, from the session activation.
+        var partnerId: String?
         var bssid: [UInt8]?
         var devices: [Device] = []
+        /// The place's topology, for naming the entities the mapping points at.
         var place: Place?
+        /// The backend's `external id → internal URN` mapping for this place and partner;
+        /// `nil` until it loads.
+        var externalDeviceIds: [String: String]?
         var isEntityPickerPresented = false
+        /// Entity ID typed into the entity picker sheet.
+        var manualEntityId = ""
         var offerRetry = false
         var presentingPairing = false
+
+        /// The place's zones, rooms and devices with the mapping keys that point at each.
+        ///
+        /// `nil` until both the place and the mapping are loaded.
+        var entityPickerTree: EntityPickerTree? {
+            guard let place, let externalDeviceIds else { return nil }
+            return EntityPickerTree(zones: place.zones, devices: devices, mapping: externalDeviceIds)
+        }
     }
     
+    /// Creates the view model and starts loading the place's devices, topology and mapping.
+    ///
+    /// - Parameters:
+    ///   - pairingManager: The activated session's pairing manager; supplies the token, place id
+    ///     and partner id.
+    ///   - nextRoute: Called with the route to navigate to.
     init(pairingManager: PairingManager, nextRoute: @escaping (RootRouter.Routes) -> Void) {
-        self.state = State()
+        self.state = State(partnerId: pairingManager.partnerId)
         self.pairingManager = pairingManager
         self.nextRoute = nextRoute
         
         refreshDevices()
         refreshPlace()
+        refreshExternalDeviceIds()
     }
     
     @Published var state: State
@@ -47,9 +70,21 @@ final class PlaceDevicesListViewModel: ObservableObject {
         nextRoute(.presentSettings)
     }
 
-    func presentSettings(forEntity urn: String) {
+    /// Opens the entity picker with a fresh place, device list and mapping.
+    func presentEntityPicker() {
+        state.isEntityPickerPresented = true
+        refreshDevices()
+        refreshPlace()
+        refreshExternalDeviceIds()
+    }
+
+    /// Opens settings scoped to a partner entity id.
+    ///
+    /// - Parameter entityId: A mapping key, or any id typed into the sheet (including ids the
+    ///   mapping lacks, to exercise the not-found path).
+    func presentSettings(forEntity entityId: String) {
         state.isEntityPickerPresented = false
-        nextRoute(.presentSettingsForEntity(urn: urn))
+        nextRoute(.presentSettingsForEntity(entityId: entityId))
     }
 
     func presentUpdateWiFiCredentials() {
@@ -113,6 +148,52 @@ final class PlaceDevicesListViewModel: ObservableObject {
             .store(in: &disposable)
     }
     
+    /// Fetches the place's external device id mapping for the session's partner and stores it
+    /// for the entity picker. The mapping's keys are the partner ids the SDK can resolve.
+    ///
+    /// Does nothing when the session has no partner id: there is no mapping to ask for.
+    func refreshExternalDeviceIds() {
+        guard let token = pairingManager.accessToken, let partnerId = state.partnerId else { return }
+        let request = Self.externalDeviceIdsRequest(
+            baseUrl: PairingManager.baseUrl,
+            placeId: pairingManager.placeId.rawValue,
+            partnerId: partnerId,
+            accessToken: token
+        )
+
+        URLSession.shared.dataTaskPublisher(for: request)
+            .map(\.data)
+            .decode(type: ExternalDeviceIdsResponse.self, decoder: Self.apiDecoder)
+            .map(\.externalDeviceIds)
+            .receive(on: DispatchQueue.main)
+            .sink { completion in
+                if case let .failure(error) = completion {
+                    print("Failed to fetch external device ids: \(error)")
+                }
+            } receiveValue: { [weak self] mapping in
+                self?.state.externalDeviceIds = mapping
+            }
+            .store(in: &disposable)
+    }
+
+    /// Builds `GET /places/:place_id/external-device-ids?external_client_id=<partner id>`.
+    ///
+    /// - Parameters:
+    ///   - baseUrl: The nami API base URL.
+    ///   - placeId: The session's place id.
+    ///   - partnerId: The external id of the client whose mapping to fetch.
+    ///   - accessToken: The session's bearer token.
+    /// - Returns: The authorized request.
+    static func externalDeviceIdsRequest(baseUrl: URL, placeId: Int64, partnerId: String, accessToken: String) -> URLRequest {
+        let url = baseUrl
+            .appending(path: "places/\(placeId)/external-device-ids")
+            .appending(queryItems: [URLQueryItem(name: "external_client_id", value: partnerId)])
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        return request
+    }
+    
     func deleteDevice(deviceId: NamiDeviceID) {
         guard let token = pairingManager.accessToken else { return }
         
@@ -173,6 +254,17 @@ private struct APIDeviceModel: Decodable {
     
     enum CodingKeys: String, CodingKey {
         case codeName = "code_name"
+    }
+}
+
+/// Response of `GET /places/:place_id/external-device-ids`:
+/// `{ "external_device_ids": { "<external id>": "<urn>", ... } }`.
+struct ExternalDeviceIdsResponse: Decodable {
+    /// Every external id the partner has in the place, mapped to the internal URN it resolves to.
+    let externalDeviceIds: [String: String]
+
+    enum CodingKeys: String, CodingKey {
+        case externalDeviceIds = "external_device_ids"
     }
 }
 

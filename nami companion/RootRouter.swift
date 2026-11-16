@@ -14,7 +14,7 @@ final class RootRouter: ObservableObject {
         case presentSingleDeviceSetup
         case presentSetupGuide
         case presentSettings
-        case presentSettingsForEntity(urn: String)
+        case presentSettingsForEntity(entityId: String)
         case presentPinCreation
         case presentSystemCheckup
         case presentEntryExitDelays
@@ -64,8 +64,8 @@ final class RootRouter: ObservableObject {
         case .presentSettings:
             return presentSettings()
                 .anyView
-        case let .presentSettingsForEntity(urn):
-            return presentSettingsForEntity(urn: urn)
+        case let .presentSettingsForEntity(entityId):
+            return presentSettingsForEntity(entityId: entityId)
                 .anyView
         case .presentPinCreation:
             return presentPinCreation()
@@ -111,10 +111,14 @@ final class RootRouter: ObservableObject {
         .navigationViewStyle(.stack)
     }
 
+    /// Wraps the SDK's entity-scoped settings in a navigation view.
+    ///
+    /// - Parameter entityId: The partner's id for the zone, room or device to open.
+    /// - Returns: The settings view.
     @MainActor
-    private func presentSettingsForEntity(urn: String) -> some View {
+    private func presentSettingsForEntity(entityId: String) -> some View {
         NavigationView {
-            pairingManager!.presentSettingsForEntity(urn: urn) { [weak self] event in
+            pairingManager!.presentSettingsForEntity(entityId: entityId) { [weak self] event in
                 self?.onGuideEnded(event: event)
             }
         }
